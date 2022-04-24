@@ -1,6 +1,3 @@
-# Make My Day 
-
-[![x|MMD](https://latam.makemydayapp.com/images/logo_MMD_symbol_large.svg)](https://www.makemydayapp.com/)
 ## _PHP training_
 In this training we'll create a PHP program that will run on a local environment, using OOP principals.
 We'll create a simple blog like site. This will allow us to go over a lot of the  pricipals and code that will help you become a better PHP programmer.
