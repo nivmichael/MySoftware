@@ -6,7 +6,7 @@ After each step there will be a code review, and a quick explanation on the next
 
 ## The steps:
 
-- Setup a local environment using PHP, APACHE and MySQL (XAMMP or windows / global installation Linux)
+- Setup a local environment using PHP, APACHE and MySQL (XAMMP on windows / global installation Linux)
 - Using MySQL CLI, create a "blog" database, with a "users" table. Insert one user.
 - Create a Login page (index.php)
 - Create an autoload class in the root of application
@@ -35,8 +35,10 @@ The users table should have these fields:
 3. password | varchar 100
 4. created_at datetime
 
+!Save all the commands in the changes.sql file
 Insert one user into the table.
-Save all the commands in the changes.sql file
+Add an 'address'column to the table.
+
 
 ### Create a popup login page (index.php)
 Once the local site is set up, create a login button in index.php.
@@ -50,6 +52,7 @@ Autoload all the classes in the "inc" folder
 In the login.rpc.php, check if the user's credentials are OK, using the login.class.php and db.class.php
 Save login in cookie for persistant login.
 db.class.php should handle the mysqli connection to the server
+rpc files return a json object to the client.
 
 ### Once logged in - redirect to dmin.view.php page
 ### Create a form to upload blog posts
@@ -73,5 +76,5 @@ If we're logged in, displat a logout button instead of the login button.
 
 ## Important
 Please feel free ask question to better understand the required design of the app.
-Use best practices.
+Use best practices and the MMD code design document.
 Try and solve as much as you can by your own.
