@@ -54,7 +54,7 @@ Save login in cookie for persistant login.
 db.class.php should handle the mysqli connection to the server
 rpc files return a json object to the client.
 
-### Once logged in - redirect to dmin.view.php page
+### Once logged in - redirect to admin.view.php page
 ### Create a form to upload blog posts
 In the admin view, create a form that allows to upload a blog post, consisting from:
 1. Title
