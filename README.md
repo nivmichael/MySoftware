@@ -6,6 +6,7 @@ After each step there will be a code review, and a quick explanation on the next
 
 ## The steps:
 
+- After cloning the project, create a new branch with your name, to work on
 - Setup a local environment using PHP, APACHE and MySQL (XAMMP on windows / global installation Linux)
 - Create an page that displays data from API
 - Using MySQL CLI, create a "blog" database, with a "users" table. Insert one user.
