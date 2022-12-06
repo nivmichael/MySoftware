@@ -30,3 +30,38 @@ input[type=submit]:hover, button:hover {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+#id-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: .7em;
+  place-items: center;
+  align-items: baseline;
+
+}
+
+.c-list-item {
+  width: 75%;
+  border: 1px solid var(--grey-color);
+  border-radius: 5px;
+}
+
+.c-list-item-title {
+  font-weight: bold;
+  text-align: center;
+  padding: 2%;
+  color: var(--darkblue-color);
+}
+
+.c-list-item-body {
+  font-weight: normal;
+  padding-inline: 3%;
+  padding-bottom: 2%;
+  color: var(--blue-color);
+}
+
+:root {
+  --blue-color: rgb(32, 86, 185);
+  --grey-color: #968989;
+  --darkblue-color: rgb(13, 59, 145);
+}
