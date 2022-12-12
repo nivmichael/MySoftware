@@ -3,27 +3,28 @@ const API_URL='https://jsonplaceholder.typicode.com/posts';
 // Main function to display items with 'e' in the beginning of the title from api
 async function displayItems () {
     const results = document.getElementById("id-results");
-    
-    let response = await fetchData(); // Call to api
-    response = filterLetter(response, 'e'); // Filter letters with 'e' in the beginning of title
-    
-    // Building the API view
-    response.forEach(item => {
-        const listItem = document.createElement("details");
-        listItem.classList.add('c-list-item');
+    if (results) {
+        let response = await fetchData(); // Call to api
+        response = filterLetter(response, 'e'); // Filter letters with 'e' in the beginning of title
         
-        const title = document.createElement("summary");
-        title.classList.add('c-list-item-title');
-        title.innerHTML = item.title;
-        
-        const body = document.createElement("div");
-        body.classList.add('c-list-item-body');
-        body.innerHTML = item.body;
+        // Building the API view
+        response.forEach(item => {
+            const listItem = document.createElement("details");
+            listItem.classList.add('c-list-item');
+            
+            const title = document.createElement("summary");
+            title.classList.add('c-list-item-title');
+            title.innerHTML = item.title;
+            
+            const body = document.createElement("div");
+            body.classList.add('c-list-item-body');
+            body.innerHTML = item.body;
 
-        results.appendChild(listItem); 
-        listItem.appendChild(title);
-        listItem.appendChild(body);
-    })
+            results.appendChild(listItem); 
+            listItem.appendChild(title);
+            listItem.appendChild(body);
+        })
+    }
 }
 
 // Call to api and returns array of objects from api
@@ -50,20 +51,22 @@ displayItems();
 
 // Open login form popup
 function openForm() {
-    document.getElementById("id-loginForm").style.display = "block";
+    document.getElementById("id-login-popup").style.display = "block";
 }
 
 // Close login form popup
 function closeForm() {
-    document.getElementById("id-loginForm").style.display = "none";
+    document.getElementById("id-login-popup").style.display = "none";
 }
 
 // Event listener for login 
-var loginForm = document.getElementById('id-form');
-loginForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    userLogin();
-  });
+var loginForm = document.getElementById('id-login-form');
+if (loginForm) {
+    loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        userLogin();
+      });
+}
 
 // Send user login data to user.rpc.php using fetchLogin and shows if login success
 async function userLogin() {
@@ -71,20 +74,23 @@ async function userLogin() {
     const password = document.getElementById('id-password').value;
 
     const params = {
+        action: 'login',
         username: username,
         password: password, 
     };
     loginStatus = await fetchLogin(params);
 
     // Shows if login success
-    if (!loginStatus.status) {
-        document.getElementById("id-login-status").style.color="red";
+    if (loginStatus) {
+        if (!loginStatus.status) {
+            document.getElementById("id-login-status").style.color="red";
+            document.getElementById("id-login-status").innerHTML = loginStatus.data;
+        }
+        else {
+            closeForm();
+            window.location.reload();
+        }
     }
-    else {
-        document.getElementById("id-login-status").style.color="green";
-        closeForm();
-    }
-    document.getElementById("id-login-status").innerHTML = loginStatus.data;
 }
 
 // Send user login data to user.rpc.php
@@ -104,4 +110,14 @@ async function fetchLogin(params) {
     catch (error) {
         console.error(`Could not get it: ${error}`);
     }
+}
+
+// Event listener for post 
+/******** */
+var postForm = document.getElementById('id-upload-post-form');
+if (postForm) {
+    postForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        /***** */
+      });
 }

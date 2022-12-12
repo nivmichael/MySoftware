@@ -1,14 +1,39 @@
 <?php
 include "../autoloader.php";
+session_start();
 
 $username = $password = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// switch case of $_POST['action'] 
+// case 'login' - do login 
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
+{
     $req = file_get_contents('php://input');
     $data = json_decode($req);
-    $username = $data->{"username"};
-    $password = $data->{"password"};
-    
+    if ($action = $data->{"action"}) {
+        switch ($action) 
+        {
+            case "login": 
+            {
+                $username = $data->{"username"};
+                $password = $data->{"password"};
+                
+                // Validates that username,password exist, username is valid email
+                validate_login_data($username,$password);
+
+                // Query if user exist and create session
+                $login = user::login($username,$password);
+                echo (json_encode([
+                    'status' => ($login)? true:false,
+                    'data' => ($login)? 'user is logged in':'user or password are incorrect',
+                    ]));
+            }
+        }
+    }
+}
+
+// Validates that username,password exist, username is valid email
+function validate_login_data($username,$password) 
+{
     // Validator that username exist
     if (!$username) {
         die(json_encode([
@@ -30,25 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'data' => 'password is required',
           ]));
     }
-    // If all params (user,password) are ok
-    else {
-        echo (json_encode([
-            'status' => true,
-            'data' => 'all params are ok',
-          ]));
-    }
-
-    //db connect and select all users query
-    $conn = new db();
-    $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
-    $usersArray = [];
-    while($row = mysqli_fetch_array($result))
-    {
-        $usersArray[] = $row;
-    }
-    $conn->close();
 }
+
 
 die;
 ?>

@@ -26,9 +26,18 @@ input[type=submit]:hover, button:hover {
   background-color: #45a049;
 }
 
-.container {
+.c-container {
   border-radius: 5px;
   background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+  margin: auto;
+}
+
+.c-upload-container {
+  width: 60%;
+  border-radius: 5px;
+  background-color: #d5cdcd;
   padding: 20px;
   text-align: center;
   margin: auto;
@@ -70,7 +79,7 @@ input[type=submit]:hover, button:hover {
   --beige-color: #faffea;
 }
 
-.c-form-popup {
+.c-login-popup {
   display: none;
   position: absolute;
   background-color: var(--beige-color);
@@ -78,4 +87,19 @@ input[type=submit]:hover, button:hover {
   padding: 2%;
   left:50%; 
   transform:translate(-50%, 0%); 
+}
+
+#id-header-banner {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+#id-header-text {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform:translate(-50%, 0%); 
+  color: #ffffff;
 }
