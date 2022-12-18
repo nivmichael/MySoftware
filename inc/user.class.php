@@ -1,27 +1,19 @@
 <?php 
 class user
 {
-    public $user_id  = null;
+    private $user_id  = null;
     private $username = null;
-    private $password = null;
-    public $name     = null;
-    public $last_login = null;
+    private $name     = null;
+    private $last_login = null;
 
-    // public function __construct($username, $password)
-    // {
-    //     $user = $this->user_exist($username,$password);
-    //     if (!$user) {
-    //         die(json_encode([
-    //             'status' => false,
-    //             'data' => 'user or password are incorrect',
-    //             ]));
-    //     }
-    //     $this->user_id  = $user["id"];
-    //     $this->username = $user["username"];
-    //     $this->password = $user["password"];
-    //     $this->name     = $user["name"];
-    //     $this->last_login = $user["last_login"];
-    // }
+    public function __construct($user_id, $name, $last_login)
+    {
+        if(!is_numeric($user_id))
+            die('user constractor user_id is not numeric');
+        $this->user_id      =   $user_id;
+        $this->name         =   $name;
+        $this->last_login   =   $last_login;
+    }
 
     /**
      * check if user exits in db by credentials - and set the session with uid, name and last_login
@@ -31,13 +23,12 @@ class user
      * 
      * @return true/false if success/fail
      */ 
-    public static function login($username, $password) {
-        // Sanitize params
-        $sanitized_username = filter_var($username, FILTER_SANITIZE_EMAIL);
-        $sanitized_password = filter_var($password, FILTER_SANITIZE_STRING);
-
+    public static function login($username, $password) 
+    {
         // DB connect and query if user exist
         $conn = new db();
+        $sanitized_username = $conn->real_escape_string($username);
+        $sanitized_password = $conn->real_escape_string($password);
         $sql = "SELECT * FROM users WHERE username = '$sanitized_username' AND password = '$sanitized_password'";
         $result = $conn->query($sql);
         if($row = mysqli_fetch_assoc($result))
@@ -49,6 +40,7 @@ class user
             $conn->close();
             return false;
         }
+
         // If user exist
         // Update users last login
         $id = $result["id"];
@@ -56,12 +48,18 @@ class user
         $conn->query($sql);
         $conn->close();
         
-        //session_start();
+        // Update sessions
         $_SESSION["login"] = TRUE;
         $_SESSION["user_id"] = $result["id"];
         $_SESSION["name"] = $result["name"];
         $_SESSION["last_login"] = $result["last_login"];
 
         return true;
+    }
+
+
+    public static function logout() 
+    {
+        //session_unset();
     }
 }

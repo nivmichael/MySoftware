@@ -1,5 +1,6 @@
 <?php
 session_start();
+print_r($_SESSION);
 ?>
 
 <!doctype html>
@@ -14,47 +15,50 @@ session_start();
   <meta name="author" content="MMD">
 
   <link rel="stylesheet" href="styles.css">
-    
 </head>
 
-<body>
-  <?php
-  include('header.php');
-  ?>
+<body onload="getAllPosts();userLogged()">
   <div class="c-container">
-    <?php
-      // User is logged in
-      if (isset($_SESSION["login"])) {
-        echo "<form action='' method='post'><button class='c-logout-button' name='logout'>Logout </button></form>";
+    <div id="id-header">
+    <div id="id-user-data">
+      <h2 id="id-user-data-h2"></h2>
+      <h5 id="id-user-data-h5"></h5>
+    </div>
+    
+    <div id="id-navigation">
+      <button class='c-login-button' id='id-login-button' onclick='openForm()'>Login </button>
+      <div class="c-login-popup" id="id-login-popup">
+        <form class="c-form-container" id="id-login-form">
+          <h2>Login</h2>
+          <div>User Name</div>
+          <input type="text" id="id-username" placeholder="User Name" ><br>
+          <div>Password</div>
+          <input type="password" id="id-password" placeholder="Password" ><br> 
+          <div id="id-login-status"></div><p>
+          <button type="submit" id="id-submit-login">Login</button>
+          <button type="button" onclick="closeForm()">Close</button>
+        </form>
+      </div>
+      <button class='c-logout-button' id='id-logout-button' onclick='userLogout()'>Logout </button>
+    </div>
+    </div>
+    <div id="id-posts">
+      <div class="c-upload-container" id="id-post-upload">
+        <?php
         include('post.php');
-
-        if(isset($_POST['logout'])) {
-          session_destroy();
-        }
-      }
-
-      // User is logged out
-      else {
-      ?>
-        <button class='c-login-button' onclick='openForm()'>Login </button>
-        <div class="c-login-popup" id="id-login-popup">
-          <form class="c-form-container" id="id-login-form">
-            <h2>LOGIN</h2>
-            <div>User Name</div>
-            <input type="text" id="id-username" placeholder="User Name" ><br>
-            <div>Password</div>
-            <input type="password" id="id-password" placeholder="Password" ><br> 
-            <div id="id-login-status"></div><p>
-            <button type="submit" id="id-submit-login">Login</button>
-            <button type="button" onclick="closeForm()">Close</button>
-          </form>
-        </div>
-        
-        <h2>Last task API</h2>
-        <div id="id-results" ></div>
-      <?php
-      }
-      ?>
+        ?>
+      </div>
+      <div id="id-filter-posts">
+        <input type="text" id="id-filter-by-name" onkeyup="filterPostsByNameFunc()" placeholder="Search posts by user's name">
+      </div>
+      <div id="id-all-posts">
+        <div class="c-blog-container" id="id-blog-container"></div>
+      </div>
+    </div>
+    <div id="id-api-results">
+      <h2>Last task API</h2>
+      <div id="id-results" ></div>
+    </div>
     <script src="scripts.js"></script>
   </div>
 </body>

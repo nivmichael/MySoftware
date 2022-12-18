@@ -26,5 +26,10 @@ class db
     //Closes the database connection
 	function close() {
 		self::$conn->close();
+        self::$conn = null;
 	}
+
+    public function real_escape_string($str = null) {
+       return self::$conn->real_escape_string($str);
+    }
 }
