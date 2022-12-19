@@ -87,20 +87,23 @@ input[type=submit]:hover, button:hover {
 
 #id-navigation {
   margin: auto;
-  transform:translate(100%, 0%); 
 }
 
 #id-user-data{
   display: none;
+  max-width: 18%;
+  position: absolute;
 }
 
 #id-user-data h2 {
   margin-block-end: 0;
+  margin-block-start: 0;
 }
 #id-user-data h5 {
   margin-block-start: 0.5em;
   font-weight: lighter;
   color: #aaa;
+  margin-block-end: 0;
 }
 
 /* blog posts view */

@@ -88,9 +88,10 @@ async function userLogin() {
         }
         else {
             closeForm();
-            //window.location.reload();
-            // call to function that loads (DOM) the post form and update user data in the DOM
+            // Call to function that loads (DOM) the post form and update user data in the DOM
             userDisplay(loginStatus.name, loginStatus.last_login);
+            // Loads (DOM) to display only the logged user's posts
+            filterPostsByNameFunc(loginStatus.name);
         }
     }
 }
@@ -128,6 +129,7 @@ function userDisplay(name,lastLogin) {
     document.getElementById("id-all-posts").style.display = "block";
     document.getElementById("id-logout-button").style.display = "block";
     document.getElementById("id-login-button").style.display = "none";
+    document.getElementById("id-filter-by-name").style.display = "none";
 }
 
 // Onload calls this function, if session exist change to user display
@@ -143,6 +145,10 @@ async function userLogged() {
         const data = await response.json();
         if (data.status) {
             userDisplay(data.name,data.last_login);
+            getPostsByUser();
+        }
+        else {
+            getAllPosts();
         }
     }
     catch (error) {
@@ -194,10 +200,28 @@ async function fetchUploadPost(params) {
     }
 }
 
-// Get posts from db and display it using display posts
+// Get all posts from db and display it using display posts
 async function getAllPosts() {
     try {
         const response = await fetch('rpc/post.rpc.php?action=all', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+        displayPosts(data);
+    }
+    catch (error) {
+        console.error(`Could not get it: ${error}`);
+    }
+}
+
+// Get posts by user id from db and display it using display posts
+async function getPostsByUser() {
+    try {
+        const response = await fetch('rpc/post.rpc.php?action=posts-by-userid', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -245,10 +269,12 @@ function displayPosts(data) {
 }
 
 // Filter posts by users name
-function filterPostsByNameFunc() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById('id-filter-by-name');
-    filter = input.value.toUpperCase();
+function filterPostsByNameFunc(input) {
+    var filter, posts, cards, usersName, i, txtValue;
+    if (!input) {
+        input = document.getElementById('id-filter-by-name').value;
+    }
+    filter = input.toUpperCase();
     posts = document.getElementById("id-blog-container");
     cards = posts.getElementsByClassName('c-blog-card');
 

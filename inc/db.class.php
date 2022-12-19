@@ -19,7 +19,7 @@ class db
     }  
 
     // Executes a database query
-    function query( $query ) {
+    function query($query) {
 		return self::$conn->query( $query );
 	}
 
