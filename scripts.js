@@ -135,7 +135,7 @@ function userDisplay(name,lastLogin) {
 // Onload calls this function, if session exist change to user display
 async function userLogged() {
     try {
-        const response = await fetch('rpc/user.rpc.php/?action=check_if_logged', {
+        const response = await fetch('rpc/user.rpc.php/?action=check-if-logged', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -291,7 +291,6 @@ function filterPostsByNameFunc(input) {
 }
 
 // Logout the user
-/***doesnt work - i hide the session destroy in  user class*/
 async function userLogout() {
     try {
         fetch('rpc/user.rpc.php/?action=logout', {
@@ -305,5 +304,5 @@ async function userLogout() {
     catch (error) {
         console.error(`Could not get it: ${error}`);
     }
-    //window.location.reload();
+    window.location.reload();
 }
