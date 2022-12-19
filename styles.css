@@ -219,3 +219,10 @@ input[type=submit]:hover, button:hover {
   margin-top: 10px;
   margin-bottom: 0px;
 }
+
+#id-post-file-btn {
+  background-color: white;
+  color:black;
+  padding: 6px;
+  border: 1px solid black; 
+}

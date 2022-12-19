@@ -47,7 +47,9 @@ session_start();
           <div>Post Body</div>
           <textarea id="id-post-body" name="body" placeholder="Body" rows="5"></textarea>
           <div>Upload Image</div>
-          <input type="file" id="id-post-file" name="file">
+          <button type="button" id="id-post-file-btn" onclick="document.getElementById('id-post-file').click();">Choose File</button>
+          <input type='file' id="id-post-file" name="file" style="display:none" onchange="showFileName(this.files[0]);">
+          <span id="id-file-name" style="color:gray">No file chosen</span>
           </p>
           <div id="id-upload-post-status"></div>
           <input type="submit" class="c-post-submit" name="post-submit" value="Upload Post">

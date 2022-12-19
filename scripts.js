@@ -183,6 +183,17 @@ async function uploadPost() {
     else {
         document.getElementById("id-upload-post-status").style.color="red";
         document.getElementById("id-upload-post-status").innerHTML = uploadPostStatus.data;
+        document.getElementById("id-file-name").innerHTML = "No File chosen";
+    }
+}
+
+// Displays to the user the name of chosen file in upload post form
+function showFileName(file){
+    if (file) {
+        document.getElementById('id-file-name').innerHTML = file.name;
+    } 
+    else {
+        document.getElementById('id-file-name').innerHTML = 'No file chosen';
     }
 }
 
