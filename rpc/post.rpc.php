@@ -66,12 +66,22 @@ else if (isset($_POST["action"]))
             $new_title  = $_POST["new-title"];
             if (isset($_SESSION["user_id"])) 
             {
-                $post = new post($id);
-                $post->edit_title($new_title, $_SESSION["user_id"]);
-                $rpc_result  = [
-                    "status" => true,
-                    "data"   => "post title updated",
-                   ];
+                if ($new_title)
+                {
+                    $post = new post($id);
+                    $post->edit_title($new_title, $_SESSION["user_id"]);
+                    $rpc_result  = [
+                        "status" => true,
+                        "data"   => "post title updated",
+                    ];
+                }
+                else 
+                {
+                    $rpc_result  = [
+                        "status" => false,
+                        "data"   => "title can't be null",
+                    ];
+                }
             }
             break;
         }

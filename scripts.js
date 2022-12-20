@@ -303,7 +303,7 @@ function displayPosts(data, editPossible = false) {
             closeIcon.setAttribute('onClick','closeEdit('+item.id+')');
             const checkIcon = document.createElement("i");
             checkIcon.setAttribute('class','fa fa-check');
-            checkIcon.setAttribute('onClick','applyEdit('+item.id+')');
+            checkIcon.setAttribute('onClick','applyEdit('+item.id+',"'+item.title+'")');
             const deleteIcon = document.createElement("i");
             deleteIcon.setAttribute('class','fa fa-trash');
             deleteIcon.setAttribute('onClick','deletePost('+item.id+')');
@@ -340,7 +340,7 @@ function editPost(id) {
 }
 
 // Gets post id, disable title edit and displays edit icon
-function closeEdit(id) {
+function closeEdit(id, pastTitle = null) {
     // change edit icons
     const editPart = document.getElementById('edit-'+id);
     const edit = editPart.getElementsByClassName('fa fa-edit');
@@ -355,11 +355,16 @@ function closeEdit(id) {
     // change back title from input
     const card = document.getElementById(id);
     const title = card.getElementsByTagName("h2")[0];
-    title.innerHTML = title.getElementsByTagName("input")[0].value;
+    if (pastTitle) {
+        title.innerHTML = pastTitle;
+    }
+    else {
+        title.innerHTML = title.getElementsByTagName("input")[0].value;
+    }
 }
 
 // Gets post id, update in db the posts title and closes edit
-async function applyEdit(id) {
+async function applyEdit(id, pastTitle) {
     const card = document.getElementById(id);
     const title = card.getElementsByTagName("h2")[0];
     const newTitle = title.getElementsByTagName("input")[0].value;
@@ -372,7 +377,12 @@ async function applyEdit(id) {
     editPostStatus = await fetchUploadPost(params);
     console.log(editPostStatus);
 
-    closeEdit(id);
+    if (editPostStatus.status) {
+        closeEdit(id);
+    }
+    else {
+        closeEdit(id, pastTitle);
+    }
 }
 
 // Gets post id, update in db the posts title and closes edit
@@ -383,8 +393,10 @@ async function deletePost(id) {
     deletePostStatus = await fetchUploadPost(params);
     console.log(deletePostStatus);
 
-    const card = document.getElementById(id);
-    card.style.display = "none";
+    if (deletePostStatus.status) {
+        const card = document.getElementById(id);
+        card.style.display = "none";
+    }
 }
 
 // Filter posts by users name
