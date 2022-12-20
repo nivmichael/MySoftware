@@ -27,10 +27,13 @@ class post
     {
         $conn   = new db();
         $id     = $this->post_id;
-        $sql    = "UPDATE posts 
-                  SET title = '$new_title' 
-                  WHERE id = $id
-                  AND user_id = $user_id";
+        if(!is_numeric($id) || !is_numeric($user_id))
+            die("post edit_title post_id or user_id is not numeric");
+        $sanitized_new_title = $conn->real_escape_string($new_title);
+        $sql                 = "UPDATE posts 
+                                SET title = '$sanitized_new_title' 
+                                WHERE id = $id
+                                AND user_id = $user_id";
         $conn->query($sql)
             or die("Error in post::edit_title $conn->error");
     }
@@ -44,6 +47,8 @@ class post
     {
         $conn   = new db();
         $id     = $this->post_id;
+        if(!is_numeric($id) || !is_numeric($user_id))
+            die("post delete_post post_id or user_id is not numeric");
         $sql    = "DELETE FROM posts
                    WHERE id = $id
                    AND user_id = $user_id";
