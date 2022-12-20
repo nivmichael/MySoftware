@@ -130,7 +130,7 @@ input[type=submit]:hover, button:hover {
 .c-blog-text {
   overflow: auto;
   padding-inline: 20px;
-  min-width: 60%;
+  min-width: 55%;
   text-align: initial;
 }
 
@@ -147,6 +147,29 @@ input[type=submit]:hover, button:hover {
   margin-block-start: 0.5em;
   font-weight: lighter;
   color: #aaa;
+}
+
+.c-blog-edit {
+  width: 5%;
+  margin: auto;
+  margin-right: initial;
+}
+
+.fa.fa-edit {
+  display: none;
+}
+
+.fa.fa-check {
+  display: none;
+}
+
+.fa.fa-times {
+  display: none;
+}
+
+.fa.fa-trash {
+  display: none;
+  margin: 5px;
 }
 
 /* Other */

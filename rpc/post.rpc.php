@@ -60,6 +60,35 @@ else if (isset($_POST["action"]))
             }
             break;
         }
+        case "edit-title": 
+        {
+            $id         = $_POST["post-id"];
+            $new_title  = $_POST["new-title"];
+            if (isset($_SESSION["user_id"])) 
+            {
+                $post = new post($id);
+                $post->edit_title($new_title, $_SESSION["user_id"]);
+                $rpc_result  = [
+                    "status" => true,
+                    "data"   => "post title updated",
+                   ];
+            }
+            break;
+        }
+        case "delete-post": 
+            {
+                $id = $_POST["post-id"];
+                if (isset($_SESSION["user_id"])) 
+                {
+                    $post = new post($id);
+                    $post->delete_post($_SESSION["user_id"]);
+                    $rpc_result  = [
+                        "status" => true,
+                        "data"   => "post deleted",
+                       ];
+                }
+                break;
+            }
     }
 }
 

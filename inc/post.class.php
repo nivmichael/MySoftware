@@ -1,6 +1,56 @@
 <?php 
 class post
 {
+    private $post_id  = null;
+
+    /**
+     * constructs post with post_id
+     *
+     * @param post_id int
+     * 
+     * @return post
+     */ 
+    public function __construct($post_id)
+    {
+        if(!is_numeric($post_id))
+            die("post constractor post_id is not numeric");
+        $this->post_id   =   $post_id;
+    }
+
+    /**
+     * updates post title to new title
+     *
+     * @param new_title string
+     * @param user_id int
+     */ 
+    public function edit_title($new_title, $user_id)
+    {
+        $conn   = new db();
+        $id     = $this->post_id;
+        $sql    = "UPDATE posts 
+                  SET title = '$new_title' 
+                  WHERE id = $id
+                  AND user_id = $user_id";
+        $conn->query($sql)
+            or die("Error in post::edit_title $conn->error");
+    }
+
+    /**
+     * delete post
+     *
+     * @param user_id int
+     */ 
+    public function delete_post($user_id)
+    {
+        $conn   = new db();
+        $id     = $this->post_id;
+        $sql    = "DELETE FROM posts
+                   WHERE id = $id
+                   AND user_id = $user_id";
+        $conn->query($sql)
+            or die("Error in post::edit_title $conn->error");
+    }
+
     /**
      * DB connect to get posts. If gets user_id returns user's posts, otherwise returns all posts
      *
@@ -70,7 +120,7 @@ class post
         $sql                 = "INSERT INTO posts (user_id, title, body, file_path) 
                                 VALUES ($user_id, '$sanitized_title', '$sanitized_body', '$sanitized_file_path')";
         $result              = $conn->query($sql)
-                                or die("Error in post::get_all_posts $conn->error");
+                                or die("Error in post::upload_post $conn->error");
         return $result;
     }
 

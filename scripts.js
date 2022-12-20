@@ -130,6 +130,14 @@ function userDisplay(name,lastLogin) {
     document.getElementById("id-logout-button").style.display = "block";
     document.getElementById("id-login-button").style.display = "none";
     document.getElementById("id-filter-by-name").style.display = "none";
+    const edits = document.getElementsByClassName("fa fa-edit");
+    for (i = 0; i < edits.length; i++) {
+        edits[i].style.display = "block";
+    }
+    const deletes = document.getElementsByClassName("fa fa-trash");
+    for (i = 0; i < deletes.length; i++) {
+        deletes[i].style.display = "block";
+    }
 }
 
 // Onload calls this function, if session exist change to user display
@@ -240,7 +248,7 @@ async function getPostsByUser() {
             },
         });
         const data = await response.json();
-        displayPosts(data);
+        displayPosts(data, true);
     }
     catch (error) {
         console.error(`Could not get it: ${error}`);
@@ -248,14 +256,17 @@ async function getPostsByUser() {
 }
 
 // Building the posts view
-function displayPosts(data) {
+function displayPosts(data, editPossible = false) {
     const element = document.getElementById("id-blog-container");
     if (element) {
         data.forEach(item => {
+            // Post card
             const card = document.createElement("div");
             card.classList.add('c-blog-card');
+            card.setAttribute('id', item.id);
             element.appendChild(card);
             
+            // Post card's img
             if (item.file_path) {
                 const img = document.createElement("img");
                 img.classList.add('c-blog-img');
@@ -263,6 +274,7 @@ function displayPosts(data) {
                 card.appendChild(img);     
             }
             
+            // Post card's text (Title, Body)
             const text = document.createElement("div");
             text.classList.add('c-blog-text');
             const h2 = document.createElement("h2");
@@ -275,8 +287,104 @@ function displayPosts(data) {
             text.appendChild(h5);
             text.appendChild(p);
             card.appendChild(text);
+
+            // Post card's edit (editIcon, checkIcon, closeIcon)
+            const edit = document.createElement("div");
+            edit.classList.add('c-blog-edit');
+            edit.setAttribute('id', 'edit-'+item.id);
+            const editIcon = document.createElement("i");
+            editIcon.setAttribute('class','fa fa-edit');
+            editIcon.setAttribute('onClick','editPost('+item.id+')');
+            if (editPossible) {
+                editIcon.style.display = "block";
+            }
+            const closeIcon = document.createElement("i");
+            closeIcon.setAttribute('class','fa fa-times');
+            closeIcon.setAttribute('onClick','closeEdit('+item.id+')');
+            const checkIcon = document.createElement("i");
+            checkIcon.setAttribute('class','fa fa-check');
+            checkIcon.setAttribute('onClick','applyEdit('+item.id+')');
+            const deleteIcon = document.createElement("i");
+            deleteIcon.setAttribute('class','fa fa-trash');
+            deleteIcon.setAttribute('onClick','deletePost('+item.id+')');
+            if (editPossible) {
+                deleteIcon.style.display = "block";
+            }
+            edit.appendChild(editIcon);
+            edit.appendChild(checkIcon);
+            edit.appendChild(closeIcon);
+            edit.appendChild(deleteIcon);
+            card.appendChild(edit);
         })
     }
+}
+
+// Gets post id, enable edit title and displays edit apply and close icons
+function editPost(id) {
+    // change edit icons
+    const editPart = document.getElementById('edit-'+id);
+    const edit = editPart.getElementsByClassName('fa fa-edit');
+    const check = editPart.getElementsByClassName('fa fa-check');
+    const close = editPart.getElementsByClassName('fa fa-times');
+    const deletePost = editPart.getElementsByClassName('fa fa-trash');
+    edit[0].style.display = "none";
+    check[0].style.display = "block";
+    close[0].style.display = "block";
+    deletePost[0].style.display = "none";
+
+    // change title to input
+    const card = document.getElementById(id);
+    const title = card.getElementsByTagName("h2")[0];
+    title.innerHTML = `<input value='${title.innerText}' />`;
+    document.getElementsByTagName('input')[0].focus();
+}
+
+// Gets post id, disable title edit and displays edit icon
+function closeEdit(id) {
+    // change edit icons
+    const editPart = document.getElementById('edit-'+id);
+    const edit = editPart.getElementsByClassName('fa fa-edit');
+    const check = editPart.getElementsByClassName('fa fa-check');
+    const close = editPart.getElementsByClassName('fa fa-times');
+    const deletePost = editPart.getElementsByClassName('fa fa-trash');
+    edit[0].style.display = "block";
+    check[0].style.display = "none";
+    close[0].style.display = "none";
+    deletePost[0].style.display = "block";
+
+    // change back title from input
+    const card = document.getElementById(id);
+    const title = card.getElementsByTagName("h2")[0];
+    title.innerHTML = title.getElementsByTagName("input")[0].value;
+}
+
+// Gets post id, update in db the posts title and closes edit
+async function applyEdit(id) {
+    const card = document.getElementById(id);
+    const title = card.getElementsByTagName("h2")[0];
+    const newTitle = title.getElementsByTagName("input")[0].value;
+
+    // Update title in db
+    const params = new FormData();
+    params.append('action', 'edit-title');
+    params.append('post-id', id);
+    params.append('new-title', newTitle);
+    editPostStatus = await fetchUploadPost(params);
+    console.log(editPostStatus);
+
+    closeEdit(id);
+}
+
+// Gets post id, update in db the posts title and closes edit
+async function deletePost(id) {
+    const params = new FormData();
+    params.append('action', 'delete-post');
+    params.append('post-id', id);
+    deletePostStatus = await fetchUploadPost(params);
+    console.log(deletePostStatus);
+
+    const card = document.getElementById(id);
+    card.style.display = "none";
 }
 
 // Filter posts by users name
