@@ -260,61 +260,25 @@ function displayPosts(data, editPossible = false) {
     const element = document.getElementById("id-blog-container");
     if (element) {
         data.forEach(item => {
-            // Post card
-            const card = document.createElement("div");
-            card.classList.add('c-blog-card');
-            card.setAttribute('id', item.id);
-            element.appendChild(card);
-            
-            // Post card's img
+            const template = document.getElementById('id-temp-card')
+            const tmp = template.content.cloneNode(true)
+            tmp.querySelector('.c-blog-card').setAttribute('id',item.id);
             if (item.file_path) {
-                const img = document.createElement("img");
-                img.classList.add('c-blog-img');
-                img.src = "uploads/"+item.user_id+"/"+item.file_path;
-                card.appendChild(img);     
+                tmp.querySelector('.c-blog-img').src = "uploads/"+item.user_id+"/"+item.file_path;
             }
-            
-            // Post card's text (Title, Body)
-            const text = document.createElement("div");
-            text.classList.add('c-blog-text');
-            const h2 = document.createElement("h2");
-            const h5 = document.createElement("h5");
-            const p = document.createElement("p");
-            h2.innerHTML = item.title;
-            h5.innerHTML = "<span>"+item.name+"</span>"+"&emsp;"+ item.uploaded_on;
-            p.innerHTML = item.body;
-            text.appendChild(h2);
-            text.appendChild(h5);
-            text.appendChild(p);
-            card.appendChild(text);
-
-            // Post card's edit (editIcon, checkIcon, closeIcon)
-            const edit = document.createElement("div");
-            edit.classList.add('c-blog-edit');
-            edit.setAttribute('id', 'edit-'+item.id);
-            const editIcon = document.createElement("i");
-            editIcon.setAttribute('class','fa fa-edit');
-            editIcon.setAttribute('onClick','editPost('+item.id+')');
+            tmp.querySelector("h2").innerText = item.title;
+            tmp.querySelector("h5").innerHTML = "<span>"+item.name+"</span>"+"&emsp;"+ item.uploaded_on;
+            tmp.querySelector("p").innerText = item.body;
+            tmp.querySelector('.c-blog-edit').setAttribute('id', 'edit-'+item.id);
+            tmp.querySelector('.fa-edit').setAttribute('onClick','editPost('+item.id+')');
+            tmp.querySelector('.fa-check').setAttribute('onClick','applyEdit('+item.id+',"'+item.title+'")');
+            tmp.querySelector('.fa-times').setAttribute('onClick','closeEdit('+item.id+')');
+            tmp.querySelector('.fa-trash').setAttribute('onClick','deletePost('+item.id+')');
             if (editPossible) {
-                editIcon.style.display = "block";
+                tmp.querySelector('.fa-edit').style.display = "block";
+                tmp.querySelector('.fa-trash').style.display = "block";
             }
-            const closeIcon = document.createElement("i");
-            closeIcon.setAttribute('class','fa fa-times');
-            closeIcon.setAttribute('onClick','closeEdit('+item.id+')');
-            const checkIcon = document.createElement("i");
-            checkIcon.setAttribute('class','fa fa-check');
-            checkIcon.setAttribute('onClick','applyEdit('+item.id+',"'+item.title+'")');
-            const deleteIcon = document.createElement("i");
-            deleteIcon.setAttribute('class','fa fa-trash');
-            deleteIcon.setAttribute('onClick','deletePost('+item.id+')');
-            if (editPossible) {
-                deleteIcon.style.display = "block";
-            }
-            edit.appendChild(editIcon);
-            edit.appendChild(checkIcon);
-            edit.appendChild(closeIcon);
-            edit.appendChild(deleteIcon);
-            card.appendChild(edit);
+            element.append(tmp)
         })
     }
 }

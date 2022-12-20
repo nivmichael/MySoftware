@@ -154,6 +154,10 @@ input[type=submit]:hover, button:hover {
   margin-right: initial;
 }
 
+.fa {
+  cursor: pointer;
+}
+
 .fa.fa-edit {
   display: none;
 }

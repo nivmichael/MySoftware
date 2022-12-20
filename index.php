@@ -69,5 +69,22 @@ session_start();
     </div>
     <script src="scripts.js"></script>
   </div>
+
+  <template id="id-temp-card">
+    <div class="c-blog-card" id="77">
+      <img class="c-blog-img">
+      <div class="c-blog-text">
+        <h2></h2>
+        <h5></h5>
+        <p></p>
+      </div>
+      <div class="c-blog-edit">
+        <i class="fa fa-edit"></i>
+        <i class="fa fa-check"></i>
+        <i class="fa fa-times"></i>
+        <i class="fa fa-trash"></i>
+      </div>
+    </div>
+  </template>
 </body>
 </html>
