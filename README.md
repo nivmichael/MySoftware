@@ -20,7 +20,7 @@ After each step there will be a code review, and a quick explanation on the next
 - See the data in index.php
 
 ## Notes on the steps
-### Setup a local environment using PHP, APACHE and MySQL (XAMMP or windows / global installation Linux)
+### Setup a local environment using PHP, Caddy and MySQL (global installation Linux)
 Linux:
 - Install PHP 8.1
 - Install Caddy server
