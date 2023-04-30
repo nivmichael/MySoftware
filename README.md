@@ -5,9 +5,8 @@ Please follow the steps, and read the note on each step for insctructions.
 After each step there will be a code review, and a quick explanation on the next step.
 
 ## The steps:
-
+- Setup a local environment using PHP, Caddy server and MySQL
 - After cloning the project, create a new branch with your name, to work on
-- Setup a local environment using PHP, APACHE and MySQL (XAMMP on windows / global installation Linux)
 - Create an page that displays data from API
 - Using MySQL CLI, create a "blog" database, with a "users" table. Insert one user.
 - Create a Login page (index.php)
@@ -22,20 +21,26 @@ After each step there will be a code review, and a quick explanation on the next
 
 ## Notes on the steps
 ### Setup a local environment using PHP, APACHE and MySQL (XAMMP or windows / global installation Linux)
-Windows:
+Linux:
+- Install PHP 8.1
+- Install Caddy server
+- Install MySQL + MySQL workbench
+- clone project into /var/www/
+
+Windows (depracated):
 - Dowload XAMPP
 - Set up a local site named blog.co in C:\Windows\System32\drivers\etc\host file
 - Set up a virtual host (blog.co) in XAMPP's httpd-vhosts.conf file pointing to this project
 
-Linux:
-https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-20-04
+
 
 ### Create an page that displays data from API
-1. Use this link (https://jsonplaceholder.typicode.com/posts) to get json result, and show them in the 'results' div
-2. Filter the posts, keep only the the ones with titles that begin with the letter 'e'
-3. Each post should have a container with 'title' and 'body'
-4. Make the body hidden unless the title was clicked (optional)
-5. Use css (flex or grid) to arrange the posts in two columns, side by side
+1. Download nanoajax as a local js file to use for AJAX calls 
+2. Use this link (https://jsonplaceholder.typicode.com/posts) to get json result, and show them in the 'results' div
+3. Filter the posts, keep only the the ones with titles that begin with the letter 'e'
+4. Each post should have a container with 'title' and 'body'
+5. Make the body hidden unless the title was clicked (optional)
+6. Use css (flex or grid) to arrange the posts in two columns, side by side
 
 ### Using Mysql CLI, create a "blog" database, with a "users" table. Insert one user.
 The users table should have these fields:
