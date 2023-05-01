@@ -30,3 +30,7 @@ input[type=submit]:hover, button:hover {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+.blogs {
+  display: flexbox;
+}
