@@ -3,7 +3,7 @@ nanoajax.ajax({url:'https://jsonplaceholder.typicode.com/posts'}, function (code
     ans = ans.filter(startWithE);
     
     // console.log(ans)
-
+    // CR - use details+summary for the posts
     var results = document.getElementById("results");
     var nHTML = '';
 
