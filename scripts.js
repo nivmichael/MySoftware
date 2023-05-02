@@ -27,4 +27,5 @@ function startWithE(post) {
 
 function showBody(i) {
     document.getElementById(i).style.display = 'block';
+    
 }
