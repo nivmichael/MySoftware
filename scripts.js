@@ -34,3 +34,17 @@ document.getElementById("id-login-btn").addEventListener("click", function() {
       document.getElementById("id-login-popup").style.display = "none";
     }
   });
+
+
+function loginClicked() {
+    // event.preventDefault();
+    var username = document.getElementById("username").value
+    var password = document.getElementById("password").value
+
+    var data = 'username=' + username + '&password=' + password
+
+
+    nanoajax.ajax({url: 'rpc/user.rpc.php', method: 'POST', body: data }, function (code, responseText, request) {
+        console.log(JSON.stringify(data))
+    })
+}
