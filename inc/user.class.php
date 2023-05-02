@@ -13,5 +13,17 @@ class user
         $this->username = $username;
         $this->name     = $name;
     }
+
+
+    public function login($username, $password) {
+        //clean string (remove special characters etc..)
+        //check if username+password exsists in DB
+        //update last_logged_in column for the user
+        //begin session
+    }
+
+    public function logout() {
+        //delete current session
+    }
     
 }
