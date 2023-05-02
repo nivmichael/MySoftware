@@ -29,3 +29,16 @@ function showBody(i) {
     document.getElementById(i).style.display = 'block';
     
 }
+
+
+// Show login popup when button is clicked
+document.getElementById("loginBtn").addEventListener("click", function() {
+    document.getElementById("loginPopup").style.display = "block";
+  });
+  
+  // Hide login popup when user clicks outside of it
+  window.addEventListener("click", function(event) {
+    if (event.target == document.getElementById("loginPopup")) {
+      document.getElementById("loginPopup").style.display = "none";
+    }
+  });

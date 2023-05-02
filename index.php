@@ -17,6 +17,23 @@
 </head>
 
 <body>
+  <button id="loginBtn">Login</button>
+
+  <br>
+
+  <!-- Login popup -->
+  <div id="loginPopup">
+    <form action="rpc/user.rpc.php" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
   <div id="results" class="container">
 
   </div>
