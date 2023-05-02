@@ -29,8 +29,14 @@ input[type=submit]:hover, button:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.blogs {
-  display: flexbox;
+.item {
+  flex: 40%;
+  margin: 10px;
+  padding: 10px;
 }
