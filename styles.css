@@ -25,7 +25,7 @@ input[type=submit]:hover, button:hover {
   background-color: #45a049;
 }
 
-.container {
+.c-container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
@@ -35,19 +35,19 @@ input[type=submit]:hover, button:hover {
   justify-content: space-between;
 }
 
-.item {
+.c-post {
   flex: 40%;
   margin: 10px;
   padding: 10px;
 }
 
 
-#loginBtn {
+#id-login-btn {
   position: absolute;
   left: 50%;
 }
 
-#loginPopup {
+#id-login-popup {
   display: none;
   position: fixed;
   top: 50%;

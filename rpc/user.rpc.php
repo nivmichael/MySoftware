@@ -3,8 +3,6 @@
 session_start();
 
 // Check if form has been submitted
-// In php we move the bracket one line down like c
-// function name login_user - snake case
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
   // Get username and password from form

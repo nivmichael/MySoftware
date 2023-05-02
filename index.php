@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <button id="loginBtn">Login</button>
+  <button id="id-login-btn">Login</button>
   <br>
   <br>
 
@@ -31,8 +31,8 @@
 
     remove action - use ajax (js function to submit the form)
    -->
-  <div id="loginPopup">
-    <form action="rpc/user.rpc.php" method="post">
+  <div id="id-login-popup">
+    <form method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
       <br>
@@ -42,12 +42,8 @@
       <input type="submit" value="Login">
     </form>
   </div>
-  <details>
-    <summary>Details</summary>
-    Something small enough to escape casual notice.
-</details>
 
-  <div id="results" class="container">
+  <div id="results" class="c-container">
 
   </div>
   <script src="scripts.js"></script>

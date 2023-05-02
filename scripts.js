@@ -3,17 +3,15 @@ nanoajax.ajax({url:'https://jsonplaceholder.typicode.com/posts'}, function (code
     ans = ans.filter(startWithE);
     
     // console.log(ans)
-    // CR - use details+summary for the posts
     var results = document.getElementById("results");
     var nHTML = '';
 
     for (var i = 0; i < ans.length; i++) {
-        nHTML += '<div class="item">' + ans[i]['title'];
-        nHTML += '<br>';
-        nHTML += '<p id="' + i + '" style="display: none;">' + ans[i]['body'] + '</p>';
-        nHTML += '<button onclick="showBody(' + i + ')">Show Body</button>';
+        nHTML += '<div class="c-post"> <details> <summary>' + ans[i]['title'];
+        nHTML += '</summary> <br>';
+        nHTML += ans[i]['body'];
         // nHTML += '<hr>';
-        nHTML += '</div>'
+        nHTML += '</details> </div>'
      }
 
      results.innerHTML = nHTML;
@@ -25,20 +23,14 @@ function startWithE(post) {
   }
 
 
-function showBody(i) {
-    document.getElementById(i).style.display = 'block';
-    
-}
-
-
 // Show login popup when button is clicked
-document.getElementById("loginBtn").addEventListener("click", function() {
-    document.getElementById("loginPopup").style.display = "block";
+document.getElementById("id-login-btn").addEventListener("click", function() {
+    document.getElementById("id-login-popup").style.display = "block";
   });
   
   // Hide login popup when user clicks outside of it
   window.addEventListener("click", function(event) {
-    if (event.target == document.getElementById("loginPopup")) {
-      document.getElementById("loginPopup").style.display = "none";
+    if (event.target == document.getElementById("id-login-popup")) {
+      document.getElementById("id-login-popup").style.display = "none";
     }
   });
