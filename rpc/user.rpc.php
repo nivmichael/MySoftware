@@ -1,6 +1,7 @@
 <?php
-// Start session
-//session_start();
+include "../inc/user.class.php";
+
+
 
 // Check if form has been submitted
 // if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -27,11 +28,46 @@
 //   }
 // }
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
+
     $username = $_POST["username"];
     $password = $_POST["password"];
-    
-    var_dump($_REQUEST);die;
+
+    //clean string (remove special characters etc..)
+    //check if username if valid email
+    //create new user and call login function on it
+
+    if (!$username) 
+    {
+        http_response_code(404);
+        die("should provide username!");
+    }
+    if (!filter_var($username, FILTER_VALIDATE_EMAIL))
+    {
+        http_response_code(404);
+        die("username should be an email!");
+    }
+    if (!$password) 
+    {
+        http_response_code(404);
+        die("should provide password!");
+    }
+
+    $logged_in = user::login($username, $password);
+
+    if ($logged_in) 
+    {
+        // Start session
+        session_start();
+        
+        var_dump($_REQUEST); die;
+    }
+    else
+    {
+        http_response_code(404);
+        die("no user in DB with username and password!");
+    }
 }
 ?>

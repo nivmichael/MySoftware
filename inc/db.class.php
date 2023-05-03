@@ -10,46 +10,19 @@ class db
   
     public function __construct() {
       // Establish database connection
-      try {
-        $this->conn = new PDO("mysql:host=$this->host;dbname=$this->database", $this->username, $this->password);
-        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+      $this->conn = new mysqli($this->host, $this->username, $this->password, $this->database);
+      if ($this->conn->connect_error) {
+        die("Connection failed: " . $this->conn->connect_error);
       }
+
     }
 
     public function getConn() {
         return $this->conn;
     }
   
-    public function query($sql, $params = []) {
-
+    public function query($query) {
       // Prepare and execute SQL query with parameters
-      try {
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute($params);
-        return $stmt;
-      } catch(PDOException $e) {
-        echo "Query failed: " . $e->getMessage();
-      }
+      return $this->conn->query( $query );
     }
 }
-
-
-
-/* TO USE THE DATABASE:::
-
-$db = new Database();
-
-// Example query
-$sql = "SELECT * FROM users WHERE username = ?";
-$username = "john";
-$stmt = $db->query($sql, [$username]);
-
-// Loop through result set
-while ($row = $stmt->fetch()) {
-  echo $row["username"] . "<br>";
-}
-
-
-*/

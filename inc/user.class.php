@@ -1,4 +1,6 @@
 <?php 
+include 'db.class.php';
+
 class user
 {
     private $user_id  = null;
@@ -15,14 +17,31 @@ class user
     }
 
 
-    public function login($username, $password) {
-        //clean string (remove special characters etc..)
+    public static function login($username, $password) 
+    {
         //check if username+password exsists in DB
-        //update last_logged_in column for the user
-        //begin session
+        $db = new db();
+        $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+
+        $stml = $db->query($query);
+
+        $row = $stml->fetch_assoc();
+
+        if (!$row) 
+        {
+            return false;
+        }
+
+        $id = $row["id"];
+
+        $query = "UPDATE users  SET last_login = NOW()  WHERE id = $id";
+
+        return true;
+        
     }
 
-    public function logout() {
+    public function logout() 
+    {
         //delete current session
     }
     
