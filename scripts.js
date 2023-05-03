@@ -3,7 +3,7 @@ nanoajax.ajax({url:'https://jsonplaceholder.typicode.com/posts'}, function (code
     ans = ans.filter(startWithE);
     
     // console.log(ans)
-    var results = document.getElementById("results");
+    var results = document.getElementById("id-results");
     var nHTML = '';
 
     for (var i = 0; i < ans.length; i++) {
@@ -28,12 +28,12 @@ document.getElementById("id-login-btn").addEventListener("click", function() {
     document.getElementById("id-login-popup").style.display = "block";
   });
   
-  // Hide login popup when user clicks outside of it
-  window.addEventListener("click", function(event) {
-    if (event.target == document.getElementById("id-login-popup")) {
-      document.getElementById("id-login-popup").style.display = "none";
-    }
-  });
+// Hide login popup when user clicks outside of it --- not working!!!!
+// window.addEventListener("click", function(event) {
+//   if (event.target == document.getElementById("id-login-popup")) {
+//     document.getElementById("id-login-popup").style.display = "none";
+//   }
+// });
 
 
 function loginClicked() {
@@ -48,6 +48,7 @@ function loginClicked() {
 
     var data = 'username=' + username + '&password=' + password
 
+    //try sending request with json!!! (and not raw string)
     nanoajax.ajax({
       url: 'rpc/user.rpc.php', 
       method: 'POST', 
@@ -56,8 +57,26 @@ function loginClicked() {
       if (code === 200) {
         console.log(responseText);
         //display new layout with username at time since login
+        document.getElementById("id-login-popup").style.display = "none";
+        document.getElementById("id-login-btn").style.display = "none";
+        document.getElementById("id-user-logged-in").style.display = "block";
+
+        // console.log(responseText["time_since_last_login"]);
+
+        var obj = JSON.parse(responseText)
+        
+        var timeSinceLastLogin = obj["time_since_last_login"];
+        
+        document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was ' + timeSinceLastLogin + ' seconds ago';
+
+
       } else {
           console.error('Request failed with status ' + code);
       }
     })
+}
+
+
+function cancelClicked() {
+  document.getElementById("id-login-popup").style.display = "none";
 }

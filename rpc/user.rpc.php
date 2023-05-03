@@ -62,7 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         // Start session
         session_start();
         
-        var_dump($logged_in["user"]); die;
+        // var_dump($logged_in["user"]);
+
+        die(json_encode($logged_in["user"]));
     }
     else
     {

@@ -79,3 +79,7 @@ details[open] summary {
   border: 1px solid #000;
   padding: 20px;
 }
+
+#id-user-logged-in {
+  display: none;
+}

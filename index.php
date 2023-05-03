@@ -24,13 +24,6 @@
   <br>
 
   <!-- Login popup -->
-  <!-- 
-    id -> we always use "id-...." to name id's, and only - as separetors 
-    so loginPopup should be id-login-popup
-    same in classes: c-some-class-name
-
-    remove action - use ajax (js function to submit the form)
-   -->
   <div id="id-login-popup">
     <form method="post">
       <label for="username">Username:</label>
@@ -40,10 +33,15 @@
       <input type="password" id="password" name="password" required>
       <br>
       <input type="button" value="Login" onClick="loginClicked()">
+      <input type="button" value="Cancel" onClick="cancelClicked()">
     </form>
   </div>
 
-  <div id="results" class="c-container">
+  <div id="id-user-logged-in"> 
+    <p id="user-logged-in-text"> user is logged in now! </p>
+  </div>
+  
+  <div id="id-results" class="c-container">
 
   </div>
   <script src="scripts.js"></script>
