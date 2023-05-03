@@ -57,12 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     $logged_in = user::login($username, $password);
 
-    if ($logged_in) 
+    if ($logged_in["status"]) 
     {
         // Start session
         session_start();
         
-        var_dump($_REQUEST); die;
+        var_dump($logged_in["user"]); die;
     }
     else
     {

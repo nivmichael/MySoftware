@@ -47,7 +47,7 @@ function loginClicked() {
     // }
 
     var data = 'username=' + username + '&password=' + password
-    
+
     nanoajax.ajax({
       url: 'rpc/user.rpc.php', 
       method: 'POST', 
@@ -55,6 +55,7 @@ function loginClicked() {
     }, function (code, responseText, request) {
       if (code === 200) {
         console.log(responseText);
+        //display new layout with username at time since login
       } else {
           console.error('Request failed with status ' + code);
       }

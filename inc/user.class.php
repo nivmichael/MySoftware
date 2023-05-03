@@ -19,7 +19,12 @@ class user
 
     public static function login($username, $password) 
     {
-        //check if username+password exsists in DB
+        $result = 
+        [
+            "status" => false,
+            "user" => []
+        ];
+
         $db = new db();
         $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
@@ -29,16 +34,28 @@ class user
 
         if (!$row) 
         {
-            return false;
+            return $result;
         }
 
         $id = $row["id"];
 
+        $last_login = $row["last_login"];
+
+        $time_since_last_login = strtotime("now") - strtotime($last_login); 
+        
         $query = "UPDATE users  SET last_login = NOW()  WHERE id = $id";
 
         $db->query($query);
 
-        return true;
+        $result["status"] = true;
+        $result["user"] = 
+        [
+            "id" => $row["id"],
+            "username" => $row["username"],
+            "time_since_last_login" => $time_since_last_login
+        ];
+
+        return $result;
         
     }
 
