@@ -61,13 +61,13 @@ function loginClicked() {
         document.getElementById("id-login-btn").style.display = "none";
         document.getElementById("id-user-logged-in").style.display = "block";
 
-        // console.log(responseText["time_since_last_login"]);
+        // console.log(responseText["prev_login"]);
 
         var obj = JSON.parse(responseText)
         
-        var timeSinceLastLogin = obj["time_since_last_login"];
+        var lastLogin = obj["prev_login"];
         
-        document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was ' + timeSinceLastLogin + ' seconds ago';
+        document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was at ' + lastLogin ;
 
 
       } else {

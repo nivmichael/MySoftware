@@ -39,9 +39,9 @@ class user
 
         $id = $row["id"];
 
-        $last_login = $row["last_login"];
+        $prev_login = $row["last_login"];
 
-        $time_since_last_login = strtotime("now") - strtotime($last_login); 
+        // $time_since_last_login = strtotime("now") - strtotime($last_login); 
         
         $query = "UPDATE users  SET last_login = NOW()  WHERE id = $id";
 
@@ -52,7 +52,7 @@ class user
         [
             "id" => $row["id"],
             "username" => $row["username"],
-            "time_since_last_login" => $time_since_last_login
+            "prev_login" => $prev_login
         ];
 
         return $result;

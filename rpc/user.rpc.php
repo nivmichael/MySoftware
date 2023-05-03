@@ -61,6 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         // Start session
         session_start();
+
+        $user = $logged_in["user"];
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["username"] = $user["username"];
+        $_SESSION["prev_login"] = $user["prev_login"];
         
         // var_dump($logged_in["user"]);
 
