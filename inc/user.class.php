@@ -36,6 +36,8 @@ class user
 
         $query = "UPDATE users  SET last_login = NOW()  WHERE id = $id";
 
+        $db->query($query);
+
         return true;
         
     }
