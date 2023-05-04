@@ -1,7 +1,8 @@
 <?php
 include "../inc/user.class.php";
 
-
+// Start session
+session_start();
 
 // Check if form has been submitted
 // if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -27,6 +28,24 @@ include "../inc/user.class.php";
 //     echo $errorMessage;
 //   }
 // }
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "GET")
+{
+    // var_dump($_GET["action"]);
+
+    if ($_GET["action"] == "check-logged-in")
+    {
+        user_logged_in();
+    }
+    else
+    {
+        session_unset();
+    }
+
+}
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -59,8 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     if ($logged_in["status"]) 
     {
-        // Start session
-        session_start();
 
         $user = $logged_in["user"];
         $_SESSION["user_id"] = $user["id"];
@@ -77,4 +94,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         die("no user in DB with username and password!");
     }
 }
+
+
+
+function user_logged_in() 
+{
+    if (isset($_SESSION["user_id"])) 
+    { 
+        $result = 
+        [
+            "status" => true,
+            "user_id" => $_SESSION["user_id"],
+            "username" => $_SESSION["username"],
+            "prev_login" => $_SESSION["prev_login"]
+        ];
+
+        die(json_encode($result));
+    }
+    else
+    {
+        $result = 
+        [
+            "status" => false
+        ];
+
+        die(json_encode($result));
+    }
+}
+
+
 ?>

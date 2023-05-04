@@ -21,7 +21,7 @@
     
 </head>
 
-<body>
+<body onload="checkUserLogged();">
   <button id="id-login-btn">Login</button>
   <br>
   <br>
@@ -42,6 +42,7 @@
 
   <div id="id-user-logged-in"> 
     <p id="user-logged-in-text"> user is logged in now! </p>
+    <button id="id-logout-btn">Logout</button>
   </div>
   
   <div id="id-results" class="c-container">

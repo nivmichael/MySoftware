@@ -36,6 +36,31 @@ document.getElementById("id-login-btn").addEventListener("click", function() {
 // });
 
 
+document.getElementById("id-logout-btn").addEventListener("click", function() {
+  nanoajax.ajax({
+    url:'rpc/user.rpc.php/?action=logout'
+  }, function (code, responseText) { 
+      console.log(responseText);
+      userNotLoggedLayout();
+   })
+});
+
+
+function checkUserLogged() {
+  nanoajax.ajax({
+    url:'rpc/user.rpc.php/?action=check-logged-in'
+  }, function (code, responseText) { 
+      console.log(responseText);
+      var response = JSON.parse(responseText);
+      var status = response["status"];
+
+      if (status === true) {
+        userLoggedLayout(response);
+      }
+   })
+}
+
+
 function loginClicked() {
     // event.preventDefault();
     var username = document.getElementById("username").value
@@ -57,17 +82,8 @@ function loginClicked() {
       if (code === 200) {
         console.log(responseText);
         //display new layout with username at time since login
-        document.getElementById("id-login-popup").style.display = "none";
-        document.getElementById("id-login-btn").style.display = "none";
-        document.getElementById("id-user-logged-in").style.display = "block";
-
-        // console.log(responseText["prev_login"]);
-
-        var obj = JSON.parse(responseText)
-        
-        var lastLogin = obj["prev_login"];
-        
-        document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was at ' + lastLogin ;
+        var response = JSON.parse(responseText);
+        userLoggedLayout(response);
 
 
       } else {
@@ -79,4 +95,24 @@ function loginClicked() {
 
 function cancelClicked() {
   document.getElementById("id-login-popup").style.display = "none";
+}
+
+
+function userLoggedLayout(response) {
+  document.getElementById("id-login-popup").style.display = "none";
+  document.getElementById("id-login-btn").style.display = "none";
+  document.getElementById("id-user-logged-in").style.display = "block";
+
+  // console.log(responseText["prev_login"]);
+
+  var lastLogin = response["prev_login"];
+  
+  document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was at ' + lastLogin ;
+}
+
+
+function userNotLoggedLayout(response) {
+  document.getElementById("id-login-popup").style.display = "none";
+  document.getElementById("id-login-btn").style.display = "block";
+  document.getElementById("id-user-logged-in").style.display = "none";
 }
