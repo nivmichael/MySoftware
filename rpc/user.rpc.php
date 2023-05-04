@@ -4,32 +4,6 @@ include "../inc/user.class.php";
 // Start session
 session_start();
 
-// Check if form has been submitted
-// if ($_SERVER["REQUEST_METHOD"] == "POST") 
-// {
-//   // Get username and password from form
-//   $username = $_POST["username"];
-//   $password = $_POST["password"];
-
-//   // Validate login credentials (replace with your own validation code)
-//   if ($username == "admin" && $password == "password") 
-//   {
-//     // Login successful, redirect user to homepage
-//     $_SESSION["username"] = $username;
-//     // header("Location: ../index.php");
-//     // exit;
-//     echo "Logged in succesfully";
-//   } 
-//   else 
-//   {
-//     // Login failed, display error message
-//     $errorMessage = "Invalid username or password.";
-
-//     echo $errorMessage;
-//   }
-// }
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "GET")
 {
@@ -100,6 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 function user_logged_in() 
 {
+    $result = [];
+
     if (isset($_SESSION["user_id"])) 
     { 
         $result = 
@@ -110,7 +86,7 @@ function user_logged_in()
             "prev_login" => $_SESSION["prev_login"]
         ];
 
-        die(json_encode($result));
+        
     }
     else
     {
@@ -119,8 +95,9 @@ function user_logged_in()
             "status" => false
         ];
 
-        die(json_encode($result));
     }
+
+    die(json_encode($result));
 }
 
 

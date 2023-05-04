@@ -1,21 +1,23 @@
-nanoajax.ajax({url:'https://jsonplaceholder.typicode.com/posts'}, function (code, responseText) { 
-    ans = JSON.parse(responseText)
-    ans = ans.filter(startWithE);
+// nanoajax.ajax({url:'https://jsonplaceholder.typicode.com/posts'}, function (code, responseText) { 
+//     ans = JSON.parse(responseText)
+//     ans = ans.filter(startWithE);
     
-    // console.log(ans)
-    var results = document.getElementById("id-results");
-    var nHTML = '';
+//     // console.log(ans)
+//     var results = document.getElementById("id-results");
+//     var nHTML = '';
 
-    for (var i = 0; i < ans.length; i++) {
-        nHTML += '<div class="c-post"> <details> <summary>' + ans[i]['title'];
-        nHTML += '</summary> <br>';
-        nHTML += ans[i]['body'];
-        // nHTML += '<hr>';
-        nHTML += '</details> </div>'
-     }
+//     for (var i = 0; i < ans.length; i++) {
+//         nHTML += '<div class="c-post"> <details> <summary>' + ans[i]['title'];
+//         nHTML += '</summary> <br>';
+//         nHTML += ans[i]['body'];
+//         // nHTML += '<hr>';
+//         nHTML += '</details> </div>'
+//      }
 
-     results.innerHTML = nHTML;
-})
+//      results.innerHTML = nHTML;
+// })
+
+
 
 
 function startWithE(post) {
@@ -60,6 +62,9 @@ function checkUserLogged() {
 
       if (status === true) {
         userLoggedLayout(response);
+      }
+      else {
+        userNotLoggedLayout();
       }
    })
 }
@@ -124,6 +129,8 @@ function userLoggedLayout(response) {
   var lastLogin = response["prev_login"];
   
   document.getElementById("id-user-logged-in-text").innerHTML = 'user ' + username + ' logged in! <br> his last login was at ' + lastLogin ;
+
+  displayPostsOfUser();
 }
 
 
@@ -132,5 +139,45 @@ function userNotLoggedLayout(response) {
   document.getElementById("id-login-btn").style.display = "block";
   document.getElementById("id-user-logged-in").style.display = "none";
   document.getElementById("id-upload-post-form").style.display = "none";
+  displayAllPosts();
 }
 
+
+function displayAllPosts() {
+  nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
+   
+    var response = JSON.parse(responseText);
+    console.log(response);
+
+    displayPosts(response);
+
+  })
+}
+
+
+function displayPostsOfUser() {
+  nanoajax.ajax({url:'rpc/post.rpc.php/?action=current_user'}, function (code, responseText) { 
+   
+    var response = JSON.parse(responseText);
+    console.log(response);
+
+    displayPosts(response);
+
+  })
+}
+
+
+function displayPosts(response) {
+  var results = document.getElementById("id-results");
+  var nHTML = '';
+
+  for (var i = 0; i < response.length; i++) {
+      nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+      nHTML += '</summary> <br>';
+      nHTML += response[i]['body'];
+      // nHTML += '<hr>';
+      nHTML += '</details> </div>'
+   }
+
+   results.innerHTML = nHTML;
+}

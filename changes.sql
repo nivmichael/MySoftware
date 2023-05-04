@@ -1,11 +1,4 @@
--- CR no need for ``
--- no need for blog, just name the table name. example:
--- CREATE TABLE connection_type (
---     id                   MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
---     name                 VARCHAR(255) NOT NULL,
---     fast                 TINYINT(1) NULL
--- ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
--- Created at, we use this:      created_at          TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
 CREATE TABLE users (
   id            MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
   username      VARCHAR(100) NULL,
@@ -23,3 +16,13 @@ VALUES ('a@yahoo.com', 'aaa');
 ALTER TABLE users
 ADD address VARCHAR(100);
 
+
+CREATE TABLE posts(    
+   id           MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,    
+   user_id      MEDIUMINT UNSIGNED NOT NULL,    
+   title        VARCHAR(100) NOT NULL,    
+   body         TEXT NOT NULL,    
+   file_path    VARCHAR(255),    
+   PRIMARY KEY ( id ),
+   FOREIGN KEY (user_id) REFERENCES users(id)
+);
