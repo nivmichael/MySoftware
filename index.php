@@ -55,10 +55,10 @@
 
       <form method="post" enctype="multipart/form-data">
         <label for="username">Title:</label>
-        <input type="text" id="id-post-title" name="post-title" required>
+        <input type="text" id="id-post-title" name="id-post-title" required>
         <br>
         <label for="password">Body:</label>
-        <textarea id="id-post-body" name="post-body" required></textarea>
+        <textarea id="id-post-body" name="id-post-body" required></textarea>
         <br>
         Select image to upload:
         <input type="file" name="fileToUpload" id="id-file-to-upload">

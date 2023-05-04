@@ -23,6 +23,10 @@ class db
   
     public function query($query) {
       // Prepare and execute SQL query with parameters
-      return $this->conn->query( $query );
+      // var_dump($query);
+
+      $ans = $this->conn->query( $query );
+
+      return $ans;
     }
 }

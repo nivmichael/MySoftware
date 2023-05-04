@@ -58,10 +58,5 @@ class user
         return $result;
         
     }
-
-    public function logout() 
-    {
-        //delete current session
-    }
     
 }

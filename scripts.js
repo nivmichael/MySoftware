@@ -17,12 +17,9 @@
 //      results.innerHTML = nHTML;
 // })
 
-
-
-
-function startWithE(post) {
-    return post['title'][0] === 'e' || post['body'][0] === 'E';
-  }
+// function startWithE(post) {
+//     return post['title'][0] === 'e' || post['body'][0] === 'E';
+//   }
 
 
 // Show login popup when button is clicked
@@ -80,9 +77,11 @@ function loginClicked() {
     //   password: password
     // }
 
+    // var headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+
     var data = 'username=' + username + '&password=' + password
 
-    //try sending request with json!!! (and not raw string)
+    //TODO: try sending request with json!!! (and not raw string)
     nanoajax.ajax({
       url: 'rpc/user.rpc.php', 
       method: 'POST', 
@@ -107,10 +106,41 @@ function cancelLoginClicked() {
 }
 
 
-//WAIT FOR MICHAEL ON THIS!!!
+//TODO: CONTINUE TO IMPLEMENT THIS
 function uploadPost() {
-  console.log("uploadeFile clicked");
-  console.log(document.getElementById("id-file-to-upload"));
+  console.log("uploadFile clicked");
+  
+  let title = document.getElementById("id-post-title").value;
+  let body = document.getElementById("id-post-body").value;
+  let file = document.getElementById("id-file-to-upload").files[0];
+
+  console.log(title);
+  console.log(body);
+  console.log(file);
+
+  let file_name = file ? file["name"] : ""
+
+  var data = 'action=upload&title=' + title + '&body=' + body + '&file_name=' + file_name
+
+  //TODO: try sending request with json!!! (and not raw string)
+  nanoajax.ajax({
+    url: 'rpc/post.rpc.php', 
+    method: 'POST', 
+    body: data
+  }, function (code, responseText, request) {
+    if (code === 200) {
+      console.log(responseText);
+      //display new layout with username at time since login
+      var response = JSON.parse(responseText);
+
+      document.getElementById("id-upload-post-form").style.display = "none";
+
+
+    } else {
+        console.error('Request failed with status ' + code);
+    }
+  })
+
 }
 
 
@@ -149,7 +179,18 @@ function displayAllPosts() {
     var response = JSON.parse(responseText);
     console.log(response);
 
-    displayPosts(response);
+    var results = document.getElementById("id-results");
+    var nHTML = '';
+  
+    for (var i = 0; i < response.length; i++) {
+        nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+        nHTML += '</summary> <br>';
+        nHTML += response[i]['body'];
+        // nHTML += '<hr>';
+        nHTML += '</details> </div>'
+     }
+  
+     results.innerHTML = nHTML;
 
   })
 }
@@ -158,26 +199,24 @@ function displayAllPosts() {
 function displayPostsOfUser() {
   nanoajax.ajax({url:'rpc/post.rpc.php/?action=current_user'}, function (code, responseText) { 
    
+    console.log(responseText);
     var response = JSON.parse(responseText);
-    console.log(response);
+    // console.log(response);
 
-    displayPosts(response);
+    var results = document.getElementById("id-results");
+    var nHTML = '';
+
+     //TODO: NEED TO ADD ALSO BUTTONS TO EDIT AND DELETE THE POST
+  
+    for (var i = 0; i < response.length; i++) {
+        nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+        nHTML += '</summary> <br>';
+        nHTML += response[i]['body'];
+        // nHTML += '<hr>';
+        nHTML += '</details> </div>'
+     }
+  
+     results.innerHTML = nHTML;
 
   })
-}
-
-
-function displayPosts(response) {
-  var results = document.getElementById("id-results");
-  var nHTML = '';
-
-  for (var i = 0; i < response.length; i++) {
-      nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
-      nHTML += '</summary> <br>';
-      nHTML += response[i]['body'];
-      // nHTML += '<hr>';
-      nHTML += '</details> </div>'
-   }
-
-   results.innerHTML = nHTML;
 }

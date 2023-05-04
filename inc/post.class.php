@@ -38,5 +38,20 @@ class post
         
     }
 
+
+    public static function upload_post($title, $body, $user_id, $file_path) 
+    {
+        // var_dump('in upload_post');
+
+        $db = new db();
+        
+        $query = "INSERT INTO posts (title, body, user_id, file_path) VALUES ('$title', '$body', $user_id, '$file_path')";
+
+        $query_res = $db->query($query);
+
+        return $query_res;
+        
+    }
+
     
 }
