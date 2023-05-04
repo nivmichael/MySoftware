@@ -35,6 +35,10 @@ document.getElementById("id-login-btn").addEventListener("click", function() {
 //   }
 // });
 
+document.getElementById("id-upload-post-btn").addEventListener("click", function() {
+  document.getElementById("id-upload-post-form").style.display = "block";
+});
+
 
 document.getElementById("id-logout-btn").addEventListener("click", function() {
   nanoajax.ajax({
@@ -93,10 +97,21 @@ function loginClicked() {
 }
 
 
-function cancelClicked() {
+function cancelLoginClicked() {
   document.getElementById("id-login-popup").style.display = "none";
 }
 
+
+//WAIT FOR MICHAEL ON THIS!!!
+function uploadPost() {
+  console.log("uploadeFile clicked");
+  console.log(document.getElementById("id-file-to-upload"));
+}
+
+
+function cancelUploadPostClicked() {
+  document.getElementById("id-upload-post-form").style.display = "none";
+}
 
 function userLoggedLayout(response) {
   document.getElementById("id-login-popup").style.display = "none";
@@ -105,9 +120,10 @@ function userLoggedLayout(response) {
 
   // console.log(responseText["prev_login"]);
 
+  var username = response["username"];
   var lastLogin = response["prev_login"];
   
-  document.getElementById("user-logged-in-text").innerHTML = 'user logged in! <br> his last login was at ' + lastLogin ;
+  document.getElementById("id-user-logged-in-text").innerHTML = 'user ' + username + ' logged in! <br> his last login was at ' + lastLogin ;
 }
 
 
@@ -115,4 +131,6 @@ function userNotLoggedLayout(response) {
   document.getElementById("id-login-popup").style.display = "none";
   document.getElementById("id-login-btn").style.display = "block";
   document.getElementById("id-user-logged-in").style.display = "none";
+  document.getElementById("id-upload-post-form").style.display = "none";
 }
+

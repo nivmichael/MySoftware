@@ -63,13 +63,7 @@ details[open] summary {
   padding: 10px;
 }
 
-
-#id-login-btn {
-  position: absolute;
-  left: 50%;
-}
-
-#id-login-popup {
+.c-popup-form {
   display: none;
   position: fixed;
   top: 50%;
@@ -80,6 +74,24 @@ details[open] summary {
   padding: 20px;
 }
 
+#id-login-btn {
+  position: absolute;
+  left: 50%;
+}
+
+
 #id-user-logged-in {
   display: none;
+}
+
+#id-logout-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#id-user-logged-in-text {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

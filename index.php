@@ -27,7 +27,7 @@
   <br>
 
   <!-- Login popup -->
-  <div id="id-login-popup">
+  <div id="id-login-popup" class="c-popup-form">
     <form method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
@@ -35,13 +35,40 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
       <br>
+      <br>
       <input type="button" value="Login" onClick="loginClicked()">
-      <input type="button" value="Cancel" onClick="cancelClicked()">
+      <input type="button" value="Cancel" onClick="cancelLoginClicked()">
     </form>
   </div>
 
   <div id="id-user-logged-in"> 
-    <p id="user-logged-in-text"> user is logged in now! </p>
+    <p id="id-user-logged-in-text"> user is logged in now! </p>
+
+    <br>
+    <br>
+
+    <button id="id-upload-post-btn">Create Post</button>
+      <br>
+      <br>
+
+    <div id="id-upload-post-form" class="c-popup-form">
+
+      <form method="post" enctype="multipart/form-data">
+        <label for="username">Title:</label>
+        <input type="text" id="id-post-title" name="post-title" required>
+        <br>
+        <label for="password">Body:</label>
+        <textarea id="id-post-body" name="post-body" required></textarea>
+        <br>
+        Select image to upload:
+        <input type="file" name="fileToUpload" id="id-file-to-upload">
+        <br>
+        <br>
+        <input type="button" value="Upload Post" onClick="uploadPost()">
+        <input type="button" value="Cancel" onClick="cancelUploadPostClicked()">
+      </form>
+    </div>
+
     <button id="id-logout-btn">Logout</button>
   </div>
   
