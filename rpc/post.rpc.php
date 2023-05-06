@@ -1,7 +1,7 @@
 <?php 
 include "../inc/post.class.php";
-//TODO: Need this session tart or not???
-// session_start();
+
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET")
 {
@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     else
     {
         //get posts of current user
-        
         $result = post::get_posts($_SESSION["user_id"]);
     }
 
