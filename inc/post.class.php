@@ -19,13 +19,14 @@ class post
 
     public static function get_posts($user_id = null) 
     {
+        // echo $user_id;
         $db = new db();
         
         $query = "SELECT * FROM posts";
 
         if ($user_id) 
         {
-            $query += 'WHERE user_id = ' + $user_id;
+            $query .= " WHERE user_id =  $user_id";
         }
 
         $query_res = $db->query($query);
@@ -41,7 +42,6 @@ class post
 
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
-        // var_dump('in upload_post');
 
         $db = new db();
         
