@@ -211,6 +211,8 @@ function displayPostsOfUser() {
   
     for (var i = 0; i < response.length; i++) {
         nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+        nHTML += '<button id="id-edit-button" class="c-title-button">Edit</button>'
+        nHTML += '<button id="id-delete-button" class="c-title-button">Delete</button>'
         nHTML += '</summary> <br>';
         nHTML += response[i]['body'];
         // nHTML += '<hr>';
