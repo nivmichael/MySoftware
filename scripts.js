@@ -106,21 +106,19 @@ function uploadPost() {
   let title = document.getElementById("id-post-title").value;
   let body = document.getElementById("id-post-body").value;
   let file = document.getElementById("id-file-to-upload").files[0];
+  const formData = new FormData();
 
-  console.log(title);
-  console.log(body);
+  formData.append('title', title);
+  formData.append('body', body);
+  (file)? formData.append('file', file): null;
+
   console.log(file);
 
-  let file_name = file ? file["name"] : ""
-
-  var data = 'title=' + title + '&body=' + body + '&file_name=' + file_name
-
-  //TODO: try sending request with json!!! (and not raw string)
   try {
     nanoajax.ajax({
       url: 'rpc/post.rpc.php/?action=upload-post', 
       method: 'POST', 
-      body: data
+      body: formData
     }, function (code, responseText, request) {
       
         if (code === 200) {
