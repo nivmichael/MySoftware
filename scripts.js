@@ -58,21 +58,16 @@ function loginClicked() {
     var username = document.getElementById("username").value
     var password = document.getElementById("password").value
 
-    // var data = {
-    //   username: username,
-    //   password: password
-    // }
+    const formData = new FormData();
 
-    // var headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+    formData.append('username', username);
+    formData.append('password', password);
 
-    var data = 'username=' + username + '&password=' + password
-
-    //TODO: try sending request with json!!! (and not raw string)
     try{
       nanoajax.ajax({
         url: 'rpc/user.rpc.php/?action=user-login', 
         method: 'POST', 
-        body: data
+        body: formData
       }, function (code, responseText, request) {
         
           if (code === 200) {

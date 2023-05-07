@@ -18,6 +18,7 @@ switch($action) {
         break;
 
     case 'user-login':
+        // var_dump($_REQUEST);
         $username = $_POST["username"];
         $password = $_POST["password"];
     
