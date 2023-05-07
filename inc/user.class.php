@@ -1,5 +1,5 @@
 <?php 
-include 'db.class.php';
+include '../autoloader.php';
 
 class user
 {
