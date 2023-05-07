@@ -66,7 +66,7 @@ function loginClicked() {
 
     //TODO: try sending request with json!!! (and not raw string)
     nanoajax.ajax({
-      url: 'rpc/user.rpc.php/?action=user_login', 
+      url: 'rpc/user.rpc.php/?action=user-login', 
       method: 'POST', 
       body: data
     }, function (code, responseText, request) {

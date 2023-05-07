@@ -1,5 +1,4 @@
 <?php 
-include '../autoloader.php';
 
 class post
 {
