@@ -91,7 +91,9 @@ details[open] summary {
 }
 
 #id-user-logged-in-text {
-  position: absolute;
-  top: 0;
-  left: 0;
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
 }

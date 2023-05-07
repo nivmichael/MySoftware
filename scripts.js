@@ -218,8 +218,5 @@ function displayPostsOfUser() {
      }
   
      results.innerHTML = nHTML;
-
-     window.location.reload();
-
   })
 }
