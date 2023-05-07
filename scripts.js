@@ -11,42 +11,45 @@ document.getElementById("id-upload-post-btn").addEventListener("click", function
 
 
 document.getElementById("id-logout-btn").addEventListener("click", function() {
-  nanoajax.ajax({
-    url:'rpc/user.rpc.php/?action=logout'
-  }, function (code, responseText) { 
-    try{
-      console.log(responseText);
-      userNotLoggedLayout();
-    }
-    catch (e) {
-      console.error(e);
-    }
-
-   })
+  try{
+    nanoajax.ajax({
+      url:'rpc/user.rpc.php/?action=logout'
+    }, function (code, responseText) { 
+      
+        console.log(responseText);
+        userNotLoggedLayout();
+    })
+  }
+  catch (e) {
+    console.error(e);
+  }
 });
 
 
 function checkUserLogged() {
-  nanoajax.ajax({
-    url:'rpc/user.rpc.php/?action=check-logged-in'
-  }, function (code, responseText) { 
-    try {
-      console.log(responseText);
-      var response = JSON.parse(responseText);
-      var status = response["status"];
+  try{
+    nanoajax.ajax({
+      url:'rpc/user.rpc.php/?action=check-logged-in'
+    }, function (code, responseText) { 
+      
+        console.log(responseText);
+        var response = JSON.parse(responseText);
+        var status = response["status"];
 
-      if (status === true) {
-        userLoggedLayout(response);
-      }
-      else {
-        userNotLoggedLayout();
-      }
-    }
-    catch (e) {
-      console.error(e);
-    } 
+        if (status === true) {
+          userLoggedLayout(response);
+        }
+        else {
+          userNotLoggedLayout();
+        }
+      
 
-   })
+
+    })
+  }
+  catch (e) {
+    console.error(e);
+  } 
 }
 
 
@@ -65,28 +68,29 @@ function loginClicked() {
     var data = 'username=' + username + '&password=' + password
 
     //TODO: try sending request with json!!! (and not raw string)
-    nanoajax.ajax({
-      url: 'rpc/user.rpc.php/?action=user-login', 
-      method: 'POST', 
-      body: data
-    }, function (code, responseText, request) {
-      try{
-        if (code === 200) {
-          console.log(responseText);
-          //display new layout with username at time since login
-          var response = JSON.parse(responseText);
-          userLoggedLayout(response);
-  
-  
-        } else {
-            console.error('Request failed with status ' + code);
-        }
-      }
-      catch (e) {
-        console.error(e);
-      }
+    try{
+      nanoajax.ajax({
+        url: 'rpc/user.rpc.php/?action=user-login', 
+        method: 'POST', 
+        body: data
+      }, function (code, responseText, request) {
+        
+          if (code === 200) {
+            console.log(responseText);
+            //display new layout with username at time since login
+            var response = JSON.parse(responseText);
+            userLoggedLayout(response);
+    
+    
+          } else {
+              console.error('Request failed with status ' + code);
+          }
+      })
+    }
+    catch (e) {
+      console.error(e);
+    }
 
-    })
 }
 
 
@@ -112,31 +116,34 @@ function uploadPost() {
   var data = 'title=' + title + '&body=' + body + '&file_name=' + file_name
 
   //TODO: try sending request with json!!! (and not raw string)
-  nanoajax.ajax({
-    url: 'rpc/post.rpc.php/?action=upload-post', 
-    method: 'POST', 
-    body: data
-  }, function (code, responseText, request) {
-    try {
-      if (code === 200) {
+  try {
+    nanoajax.ajax({
+      url: 'rpc/post.rpc.php/?action=upload-post', 
+      method: 'POST', 
+      body: data
+    }, function (code, responseText, request) {
+      
+        if (code === 200) {
 
-        console.log(responseText);
-        //display new layout with username at time since login
-        var response = JSON.parse(responseText);
-  
-        document.getElementById("id-upload-post-form").style.display = "none";
-  
-        displayPostsOfUser();
-  
-      } else {
-          console.error('Request failed with status ' + code);
-      }
-    }
-    catch(e) {
-      console.error(e);
-    }
+          console.log(responseText);
+          //display new layout with username at time since login
+          var response = JSON.parse(responseText);
+    
+          document.getElementById("id-upload-post-form").style.display = "none";
+    
+          displayPostsOfUser();
+    
+        } else {
+            console.error('Request failed with status ' + code);
+        }
+      
 
-  })
+
+    })
+  }
+  catch(e) {
+    console.error(e);
+  }
 
 }
 
@@ -175,8 +182,9 @@ function userNotLoggedLayout(response) {
 
 
 function displayAllPosts() {
-  nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
-    try {
+  try {
+    nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
+    
       var response = JSON.parse(responseText);
       console.log(response);
   
@@ -192,20 +200,19 @@ function displayAllPosts() {
        }
     
        results.innerHTML = nHTML;
-    }
-    catch (e) {
-      console.error(e);
-    }
-   
 
-
-  })
+    })
+  }
+  catch (e) {
+    console.error(e);
+  }
 }
 
 
 function displayPostsOfUser() {
-  nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
-    try {
+  try {
+    nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
+    
       console.log(responseText);
       var response = JSON.parse(responseText);
       // console.log(response);
@@ -226,11 +233,9 @@ function displayPostsOfUser() {
        }
     
        results.innerHTML = nHTML;
-    }
-    catch (e) {
-      console.error(e);
-    }
-   
-
-  })
+    })
+  }
+  catch (e) {
+    console.error(e);
+  }
 }
