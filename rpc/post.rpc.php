@@ -1,5 +1,5 @@
 <?php 
-include "../inc/post.class.php";
+include "../autoloader.php";
 
 session_start();
 

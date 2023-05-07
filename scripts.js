@@ -135,7 +135,7 @@ function uploadPost() {
 
       document.getElementById("id-upload-post-form").style.display = "none";
 
-      //TODO: reload page to show new post
+      displayPostsOfUser();
 
     } else {
         console.error('Request failed with status ' + code);
@@ -218,6 +218,8 @@ function displayPostsOfUser() {
      }
   
      results.innerHTML = nHTML;
+
+     window.location.reload();
 
   })
 }
