@@ -15,6 +15,7 @@ switch($action) {
 
     case 'logout':
         user::logout();
+        break;
 
     case 'user-login':
         $username = $_POST["username"];
@@ -44,9 +45,10 @@ switch($action) {
             die("no user in DB with username and password!");
         }
 
+
     default:
         die(json_encode(['error'=>'user.rpc: missing action param']));
-        break;
+
 
 
 }

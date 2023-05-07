@@ -109,11 +109,11 @@ function uploadPost() {
 
   let file_name = file ? file["name"] : ""
 
-  var data = 'action=upload&title=' + title + '&body=' + body + '&file_name=' + file_name
+  var data = 'title=' + title + '&body=' + body + '&file_name=' + file_name
 
   //TODO: try sending request with json!!! (and not raw string)
   nanoajax.ajax({
-    url: 'rpc/post.rpc.php', 
+    url: 'rpc/post.rpc.php/?action=upload-post', 
     method: 'POST', 
     body: data
   }, function (code, responseText, request) {
@@ -204,7 +204,7 @@ function displayAllPosts() {
 
 
 function displayPostsOfUser() {
-  nanoajax.ajax({url:'rpc/post.rpc.php/?action=current_user'}, function (code, responseText) { 
+  nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
     try {
       console.log(responseText);
       var response = JSON.parse(responseText);

@@ -41,7 +41,6 @@ class post
 
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
-
         $db = new db();
         
         $query = "INSERT INTO posts (title, body, user_id, file_path) VALUES ('$title', '$body', $user_id, '$file_path')";

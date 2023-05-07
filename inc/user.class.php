@@ -87,6 +87,11 @@ class user
             "prev_login" => $prev_login
         ];
 
+        $user = $result["user"];
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["username"] = $user["username"];
+        $_SESSION["prev_login"] = $user["prev_login"];
+
         return $result;
         
     }
