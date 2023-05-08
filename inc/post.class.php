@@ -2,16 +2,16 @@
 
 class post
 {
-    private $post_id  = null;
-    private $title = null;
-    private $body     = null;
+    private $post_id        = null;
+    private $title          = null;
+    private $body           = null;
 
     public function __construct($post_id, $title, $body)
     {
         if(!is_numeric($post_id))
             die('user constractor user_id is not numeric');
         $this->post_id  = $post_id;
-        $this->title = $title;
+        $this->title    = $title;
         $this->body     = $body;
     }
 
@@ -64,11 +64,11 @@ class post
 
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
-        $db = new db();
+        $db             = new db();
         
-        $query = "INSERT INTO posts (title, body, user_id, file_path) VALUES ('$title', '$body', $user_id, '$file_path')";
+        $query          = "INSERT INTO posts (title, body, user_id, file_path) VALUES ('$title', '$body', $user_id, '$file_path')";
 
-        $query_res = $db->query($query);
+        $query_res      = $db->query($query);
 
         return $query_res;
         

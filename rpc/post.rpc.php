@@ -19,8 +19,8 @@ switch($action)
     case 'upload-post':
         // var_dump($_POST);
 
-        $title = $_POST["title"];
-        $body = $_POST["body"];
+        $title      = $_POST["title"];
+        $body       = $_POST["body"];
 
         $new_filepath = null;
 

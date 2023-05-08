@@ -98,10 +98,10 @@ function cancelLoginClicked() {
 function uploadPost() {
   console.log("uploadFile clicked");
   
-  let title = document.getElementById("id-post-title").value;
-  let body = document.getElementById("id-post-body").value;
-  let file = document.getElementById("id-file-to-upload").files[0];
-  const formData = new FormData();
+  let title       = document.getElementById("id-post-title").value;
+  let body        = document.getElementById("id-post-body").value;
+  let file        = document.getElementById("id-file-to-upload").files[0];
+  const formData  = new FormData();
 
   formData.append('title', title);
   formData.append('body', body);
@@ -129,9 +129,6 @@ function uploadPost() {
         } else {
             console.error('Request failed with status ' + code);
         }
-      
-
-
     })
   }
   catch(e) {
@@ -152,7 +149,7 @@ function userLoggedLayout(response) {
 
   // console.log(responseText["prev_login"]);
 
-  var username = response["username"];
+  var username  = response["username"];
   var lastLogin = response["prev_login"];
 
   let displayText = 'user ' + username + ' logged in! <br> '
@@ -182,7 +179,7 @@ function displayAllPosts() {
       console.log(response);
   
       var results = document.getElementById("id-results");
-      var nHTML = '';
+      var nHTML   = '';
     
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
@@ -209,13 +206,17 @@ function displayAllPosts() {
 function displayPostsOfUser() {
   try {
     nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
+
+      document.getElementById("id-post-title").value = "";
+      document.getElementById("id-post-body").value = "";
+      document.getElementById("id-file-to-upload").value = "";
     
       console.log(responseText);
       var response = JSON.parse(responseText);
       // console.log(response);
   
       var results = document.getElementById("id-results");
-      var nHTML = '';
+      var nHTML   = '';
       
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];

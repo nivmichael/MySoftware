@@ -26,10 +26,10 @@ class user
         { 
             $result = 
             [
-                "status" => true,
-                "user_id" => $_SESSION["user_id"],
-                "username" => $_SESSION["username"],
-                "prev_login" => $_SESSION["prev_login"]
+                "status"        => true,
+                "user_id"       => $_SESSION["user_id"],
+                "username"      => $_SESSION["username"],
+                "prev_login"    => $_SESSION["prev_login"]
             ];
 
             
@@ -82,14 +82,14 @@ class user
         $result["status"] = true;
         $result["user"] = 
         [
-            "id" => $row["id"],
-            "username" => $row["username"],
-            "prev_login" => $prev_login
+            "id"            => $row["id"],
+            "username"      => $row["username"],
+            "prev_login"    => $prev_login
         ];
 
         $user = $result["user"];
-        $_SESSION["user_id"] = $user["id"];
-        $_SESSION["username"] = $user["username"];
+        $_SESSION["user_id"]    = $user["id"];
+        $_SESSION["username"]   = $user["username"];
         $_SESSION["prev_login"] = $user["prev_login"];
 
         return $result;
