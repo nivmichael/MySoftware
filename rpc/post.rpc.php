@@ -36,8 +36,17 @@ switch($action)
     
     case 'delete-post':
 
-        $post_id = $_POST["post-id"];
+        $post_id = $_POST["post_id"];
         post::delete_post($post_id);
+
+        break;
+
+
+    case 'update-post':
+        // var_dump($_POST);
+        $post_id = $_POST["post_id"];
+        $title   = $_POST["title"];
+        post::update_post($post_id, $title);
 
         break;
 

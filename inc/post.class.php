@@ -87,5 +87,18 @@ class post
         
     }
 
+
+    public static function update_post($post_id, $new_title) 
+    {
+        $db             = new db();
+        
+        $query          = "UPDATE posts SET title = '" . $new_title . "' WHERE id = " . $post_id ;
+
+        $query_res      = $db->query($query);
+
+        return $query_res;
+        
+    }
+
     
 }

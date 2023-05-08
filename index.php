@@ -54,10 +54,10 @@
     <div id="id-upload-post-form" class="c-popup-form">
 
       <form method="post" enctype="multipart/form-data">
-        <label for="username">Title:</label>
+        <label for="id-post-title">Title:</label>
         <input type="text" id="id-post-title" name="id-post-title" required>
         <br>
-        <label for="password">Body:</label>
+        <label for="id-post-body">Body:</label>
         <textarea id="id-post-body" name="id-post-body" required></textarea>
         <br>
         Select image to upload:
@@ -66,6 +66,18 @@
         <br>
         <input type="button" value="Upload Post" onClick="uploadPost()">
         <input type="button" value="Cancel" onClick="cancelUploadPostClicked()">
+      </form>
+    </div>
+
+
+    <div id="id-edit-post-form" class="c-popup-form">
+
+      <form method="post">
+        <label for="id-post-title">Title:</label>
+        <input type="text" id="id-edit-post-title" name="id-post-title" required>
+        <br>
+        <input type="button" value="Update Post" onClick="updatePost()">
+        <input type="button" value="Cancel" onClick="cancelEditPostClicked()">
       </form>
     </div>
 

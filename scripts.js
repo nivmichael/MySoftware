@@ -1,3 +1,4 @@
+let currentEditPostId = "";
 
 // Show login popup when button is clicked
 document.getElementById("id-login-btn").addEventListener("click", function() {
@@ -94,7 +95,6 @@ function cancelLoginClicked() {
 }
 
 
-//TODO: CONTINUE TO IMPLEMENT THIS
 function uploadPost() {
   console.log("uploadPost clicked");
   
@@ -167,7 +167,7 @@ function deletePostClicked(postId) {
   
   const formData  = new FormData();
 
-  formData.append('post-id', postId);
+  formData.append('post_id', postId);
 
   try {
     nanoajax.ajax({
@@ -195,11 +195,75 @@ function deletePostClicked(postId) {
 }
 
 
+// document.getElementById("id-upload-post-btn").addEventListener("click", function() {
+//   document.getElementById("id-upload-post-form").style.display = "block";
+// });
+
+function editPostClicked(post_id, title) {
+  console.log("Edit post clicked");
+  
+  document.getElementById("id-edit-post-title").value = title;
+  document.getElementById("id-edit-post-form").style.display = "block";
+
+  currentEditPostId = post_id;
+
+  //TODO: handle click on "Update Post"
+}
+
+
+function cancelEditPostClicked() {
+  document.getElementById("id-edit-post-form").style.display = "none";
+}
+
+
+function updatePost() {
+  console.log("uploadPost clicked");
+
+  let post_id     = currentEditPostId;
+  let title       = document.getElementById("id-edit-post-title").value;
+
+  // console.log(post_id);
+
+  const formData  = new FormData();
+
+  formData.append('post_id', post_id);
+  formData.append('title', title);
+
+  try {
+    nanoajax.ajax({
+      url: 'rpc/post.rpc.php/?action=update-post', 
+      method: 'POST', 
+      body: formData
+    }, function (code, responseText, request) {
+      
+        if (code === 200) {
+
+          console.log(responseText);
+          //display new layout with username at time since login
+          var response = JSON.parse(responseText);
+    
+          document.getElementById("id-edit-post-form").style.display = "none";
+    
+          displayPostsOfUser();
+    
+        } else {
+            console.error('Request failed with status ' + code);
+        }
+    })
+  }
+  catch(e) {
+    console.error(e);
+  }
+
+}
+
+
 function userNotLoggedLayout(response) {
   document.getElementById("id-login-popup").style.display = "none";
   document.getElementById("id-login-btn").style.display = "block";
   document.getElementById("id-user-logged-in").style.display = "none";
   document.getElementById("id-upload-post-form").style.display = "none";
+  document.getElementById("id-edit-post-form").style.display = "none";
   displayAllPosts();
 }
 
@@ -253,7 +317,8 @@ function displayPostsOfUser() {
       
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
-          nHTML += '<button id="id-edit-button" class="c-title-button">Edit</button>'
+          nHTML += '<button id="id-edit-button" class="c-title-button" onClick="editPostClicked('
+                    + response[i]['id'] + ',' + '\'' + response[i]['title'] + '\'' + ')">Edit</button>'
           nHTML += '<button id="id-delete-button" class="c-title-button" onClick="deletePostClicked(' 
                     + response[i]['id'] + ')">Delete</button>'
           if (response[i]['file_path'])
