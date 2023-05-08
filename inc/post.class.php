@@ -39,6 +39,29 @@ class post
     }
 
 
+    public static function upload_file($user_id)
+    {
+        //TODO: check if image is OK (correct size and type)
+        $file_name = $_FILES["file"]["name"];
+        $file_path = $_FILES["file"]["tmp_name"];
+
+        $new_file_folder = "../images/" . $user_id;
+
+        if (!is_dir($new_file_folder)) 
+        {
+            mkdir($new_file_folder, 0777, true);
+        }
+
+        $new_filepath = $new_file_folder . "/" . $file_name;
+        if(!move_uploaded_file($file_path, $new_filepath))
+        {
+            die(json_encode(['error'=>"Not uploaded because of error #".$_FILES["file"]["error"]])); 
+        }
+
+        return $new_filepath;
+    }
+
+
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
         $db = new db();

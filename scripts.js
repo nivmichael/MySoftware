@@ -186,6 +186,10 @@ function displayAllPosts() {
     
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+          if (response[i]['file_path'])
+          {
+            nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'
+          }
           nHTML += '</summary> <br>';
           nHTML += response[i]['body'];
           // nHTML += '<hr>';
@@ -212,13 +216,15 @@ function displayPostsOfUser() {
   
       var results = document.getElementById("id-results");
       var nHTML = '';
-  
-       //TODO: NEED TO ADD ALSO BUTTONS TO EDIT AND DELETE THE POST
-    
+      
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
           nHTML += '<button id="id-edit-button" class="c-title-button">Edit</button>'
           nHTML += '<button id="id-delete-button" class="c-title-button">Delete</button>'
+          if (response[i]['file_path'])
+          {
+            nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'
+          }
           nHTML += '</summary> <br>';
           nHTML += response[i]['body'];
           // nHTML += '<hr>';

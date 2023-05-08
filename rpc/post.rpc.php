@@ -17,16 +17,19 @@ switch($action)
         break;
 
     case 'upload-post':
-        //TODO: continue!!!!
-        //TODO: need to get somehow the file_path (so far only got file_name)
-        // var_dump($_FILES);
+        // var_dump($_POST);
 
         $title = $_POST["title"];
         $body = $_POST["body"];
-        $file_name = $_FILES["file"]["name"];
-        $file_path = $_FILES["file"]["tmp_name"];
 
-        post::upload_post($title, $body, $_SESSION["user_id"], $file_path);
+        $new_filepath = null;
+
+        if ($_FILES["file"])
+        {
+            $new_filepath = post::upload_file($_SESSION["user_id"]);
+        }
+
+        post::upload_post($title, $body, $_SESSION["user_id"], $new_filepath);
 
         break;
 
