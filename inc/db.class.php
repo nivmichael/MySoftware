@@ -29,4 +29,8 @@ class db
 
       return $ans;
     }
+
+    public function real_escape_string($str = null) {
+      return $this->conn->real_escape_string($str);
+   }
 }

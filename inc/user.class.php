@@ -58,6 +58,10 @@ class user
         ];
 
         $db = new db();
+
+        $username = $db->real_escape_string($username);
+        $password = $db->real_escape_string($password);
+
         $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
         $stml = $db->query($query);

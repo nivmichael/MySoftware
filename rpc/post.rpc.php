@@ -17,8 +17,7 @@ switch($action)
         break;
 
     case 'upload-post':
-        // var_dump($_POST);
-
+        //TODO: return the result to user
         $title      = $_POST["title"];
         $body       = $_POST["body"];
 
@@ -35,7 +34,7 @@ switch($action)
 
     
     case 'delete-post':
-
+        //TODO: return the result to user
         $post_id = $_POST["post_id"];
         post::delete_post($post_id);
 
@@ -43,7 +42,7 @@ switch($action)
 
 
     case 'update-post':
-        // var_dump($_POST);
+        //TODO: return the result to user
         $post_id = $_POST["post_id"];
         $title   = $_POST["title"];
         post::update_post($post_id, $title);
@@ -53,8 +52,6 @@ switch($action)
     default:
         die(json_encode(['error'=>'user.rpc: missing action param']));
     
-    //TODO: ADD 2 MORE CONDITIONS: for edit and for delete
-
 }
 
 die(json_encode($result));

@@ -29,7 +29,6 @@ document.getElementById("id-logout-btn").addEventListener("click", function() {
 
 
 function searchTextChanged() {
-  console.log('onchange called');
   searchText = document.getElementById("id-search-text").value;
   displayAllPosts();
 }
@@ -131,7 +130,7 @@ function uploadPost() {
           var response = JSON.parse(responseText);
     
           document.getElementById("id-upload-post-form").style.display = "none";
-    
+          
           displayPostsOfUser();
     
         } else {
@@ -151,9 +150,9 @@ function cancelUploadPostClicked() {
 }
 
 function userLoggedLayout(response) {
-  document.getElementById("id-login-popup").style.display = "none";
-  document.getElementById("id-login-btn").style.display = "none";
-  document.getElementById("id-user-logged-in").style.display = "block";
+  document.getElementById("id-login-popup").style.display         = "none";
+  document.getElementById("id-login-btn").style.display           = "none";
+  document.getElementById("id-user-logged-in").style.display      = "block";
 
   // console.log(responseText["prev_login"]);
 
@@ -267,11 +266,11 @@ function updatePost() {
 
 
 function userNotLoggedLayout(response) {
-  document.getElementById("id-login-popup").style.display = "none";
-  document.getElementById("id-login-btn").style.display = "block";
-  document.getElementById("id-user-logged-in").style.display = "none";
-  document.getElementById("id-upload-post-form").style.display = "none";
-  document.getElementById("id-edit-post-form").style.display = "none";
+  document.getElementById("id-login-popup").style.display         = "none";
+  document.getElementById("id-login-btn").style.display           = "block";
+  document.getElementById("id-user-logged-in").style.display      = "none";
+  document.getElementById("id-upload-post-form").style.display    = "none";
+  document.getElementById("id-edit-post-form").style.display      = "none";
   displayAllPosts();
 }
 
@@ -316,9 +315,10 @@ function displayPostsOfUser() {
   try {
     nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
 
-      document.getElementById("id-post-title").value = "";
-      document.getElementById("id-post-body").value = "";
-      document.getElementById("id-file-to-upload").value = "";
+      document.getElementById("id-post-title").value          = "";
+      document.getElementById("id-post-body").value           = "";
+      document.getElementById("id-file-to-upload").value      = "";
+      document.getElementById("id-search-text").style.display = "none";
     
       var response = JSON.parse(responseText);
       console.log(response);

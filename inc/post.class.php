@@ -65,6 +65,15 @@ class post
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
         $db             = new db();
+
+        $title      = $db->real_escape_string($title);
+        $body       = $db->real_escape_string($body);
+
+        if ($file_path)
+        {
+            $file_path = $db->real_escape_string($file_path);
+        }
+
         
         $query          = "INSERT INTO posts (title, body, user_id, file_path) VALUES ('$title', '$body', $user_id, '$file_path')";
 
@@ -91,6 +100,8 @@ class post
     public static function update_post($post_id, $new_title) 
     {
         $db             = new db();
+
+        $new_title = $db->real_escape_string($new_title);
         
         $query          = "UPDATE posts SET title = '" . $new_title . "' WHERE id = " . $post_id ;
 
