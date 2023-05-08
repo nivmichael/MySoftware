@@ -96,7 +96,7 @@ function cancelLoginClicked() {
 
 //TODO: CONTINUE TO IMPLEMENT THIS
 function uploadPost() {
-  console.log("uploadFile clicked");
+  console.log("uploadPost clicked");
   
   let title       = document.getElementById("id-post-title").value;
   let body        = document.getElementById("id-post-body").value;
@@ -162,6 +162,39 @@ function userLoggedLayout(response) {
 }
 
 
+function deletePostClicked(postId) {
+  console.log("Delete post clicked");
+  
+  const formData  = new FormData();
+
+  formData.append('post-id', postId);
+
+  try {
+    nanoajax.ajax({
+      url: 'rpc/post.rpc.php/?action=delete-post', 
+      method: 'POST', 
+      body: formData
+    }, function (code, responseText, request) {
+      
+        if (code === 200) {
+
+          console.log(responseText);
+          //display new layout with username at time since login
+          var response = JSON.parse(responseText);
+
+          displayPostsOfUser();
+    
+        } else {
+            console.error('Request failed with status ' + code);
+        }
+    })
+  }
+  catch(e) {
+    console.error(e);
+  }
+}
+
+
 function userNotLoggedLayout(response) {
   document.getElementById("id-login-popup").style.display = "none";
   document.getElementById("id-login-btn").style.display = "block";
@@ -221,7 +254,8 @@ function displayPostsOfUser() {
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
           nHTML += '<button id="id-edit-button" class="c-title-button">Edit</button>'
-          nHTML += '<button id="id-delete-button" class="c-title-button">Delete</button>'
+          nHTML += '<button id="id-delete-button" class="c-title-button" onClick="deletePostClicked(' 
+                    + response[i]['id'] + ')">Delete</button>'
           if (response[i]['file_path'])
           {
             nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'

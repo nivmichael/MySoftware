@@ -33,6 +33,14 @@ switch($action)
 
         break;
 
+    
+    case 'delete-post':
+
+        $post_id = $_POST["post-id"];
+        post::delete_post($post_id);
+
+        break;
+
     default:
         die(json_encode(['error'=>'user.rpc: missing action param']));
     

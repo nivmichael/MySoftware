@@ -74,5 +74,18 @@ class post
         
     }
 
+
+    public static function delete_post($post_id) 
+    {
+        $db             = new db();
+        
+        $query          = "DELETE FROM posts WHERE id = " . $post_id ;
+
+        $query_res      = $db->query($query);
+
+        return $query_res;
+        
+    }
+
     
 }
