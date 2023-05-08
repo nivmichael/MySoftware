@@ -131,6 +131,8 @@ function uploadPost() {
           var response = JSON.parse(responseText);
     
           document.getElementById("id-upload-post-form").style.display = "none";
+
+          document.getElementById("id-success-message").innerHTML     = "Post Uploaded Successfully!"
           
           displayPostsOfUser();
     
@@ -191,6 +193,8 @@ function deletePostClicked(postId) {
           // console.log(responseText);
           //display new layout with username at time since login
           var response = JSON.parse(responseText);
+
+          document.getElementById("id-success-message").innerHTML     = "Post Deleted Successfully!"
 
           displayPostsOfUser();
     
@@ -253,6 +257,8 @@ function updatePost() {
           var response = JSON.parse(responseText);
     
           document.getElementById("id-edit-post-form").style.display = "none";
+
+          document.getElementById("id-success-message").innerHTML     = "Post Updated Successfully!"
     
           displayPostsOfUser();
     

@@ -48,6 +48,7 @@
 
   <div id="id-user-logged-in"> 
     <p id="id-user-logged-in-text"> user is logged in now! </p>
+    <p id="id-success-message">  </p>
 
     <br>
     <br>
