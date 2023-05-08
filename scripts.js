@@ -1,4 +1,5 @@
 let currentEditPostId = "";
+let searchText = "";
 
 // Show login popup when button is clicked
 document.getElementById("id-login-btn").addEventListener("click", function() {
@@ -17,7 +18,7 @@ document.getElementById("id-logout-btn").addEventListener("click", function() {
       url:'rpc/user.rpc.php/?action=logout'
     }, function (code, responseText) { 
       
-        console.log(responseText);
+        // console.log(responseText);
         userNotLoggedLayout();
     })
   }
@@ -27,13 +28,20 @@ document.getElementById("id-logout-btn").addEventListener("click", function() {
 });
 
 
+function searchTextChanged() {
+  console.log('onchange called');
+  searchText = document.getElementById("id-search-text").value;
+  displayAllPosts();
+}
+
+
 function checkUserLogged() {
   try{
     nanoajax.ajax({
       url:'rpc/user.rpc.php/?action=check-logged-in'
     }, function (code, responseText) { 
       
-        console.log(responseText);
+        // console.log(responseText);
         var response = JSON.parse(responseText);
         var status = response["status"];
 
@@ -72,7 +80,7 @@ function loginClicked() {
       }, function (code, responseText, request) {
         
           if (code === 200) {
-            console.log(responseText);
+            // console.log(responseText);
             //display new layout with username at time since login
             var response = JSON.parse(responseText);
             userLoggedLayout(response);
@@ -96,7 +104,7 @@ function cancelLoginClicked() {
 
 
 function uploadPost() {
-  console.log("uploadPost clicked");
+  // console.log("uploadPost clicked");
   
   let title       = document.getElementById("id-post-title").value;
   let body        = document.getElementById("id-post-body").value;
@@ -107,7 +115,7 @@ function uploadPost() {
   formData.append('body', body);
   (file)? formData.append('file', file): null;
 
-  console.log(file);
+  // console.log(file);
 
   try {
     nanoajax.ajax({
@@ -118,7 +126,7 @@ function uploadPost() {
       
         if (code === 200) {
 
-          console.log(responseText);
+          // console.log(responseText);
           //display new layout with username at time since login
           var response = JSON.parse(responseText);
     
@@ -163,7 +171,7 @@ function userLoggedLayout(response) {
 
 
 function deletePostClicked(postId) {
-  console.log("Delete post clicked");
+  // console.log("Delete post clicked");
   
   const formData  = new FormData();
 
@@ -178,7 +186,7 @@ function deletePostClicked(postId) {
       
         if (code === 200) {
 
-          console.log(responseText);
+          // console.log(responseText);
           //display new layout with username at time since login
           var response = JSON.parse(responseText);
 
@@ -200,7 +208,7 @@ function deletePostClicked(postId) {
 // });
 
 function editPostClicked(post_id, title) {
-  console.log("Edit post clicked");
+  // console.log("Edit post clicked");
   
   document.getElementById("id-edit-post-title").value = title;
   document.getElementById("id-edit-post-form").style.display = "block";
@@ -217,7 +225,7 @@ function cancelEditPostClicked() {
 
 
 function updatePost() {
-  console.log("uploadPost clicked");
+  // console.log("uploadPost clicked");
 
   let post_id     = currentEditPostId;
   let title       = document.getElementById("id-edit-post-title").value;
@@ -238,7 +246,7 @@ function updatePost() {
       
         if (code === 200) {
 
-          console.log(responseText);
+          // console.log(responseText);
           //display new layout with username at time since login
           var response = JSON.parse(responseText);
     
@@ -277,6 +285,10 @@ function displayAllPosts() {
   
       var results = document.getElementById("id-results");
       var nHTML   = '';
+
+      if (searchText !== "") {
+        response = response.filter(post => post['title'].startsWith(searchText))
+      }
     
       for (var i = 0; i < response.length; i++) {
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
@@ -308,9 +320,8 @@ function displayPostsOfUser() {
       document.getElementById("id-post-body").value = "";
       document.getElementById("id-file-to-upload").value = "";
     
-      console.log(responseText);
       var response = JSON.parse(responseText);
-      // console.log(response);
+      console.log(response);
   
       var results = document.getElementById("id-results");
       var nHTML   = '';
