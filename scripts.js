@@ -271,6 +271,7 @@ function userNotLoggedLayout(response) {
   document.getElementById("id-user-logged-in").style.display      = "none";
   document.getElementById("id-upload-post-form").style.display    = "none";
   document.getElementById("id-edit-post-form").style.display      = "none";
+  document.getElementById("id-search-text").style.display         = "block";
   displayAllPosts();
 }
 
