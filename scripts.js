@@ -8,6 +8,7 @@ document.getElementById("id-login-btn").addEventListener("click", function() {
   
 
 document.getElementById("id-upload-post-btn").addEventListener("click", function() {
+  document.getElementById("id-file-error-msg").style.display = "none";
   document.getElementById("id-upload-post-form").style.display = "block";
 });
 
@@ -135,6 +136,8 @@ function uploadPost() {
     
         } else {
             console.error('Request failed with status ' + code);
+            document.getElementById("id-file-error-msg").innerHTML     =  responseText;
+            document.getElementById("id-file-error-msg").style.display =  "block";
         }
     })
   }

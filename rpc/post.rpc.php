@@ -18,6 +18,12 @@ switch($action)
 
     case 'upload-post':
         //TODO: return the result to user
+        if (!isset($_POST["title"]) || !isset($_POST["body"]))
+        {
+            http_response_code(500);
+            die('post request is missing parameter in body');
+        }
+
         $title      = $_POST["title"];
         $body       = $_POST["body"];
 
@@ -35,6 +41,11 @@ switch($action)
     
     case 'delete-post':
         //TODO: return the result to user
+        if (!isset($_POST["post_id"]) || !is_numeric($_POST["post_id"]))
+        {
+            http_response_code(500);
+            die('error in post request post_id parameter');
+        }
         $post_id = $_POST["post_id"];
         post::delete_post($post_id);
 
@@ -43,6 +54,11 @@ switch($action)
 
     case 'update-post':
         //TODO: return the result to user
+        if (!isset($_POST["post_id"]) || !is_numeric($_POST["post_id"]))
+        {
+            http_response_code(500);
+            die('error in post request post_id parameter');
+        }
         $post_id = $_POST["post_id"];
         $title   = $_POST["title"];
         post::update_post($post_id, $title);

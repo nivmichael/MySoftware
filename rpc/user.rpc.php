@@ -18,6 +18,11 @@ switch($action) {
         break;
 
     case 'user-login':
+        if (!isset($_POST["username"]) || !isset($_POST["password"]))
+        {
+            http_response_code(500);
+            die('post request is missing parameter in body');
+        }
         $username = $_POST["username"];
         $password = $_POST["password"];
     

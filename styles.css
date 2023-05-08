@@ -110,3 +110,16 @@ details[open] summary {
   position: absolute;
   left: 50%;
 }
+
+#id-edit-button {
+  background-color: blue;
+}
+
+#id-delete-button {
+  background-color: #f44336;
+}
+
+#id-file-error-msg {
+  color: red;
+  size: 75%;
+}

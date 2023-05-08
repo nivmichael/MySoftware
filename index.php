@@ -69,6 +69,7 @@
         <input type="file" name="fileToUpload" id="id-file-to-upload">
         <br>
         <br>
+        <p id="id-file-error-msg">  </p>
         <input type="button" value="Upload Post" onClick="uploadPost()">
         <input type="button" value="Cancel" onClick="cancelUploadPostClicked()">
       </form>
