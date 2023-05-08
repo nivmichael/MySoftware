@@ -87,7 +87,16 @@ class post
             die("Not a gif/jpeg/png");
          }
 
-         
+
+         if ($file_size === 0 ) {
+            http_response_code(500);
+            die("file is empty");
+         }
+
+         if ($file_size > 5 * 1024 * 1024 ) {
+            http_response_code(500);
+            die("file is too big!");
+         }
 
     
     }
