@@ -21,15 +21,27 @@ class db
         return $this->conn;
     }
   
+
+    /**
+     * Executes a database query
+     *
+     * @param query string
+     * 
+     * @return mysqli_result
+     */ 
     public function query($query) {
-      // Prepare and execute SQL query with parameters
-      // var_dump($query);
-
       $ans = $this->conn->query( $query );
-
       return $ans;
     }
 
+
+    /**
+     * Escapes special characters in a string for use in an SQL statement
+     *
+     * @param str string
+     * 
+     * @return string 
+     */ 
     public function real_escape_string($str = null) {
       return $this->conn->real_escape_string($str);
    }

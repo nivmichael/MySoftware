@@ -2,6 +2,7 @@ var post = function() {
 
     let currentEditPostId = "";
 
+    //make POS request to upload new post
     function uploadPost() {
         // console.log("uploadPost clicked");
         
@@ -13,9 +14,7 @@ var post = function() {
         formData.append('title', title);
         formData.append('body', body);
         (file)? formData.append('file', file): null;
-      
-        // console.log(file);
-      
+
         try {
           nanoajax.ajax({
             url: 'rpc/post.rpc.php/?action=upload-post', 
@@ -25,13 +24,11 @@ var post = function() {
             
               if (code === 200) {
       
-                // console.log(responseText);
-                //display new layout with username at time since login
                 var response = JSON.parse(responseText);
           
                 document.getElementById("id-upload-post-form").style.display = "none";
       
-                document.getElementById("id-success-message").innerHTML      = "Post Uploaded Successfully!"
+                document.getElementById("id-success-message").innerHTML      = "Post Uploaded Successfully!";
                 
                 displayPostsOfUser();
           
@@ -48,19 +45,21 @@ var post = function() {
       
     }
 
+    //hide the upload post popup window
     function cancelUploadPostClicked() {
         document.getElementById("id-upload-post-form").style.display = "none";
     }
 
+    //show popup alert to confirm the deletion of the post
     function deletePostClicked(postId) {
-        console.log("Delete post clicked " + postId);
         let text = "Are you sure you want to delete the post?";
         if (confirm(text) == true) {
           deletePost(postId);
         } 
     }
       
-      
+    
+    //send POST request to delete the post
     function deletePost(postId) {
         const formData  = new FormData();
       
@@ -75,11 +74,9 @@ var post = function() {
             
               if (code === 200) {
       
-                // console.log(responseText);
-                //display new layout with username at time since login
                 var response = JSON.parse(responseText);
       
-                document.getElementById("id-success-message").innerHTML     = "Post Deleted Successfully!"
+                document.getElementById("id-success-message").innerHTML     = "Post Deleted Successfully!";
       
                 displayPostsOfUser();
           
@@ -93,26 +90,22 @@ var post = function() {
         }
     }
 
+    //display popup window to edit the post title
     function editPostClicked(post_id, title) {
-        // console.log("Edit post clicked");
         
         document.getElementById("id-edit-post-title").value = title;
         document.getElementById("id-edit-post-form").style.display = "block";
       
         currentEditPostId = post_id;
+    }
       
-        //TODO: handle click on "Update Post"
-      }
-      
-      
+    //hide the edit post popup window
     function cancelEditPostClicked() {
         document.getElementById("id-edit-post-form").style.display = "none";
     }
 
-
+    //send POST request to update the post with the new title
     function updatePost() {
-        // console.log("uploadPost clicked");
-      
         let post_id     = currentEditPostId;
         let title       = document.getElementById("id-edit-post-title").value;
       
@@ -132,13 +125,11 @@ var post = function() {
             
               if (code === 200) {
       
-                // console.log(responseText);
-                //display new layout with username at time since login
                 var response = JSON.parse(responseText);
           
                 document.getElementById("id-edit-post-form").style.display = "none";
       
-                document.getElementById("id-success-message").innerHTML     = "Post Updated Successfully!"
+                document.getElementById("id-success-message").innerHTML     = "Post Updated Successfully!";
           
                 displayPostsOfUser();
           
@@ -152,6 +143,7 @@ var post = function() {
         }
       
     }
+
     // Get all a posts and display 
     // How do we make this function use the result from server in different ways:
     // 1. display in DOM (like it's doing now)
@@ -192,6 +184,7 @@ var post = function() {
         }
     }
 
+    //Get posts of current logged in user and display them
     function displayPostsOfUser() {
         try {
           nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
@@ -210,17 +203,17 @@ var post = function() {
             for (var i = 0; i < response.length; i++) {
                 nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
                 nHTML += '<button id="id-edit-button" class="c-title-button" onClick="post.editPostClicked('
-                          + response[i]['id'] + ',' + '\'' + response[i]['title'] + '\'' + ')">Edit</button>'
+                          + response[i]['id'] + ',' + '\'' + response[i]['title'] + '\'' + ')">Edit</button>';
                 nHTML += '<button id="id-delete-button" class="c-title-button" onClick="post.deletePostClicked(' 
-                          + response[i]['id'] + ')">Delete</button>'
+                          + response[i]['id'] + ')">Delete</button>';
                 if (response[i]['file_path'])
                 {
-                  nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'
+                  nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
                 }
                 nHTML += '</summary> <br>';
                 nHTML += response[i]['body'];
                 // nHTML += '<hr>';
-                nHTML += '</details> </div>'
+                nHTML += '</details> </div>';
              }
           
              results.innerHTML = nHTML;

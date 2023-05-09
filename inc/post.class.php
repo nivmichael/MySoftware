@@ -13,7 +13,20 @@ class post
         $this->post_id  = $post_id;
     }
 
-
+    /**
+     * Requests posts from the DB. If user_id is provided - request his posts, else request all the posts
+     *
+     * @param user_id int
+     * 
+     * @return array(
+                        "id"          => int,
+                        "user_id"     => int,
+                        "name"        => string,
+                        "title"       => string,
+                        "body"        => string,
+                        "file_path"   => string
+                    );  
+     */ 
     public static function get_posts($user_id = null) 
     {
         // echo $user_id;
@@ -37,6 +50,13 @@ class post
     }
 
 
+    /**
+     * Upload a new file to the local folder
+     *
+     * @param user_id int
+     * 
+     * @return string
+     */
     public static function upload_file($user_id)
     {
         //TODO: check if image is OK (correct size and type)
@@ -63,6 +83,12 @@ class post
     }
 
 
+    /**
+     * Check if the file is of type image and that is in the correct size
+     *
+     * @param file_path string
+     * 
+     */
     public static function validate_image($file_path)
     {
         $file_size      = filesize($file_path);
@@ -100,6 +126,16 @@ class post
     }
 
 
+    /**
+     * Request DB to upload a new post
+     *
+     * @param title string
+     * @param body string
+     * @param user_id int
+     * @param file_path string
+     * 
+     * @return mysqli_result
+     */ 
     public static function upload_post($title, $body, $user_id, $file_path) 
     {
         $db             = new db();
@@ -127,6 +163,14 @@ class post
         $this->delete_post($this->post_id);
     }
 
+
+    /**
+     * Request DB to delete a post
+     *
+     * @param user_id int
+     * 
+     * @return mysqli_result
+     */ 
     private function delete_post($post_id) 
     {   
 
@@ -154,6 +198,15 @@ class post
         $this->update_post($this->post_id, $new_title);
     }
 
+
+    /**
+     * Request DB to update a post (edit the title of the post)
+     *
+     * @param user_id int
+     * @param new_title string
+     * 
+     * @return mysqli_result
+     */ 
     private function update_post($post_id, $new_title) 
     {
         if (!is_numeric($post_id))

@@ -16,10 +16,14 @@ class user
     }
 
 
+    /**
+     * Check if the current session has a user
+     *
+     * 
+     * @return array()
+     */
     public static function check_logged_in()
     {
-        // var_dump('in checked logged in');
-
         $result = [];
 
         if (isset($_SESSION["user_id"])) 
@@ -49,6 +53,14 @@ class user
     } 
 
 
+    /**
+     * check if user exits in db by credentials - and set the session with uid, name and last_login
+     *
+     * @param username string
+     * @param password string
+     * 
+     * @return array()
+     */
     public static function login($username, $password) 
     {
         $result = 
@@ -101,12 +113,24 @@ class user
     }
 
 
+    /**
+     * End the current session of the user
+     *
+     */
     public static function logout()
     {
         session_unset();
     } 
 
 
+    /**
+     * Validate if the username and password provided are in a correct format
+     *
+     * @param username string
+     * @param password string
+     * 
+     * @return array()
+     */
     public static function validate_params($username, $password)
     {
         $rv = ["status" => true, "error" => ""];
