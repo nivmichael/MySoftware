@@ -6,13 +6,11 @@ class post
     private $title          = null;
     private $body           = null;
 
-    public function __construct($post_id, $title, $body)
+    public function __construct($post_id)
     {
         if(!is_numeric($post_id))
             die('user constractor user_id is not numeric');
         $this->post_id  = $post_id;
-        $this->title    = $title;
-        $this->body     = $body;
     }
 
 
@@ -21,7 +19,7 @@ class post
         // echo $user_id;
         $db = new db();
         
-        $query = "SELECT * FROM posts";
+        $query = "SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id";
 
         if ($user_id) 
         {
@@ -106,8 +104,8 @@ class post
     {
         $db             = new db();
 
-        $title      = $db->real_escape_string($title);
-        $body       = $db->real_escape_string($body);
+        $title          = $db->real_escape_string($title);
+        $body           = $db->real_escape_string($body);
 
         if ($file_path)
         {
@@ -123,9 +121,23 @@ class post
         
     }
 
-
-    public static function delete_post($post_id) 
+    
+    public function delete_post_by_user()
     {
+        $this->delete_post($this->post_id);
+    }
+
+    private function delete_post($post_id) 
+    {   
+
+        // var_dump("delete " . $post_id);
+
+        if (!is_numeric($post_id))
+        {
+            http_response_code(500);
+            die('error in delete_post parameter');
+        }
+         
         $db             = new db();
         
         $query          = "DELETE FROM posts WHERE id = " . $post_id ;
@@ -137,8 +149,19 @@ class post
     }
 
 
-    public static function update_post($post_id, $new_title) 
+    public function update_post_by_user($new_title) 
     {
+        $this->update_post($this->post_id, $new_title);
+    }
+
+    private function update_post($post_id, $new_title) 
+    {
+        if (!is_numeric($post_id))
+        {
+            http_response_code(500);
+            die('error in update_post parameters');
+        }
+
         $db             = new db();
 
         $new_title = $db->real_escape_string($new_title);

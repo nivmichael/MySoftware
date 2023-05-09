@@ -1,6 +1,6 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
-
+/* 
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
@@ -10,6 +10,15 @@ input[type=text], select, textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+} */
+
+input[type=text], input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 input[type=submit], button {
@@ -124,3 +133,6 @@ details[open] summary {
   background-color: #f44336;
 }
 
+#id-confirm-login-btn {
+  margin-right: 20px;
+}

@@ -42,7 +42,7 @@
       <br>
       <br>
       <p id="id-login-error-msg" class="c-error-msg">  </p>
-      <input type="button" value="Login" onClick="loginClicked()">
+      <input type="button" id="id-confirm-login-btn" value="Login" onClick="loginClicked()">
       <input type="button" value="Cancel" onClick="cancelLoginClicked()">
     </form>
   </div>

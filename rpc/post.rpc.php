@@ -40,6 +40,7 @@ switch($action)
 
     
     case 'delete-post':
+        
         //TODO: return the result to user
         if (!isset($_POST["post_id"]) || !is_numeric($_POST["post_id"]))
         {
@@ -47,7 +48,11 @@ switch($action)
             die('error in post request post_id parameter');
         }
         $post_id = $_POST["post_id"];
-        post::delete_post($post_id);
+
+        // var_dump("in delete-post " . $post_id);
+        
+        $post = new post($post_id);
+        $post->delete_post_by_user();
 
         break;
 
@@ -61,7 +66,9 @@ switch($action)
         }
         $post_id = $_POST["post_id"];
         $title   = $_POST["title"];
-        post::update_post($post_id, $title);
+
+        $post = new post($post_id);
+        $post->update_post_by_user($title);
 
         break;
 

@@ -47,7 +47,7 @@ switch($action) {
         else
         {
             http_response_code(404);
-            die("no user in DB with username and password!");
+            die("wrong username or password!");
         }
 
 

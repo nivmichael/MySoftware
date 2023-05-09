@@ -178,7 +178,7 @@ function userLoggedLayout(response) {
 
 
 function deletePostClicked(postId) {
-  // console.log("Delete post clicked");
+  console.log("Delete post clicked " + postId);
   let text = "Are you sure you want to delete the post?";
   if (confirm(text) == true) {
     deletePost(postId);
@@ -209,7 +209,7 @@ function deletePost(postId) {
           displayPostsOfUser();
     
         } else {
-            console.error('Request failed with status ' + code);
+            console.error(responseText);
         }
     })
   }
@@ -310,6 +310,7 @@ function displayAllPosts() {
       }
     
       for (var i = 0; i < response.length; i++) {
+          nHTML += response[i]['username'] + '<br>';
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
           if (response[i]['file_path'])
           {
