@@ -41,6 +41,7 @@
       <input type="password" id="password" name="password" required>
       <br>
       <br>
+      <p id="id-login-error-msg" class="c-error-msg">  </p>
       <input type="button" value="Login" onClick="loginClicked()">
       <input type="button" value="Cancel" onClick="cancelLoginClicked()">
     </form>
@@ -70,7 +71,7 @@
         <input type="file" name="fileToUpload" id="id-file-to-upload">
         <br>
         <br>
-        <p id="id-file-error-msg">  </p>
+        <p id="id-file-error-msg" class="c-error-msg">  </p>
         <input type="button" value="Upload Post" onClick="uploadPost()">
         <input type="button" value="Cancel" onClick="cancelUploadPostClicked()">
       </form>

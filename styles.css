@@ -79,6 +79,11 @@ details[open] summary {
   right: 0;
 }
 
+.c-error-msg {
+  color: red;
+  size: 3px;
+}
+
 #id-login-btn {
   position: absolute;
   left: 50%;
@@ -119,7 +124,3 @@ details[open] summary {
   background-color: #f44336;
 }
 
-#id-file-error-msg {
-  color: red;
-  size: 75%;
-}

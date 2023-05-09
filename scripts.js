@@ -3,6 +3,7 @@ let searchText = "";
 
 // Show login popup when button is clicked
 document.getElementById("id-login-btn").addEventListener("click", function() {
+  document.getElementById("id-login-error-msg").style.display = "none";
     document.getElementById("id-login-popup").style.display = "block";
   });
   
@@ -88,6 +89,8 @@ function loginClicked() {
     
           } else {
               console.error('Request failed with status ' + code);
+              document.getElementById("id-login-error-msg").innerHTML     =  responseText;
+              document.getElementById("id-login-error-msg").style.display =  "block";
           }
       })
     }
