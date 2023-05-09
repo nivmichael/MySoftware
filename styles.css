@@ -136,3 +136,8 @@ details[open] summary {
 #id-confirm-login-btn {
   margin-right: 20px;
 }
+
+#id-username-post-text {
+  float: right;
+  right: 0;
+}

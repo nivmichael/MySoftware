@@ -310,8 +310,8 @@ function displayAllPosts() {
       }
     
       for (var i = 0; i < response.length; i++) {
-          nHTML += response[i]['username'] + '<br>';
           nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+          nHTML += '<p id="id-username-post-text">' + response[i]['username'] + '</p>'
           if (response[i]['file_path'])
           {
             nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'
@@ -319,7 +319,7 @@ function displayAllPosts() {
           nHTML += '</summary> <br>';
           nHTML += response[i]['body'];
           // nHTML += '<hr>';
-          nHTML += '</details> </div>'
+          nHTML += '</details> </div> <br>'
        }
     
        results.innerHTML = nHTML;
