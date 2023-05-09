@@ -1,6 +1,15 @@
 var post = function() {
 
-    let currentEditPostId = "";
+    let currentEditPostId       = "";
+    let searchText              = "";
+    let getAllPostsResponse     = [];
+
+
+    //update the search text
+    function searchTextChanged() {
+        searchText = document.getElementById("id-search-text").value;
+        displayAllPosts();
+    }
 
     //make POS request to upload new post
     function uploadPost() {
@@ -30,7 +39,7 @@ var post = function() {
       
                 document.getElementById("id-success-message").innerHTML      = "Post Uploaded Successfully!";
                 
-                displayPostsOfUser();
+                getPostsOfUser();
           
               } else {
                   console.error('Request failed with status ' + code);
@@ -78,7 +87,7 @@ var post = function() {
       
                 document.getElementById("id-success-message").innerHTML     = "Post Deleted Successfully!";
       
-                displayPostsOfUser();
+                getPostsOfUser();
           
               } else {
                   console.error(responseText);
@@ -131,7 +140,7 @@ var post = function() {
       
                 document.getElementById("id-success-message").innerHTML     = "Post Updated Successfully!";
           
-                displayPostsOfUser();
+                getPostsOfUser();
           
               } else {
                   console.error('Request failed with status ' + code);
@@ -149,33 +158,16 @@ var post = function() {
     // 1. display in DOM (like it's doing now)
     // 2. Print JSON in a dialog
     // Hint - displayAllPosts should recive a variable/something
-    function displayAllPosts() {
+    function getAllPosts(callbackFunc) {
         try {
           nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
         
-            var response = JSON.parse(responseText);
+            getAllPostsResponse = JSON.parse(responseText);
             
             //TODO: add the function call we want
             
-            var results = document.getElementById("id-results");
-            var nHTML   = '';
-    
-            if (searchText !== "")
-              response = response.filter(post => post['title'].startsWith(searchText))            
-        
-            for (var i = 0; i < response.length; i++) {
-                nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
-                nHTML += '<p id="id-username-post-text">' + response[i]['username'] + '</p>';
-                if (response[i]['file_path'])  
-                  nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
-                
-                nHTML += '</summary> <br>';
-                nHTML += response[i]['body'];
-                // nHTML += '<hr>';
-                nHTML += '</details> </div> <br>';
-            }
-        
-            results.innerHTML = nHTML;
+            
+            callbackFunc();
     
           })
         }
@@ -184,8 +176,35 @@ var post = function() {
         }
     }
 
+
+    function displayAllPosts() {
+
+        var results = document.getElementById("id-results");
+
+        var nHTML   = '';
+
+        response = getAllPostsResponse;
+    
+        if (searchText !== "")
+            response = getAllPostsResponse.filter(post => post['title'].startsWith(searchText))            
+    
+        for (var i = 0; i < response.length; i++) {
+            nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+            nHTML += '<p id="id-username-post-text">' + response[i]['username'] + '</p>';
+            if (response[i]['file_path'])  
+              nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
+            
+            nHTML += '</summary> <br>';
+            nHTML += response[i]['body'];
+            // nHTML += '<hr>';
+            nHTML += '</details> </div> <br>';
+        }
+    
+        results.innerHTML = nHTML;
+    }
+
     //Get posts of current logged in user and display them
-    function displayPostsOfUser() {
+    function getPostsOfUser() {
         try {
           nanoajax.ajax({url:'rpc/post.rpc.php/?action=current-user'}, function (code, responseText) { 
       
@@ -195,38 +214,41 @@ var post = function() {
             document.getElementById("id-search-text").style.display = "none";
           
             var response = JSON.parse(responseText);
-            console.log(response);
-        
-            var results = document.getElementById("id-results");
-            var nHTML   = '';
+            displayPostsOfUser(response);
+               
             
-            for (var i = 0; i < response.length; i++) {
-                nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
-                nHTML += '<button id="id-edit-button" class="c-title-button" onClick="post.editPostClicked('
-                          + response[i]['id'] + ',' + '\'' + response[i]['title'] + '\'' + ')">Edit</button>';
-                nHTML += '<button id="id-delete-button" class="c-title-button" onClick="post.deletePostClicked(' 
-                          + response[i]['id'] + ')">Delete</button>';
-                if (response[i]['file_path'])
-                {
-                  nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
-                }
-                nHTML += '</summary> <br>';
-                nHTML += response[i]['body'];
-                // nHTML += '<hr>';
-                nHTML += '</details> </div>';
-             }
-          
-             results.innerHTML = nHTML;
           })
         }
         catch (e) {
           console.error(e);
         }
     }
-      
+
+    function displayPostsOfUser(response) {
+        var results = document.getElementById("id-results");
+        var nHTML   = '';
+        
+        for (var i = 0; i < response.length; i++) {
+            nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
+            nHTML += '<button id="id-edit-button" class="c-title-button" onClick="post.editPostClicked('
+                        + response[i]['id'] + ',' + '\'' + response[i]['title'] + '\'' + ')">Edit</button>';
+            nHTML += '<button id="id-delete-button" class="c-title-button" onClick="post.deletePostClicked(' 
+                        + response[i]['id'] + ')">Delete</button>';
+            if (response[i]['file_path'])
+            {
+                nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
+            }
+            nHTML += '</summary> <br>';
+            nHTML += response[i]['body'];
+            // nHTML += '<hr>';
+            nHTML += '</details> </div>';
+        }
+        
+        results.innerHTML = nHTML;
+    }
 
     return {
-        uploadPost, cancelUploadPostClicked, deletePostClicked, deletePost, 
-        editPostClicked, cancelEditPostClicked, updatePost, displayAllPosts, displayPostsOfUser
+        searchTextChanged, uploadPost, cancelUploadPostClicked, deletePostClicked, deletePost, 
+        editPostClicked, cancelEditPostClicked, updatePost, getAllPosts, displayAllPosts, getPostsOfUser
     }
 }();

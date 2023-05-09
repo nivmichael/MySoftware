@@ -28,7 +28,7 @@
   <br>
   <br>
 
-  <input type="text" id="id-search-text" placeholder="search for post title" oninput="searchTextChanged()" >
+  <input type="text" id="id-search-text" placeholder="search for post title" oninput="post.searchTextChanged()" >
 
   <br>
   <br>
