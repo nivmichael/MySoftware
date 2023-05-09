@@ -17,11 +17,13 @@
   
 
   <script type="text/javascript" src="js/nanoajax.min.js"></script>
+  <script defer type="text/javascript" src="js/user.js"></script>
+  <script defer type="text/javascript" src="js/post.js"></script>
   
     
 </head>
 
-<body onload="checkUserLogged();">
+<body onload="user.checkUserLogged();">
   <button id="id-login-btn">Login</button>
   <br>
   <br>
@@ -42,8 +44,8 @@
       <br>
       <br>
       <p id="id-login-error-msg" class="c-error-msg">  </p>
-      <input type="button" id="id-confirm-login-btn" value="Login" onClick="loginClicked()">
-      <input type="button" value="Cancel" onClick="cancelLoginClicked()">
+      <input type="button" id="id-confirm-login-btn" value="Login" onClick="user.loginClicked()">
+      <input type="button" value="Cancel" onClick="user.cancelLoginClicked()">
     </form>
   </div>
 
@@ -72,8 +74,8 @@
         <br>
         <br>
         <p id="id-file-error-msg" class="c-error-msg">  </p>
-        <input type="button" value="Upload Post" onClick="uploadPost()">
-        <input type="button" value="Cancel" onClick="cancelUploadPostClicked()">
+        <input type="button" value="Upload Post" onClick="post.uploadPost()">
+        <input type="button" value="Cancel" onClick="post.cancelUploadPostClicked()">
       </form>
     </div>
 
@@ -84,12 +86,12 @@
         <label for="id-post-title">Title:</label>
         <input type="text" id="id-edit-post-title" name="id-post-title" required>
         <br>
-        <input type="button" value="Update Post" onClick="updatePost()">
-        <input type="button" value="Cancel" onClick="cancelEditPostClicked()">
+        <input type="button" value="Update Post" onClick="post.updatePost()">
+        <input type="button" value="Cancel" onClick="post.cancelEditPostClicked()">
       </form>
     </div>
 
-    <button id="id-logout-btn">Logout</button>
+    <button id="id-logout-btn" onclick="user.logoutClicked()">Logout</button>
   </div>
   
   <div id="id-results" class="c-container">
