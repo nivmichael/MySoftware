@@ -132,7 +132,7 @@ function uploadPost() {
     
           document.getElementById("id-upload-post-form").style.display = "none";
 
-          document.getElementById("id-success-message").innerHTML     = "Post Uploaded Successfully!"
+          document.getElementById("id-success-message").innerHTML      = "Post Uploaded Successfully!"
           
           displayPostsOfUser();
     
@@ -176,7 +176,14 @@ function userLoggedLayout(response) {
 
 function deletePostClicked(postId) {
   // console.log("Delete post clicked");
-  
+  let text = "Are you sure you want to delete the post?";
+  if (confirm(text) == true) {
+    deletePost(postId);
+  } 
+}
+
+
+function deletePost(postId) {
   const formData  = new FormData();
 
   formData.append('post_id', postId);
