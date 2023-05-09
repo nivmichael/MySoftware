@@ -152,43 +152,45 @@ var post = function() {
         }
       
     }
-
+    // Get all a posts and display 
+    // How do we make this function use the result from server in different ways:
+    // 1. display in DOM (like it's doing now)
+    // 2. Print JSON in a dialog
+    // Hint - displayAllPosts should recive a variable/something
     function displayAllPosts() {
         try {
-        nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
+          nanoajax.ajax({url:'rpc/post.rpc.php/?action=all'}, function (code, responseText) { 
         
             var response = JSON.parse(responseText);
-            console.log(response);
-        
+            
+            //TODO: add the function call we want
+            
             var results = document.getElementById("id-results");
             var nHTML   = '';
     
-            if (searchText !== "") {
-            response = response.filter(post => post['title'].startsWith(searchText))
-            }
+            if (searchText !== "")
+              response = response.filter(post => post['title'].startsWith(searchText))            
         
             for (var i = 0; i < response.length; i++) {
                 nHTML += '<div class="c-post"> <details> <summary>' + response[i]['title'];
-                nHTML += '<p id="id-username-post-text">' + response[i]['username'] + '</p>'
-                if (response[i]['file_path'])
-                {
-                nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />'
-                }
+                nHTML += '<p id="id-username-post-text">' + response[i]['username'] + '</p>';
+                if (response[i]['file_path'])  
+                  nHTML += '<br><img src="' + response[i]['file_path'] + '" height=200 width=300 />';
+                
                 nHTML += '</summary> <br>';
                 nHTML += response[i]['body'];
                 // nHTML += '<hr>';
-                nHTML += '</details> </div> <br>'
+                nHTML += '</details> </div> <br>';
             }
         
             results.innerHTML = nHTML;
     
-        })
+          })
         }
         catch (e) {
-        console.error(e);
+          console.error(e);
         }
     }
-
 
     function displayPostsOfUser() {
         try {
