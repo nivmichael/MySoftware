@@ -80,6 +80,7 @@ details[open] summary {
   background-color: #fff;
   border: 1px solid #000;
   padding: 20px;
+  display: none;
 }
 
 
@@ -98,15 +99,11 @@ details[open] summary {
   left: 50%;
 }
 
-
-#id-user-logged-in {
-  display: none;
-}
-
 #id-logout-btn {
   position: absolute;
   top: 0;
   right: 0;
+  background-color: #f44336;
 }
 
 #id-user-logged-in-text {
@@ -116,13 +113,10 @@ details[open] summary {
   font-size: 30px;
 }
 
-#id-logout-btn {
-  background-color: #f44336;
-}
-
 #id-upload-post-btn {
   position: absolute;
   left: 50%;
+  margin-bottom: 20px;
 }
 
 #id-edit-button {
@@ -140,4 +134,17 @@ details[open] summary {
 #id-username-post-text {
   float: right;
   right: 0;
+}
+
+
+#id-success-message {
+  margin-bottom: 10px;
+}
+
+#id-file-to-upload {
+  margin-bottom: 20px;
+}
+
+#password {
+  margin-bottom: 20px;
 }

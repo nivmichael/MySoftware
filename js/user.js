@@ -25,6 +25,12 @@ var user = function() {
     }
 
 
+    function showLoginForm() {
+        document.getElementById("id-login-error-msg").style.display      = "none";
+        document.getElementById("id-login-popup").style.display          = "block";
+    }
+
+
     //make POST request to log the user in
     function loginClicked() {
         var username = document.getElementById("username").value;
@@ -47,6 +53,7 @@ var user = function() {
                 //display new layout with username at time since login
                 var response = JSON.parse(responseText);
                 userLoggedLayout(response);
+                document.getElementById("id-login-popup").style.display         = "none";
         
         
               } else {
@@ -87,6 +94,6 @@ var user = function() {
 
 
     return {
-        checkUserLogged, loginClicked, cancelLoginClicked, logoutClicked
+        checkUserLogged, showLoginForm, loginClicked, cancelLoginClicked, logoutClicked
     }
 }();

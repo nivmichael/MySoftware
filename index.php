@@ -26,7 +26,7 @@
 <body onload="user.checkUserLogged();">
 
   <section id="id-blog">
-    <button id="id-login-btn">Login</button>
+    <button id="id-login-btn" onclick="user.showLoginForm()">Login</button>
     <br>
     <br>
 
@@ -42,13 +42,13 @@
             <br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <br>
-            <br>
             <p id="id-login-error-msg" class="c-error-msg">  </p>
-            <input type="submit" id="id-confirm-login-btn" value="Login" onClick="user.loginClicked()">
+            <input type="button" id="id-confirm-login-btn" value="Login" onClick="user.loginClicked()">
             <input type="button" value="Cancel" onClick="user.cancelLoginClicked()">
         </form>
      </div>
+
+     <div id="id-results-blog" class="c-container">
   </section>
 
   <section id="id-post-management">
@@ -59,30 +59,23 @@
         <p id="id-user-logged-in-text"> user is logged in now! </p>
         <p id="id-success-message">  </p>
 
-        <br>
-        <br>
-
-        <button id="id-upload-post-btn">Create Post</button>
-        <br>
-        <br>
+        <button id="id-upload-post-btn" onclick="post.showCreatePostForm()">Create Post</button>
 
         <div id="id-upload-post-form" class="c-popup-form">
 
-        <form method="post" enctype="multipart/form-data">
-            <label for="id-post-title">Title:</label>
-            <input type="text" id="id-post-title" name="id-post-title" required>
-            <br>
-            <label for="id-post-body">Body:</label>
-            <textarea id="id-post-body" name="id-post-body" required></textarea>
-            <br>
-            Select image to upload:
-            <input type="file" name="fileToUpload" id="id-file-to-upload">
-            <br>
-            <br>
-            <p id="id-file-error-msg" class="c-error-msg">  </p>
-            <input type="submit" value="Upload Post" onClick="post.uploadPost()">
-            <input type="button" value="Cancel" onClick="post.cancelUploadPostClicked()">
-        </form>
+          <form method="post" enctype="multipart/form-data">
+              <label for="id-post-title">Title:</label>
+              <input type="text" id="id-post-title" name="id-post-title" required>
+              <br>
+              <label for="id-post-body">Body:</label>
+              <textarea id="id-post-body" name="id-post-body" required></textarea>
+              <br>
+              Select image to upload:
+              <input type="file" name="fileToUpload" id="id-file-to-upload">
+              <p id="id-file-error-msg" class="c-error-msg">  </p>
+              <input type="button" value="Upload Post" onClick="post.uploadPost()">
+              <input type="button" value="Cancel" onClick="post.cancelUploadPostClicked()">
+          </form>
         </div>
 
 
@@ -99,7 +92,7 @@
 
     </div>
     
-    <div id="id-results" class="c-container">
+    <div id="id-results-post-menagement" class="c-container">
   </section>
 
  

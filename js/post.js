@@ -11,6 +11,13 @@ var post = function() {
         displayAllPosts();
     }
 
+
+    function showCreatePostForm() {
+      document.getElementById("id-file-error-msg").style.display        = "none";
+      document.getElementById("id-upload-post-form").style.display      = "block";
+    }
+  
+
     //make POS request to upload new post
     function uploadPost() {
         // console.log("uploadPost clicked");
@@ -35,9 +42,11 @@ var post = function() {
       
                 var response = JSON.parse(responseText);
           
-                document.getElementById("id-upload-post-form").style.display = "none";
+                document.getElementById("id-upload-post-form").style.display       = "none";
       
-                document.getElementById("id-success-message").innerHTML      = "Post Uploaded Successfully!";
+                document.getElementById("id-success-message").innerHTML            = "Post Uploaded Successfully!";
+
+                document.getElementById("id-upload-post-form").style.display       = "none";
                 
                 getPostsOfUser();
           
@@ -176,7 +185,7 @@ var post = function() {
 
     function displayAllPosts() {
 
-        var results = document.getElementById("id-results");
+        var results = document.getElementById("id-results-blog");
 
         var nHTML   = '';
 
@@ -208,7 +217,6 @@ var post = function() {
             document.getElementById("id-post-title").value          = "";
             document.getElementById("id-post-body").value           = "";
             document.getElementById("id-file-to-upload").value      = "";
-            document.getElementById("id-search-text").style.display = "none";
           
             var response = JSON.parse(responseText);
             displayPostsOfUser(response);
@@ -222,7 +230,7 @@ var post = function() {
     }
 
     function displayPostsOfUser(response) {
-        var results = document.getElementById("id-results");
+        var results = document.getElementById("id-results-post-menagement");
         var nHTML   = '';
         
         for (var i = 0; i < response.length; i++) {
@@ -245,7 +253,7 @@ var post = function() {
     }
 
     return {
-        searchTextChanged, uploadPost, cancelUploadPostClicked, deletePostClicked, deletePost, 
+        searchTextChanged, showCreatePostForm, uploadPost, cancelUploadPostClicked, deletePostClicked, deletePost, 
         editPostClicked, cancelEditPostClicked, updatePost, getAllPosts, displayAllPosts, getPostsOfUser
     }
 }();
