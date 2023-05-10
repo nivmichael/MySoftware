@@ -17,7 +17,7 @@ switch($action)
         break;
 
     case 'upload-post':
-        //TODO: return the result to user
+
         if (!isset($_POST["title"]) || !isset($_POST["body"]))
         {
             http_response_code(500);
@@ -41,7 +41,6 @@ switch($action)
     
     case 'delete-post':
         
-        //TODO: return the result to user
         if (!isset($_POST["post_id"]) || !is_numeric($_POST["post_id"]))
         {
             http_response_code(500);
@@ -58,7 +57,7 @@ switch($action)
 
 
     case 'update-post':
-        //TODO: return the result to user
+
         if (!isset($_POST["post_id"]) || !is_numeric($_POST["post_id"]))
         {
             http_response_code(500);

@@ -59,7 +59,6 @@ class post
      */
     public static function upload_file($user_id)
     {
-        //TODO: check if image is OK (correct size and type)
         $file_name = $_FILES["file"]["name"];
         $file_path = $_FILES["file"]["tmp_name"];
 

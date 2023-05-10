@@ -164,9 +164,6 @@ var post = function() {
         
             getAllPostsResponse = JSON.parse(responseText);
             
-            //TODO: add the function call we want
-            
-            
             callbackFunc();
     
           })

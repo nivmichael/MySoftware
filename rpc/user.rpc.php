@@ -25,8 +25,6 @@ switch($action) {
         }
         $username = $_POST["username"];
         $password = $_POST["password"];
-    
-        //TODO: clean string (remove special characters etc..)
 
         $res =  user::validate_params($username, $password);
 
