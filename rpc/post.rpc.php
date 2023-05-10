@@ -24,6 +24,12 @@ switch($action)
             die('post request is missing parameter in body');
         }
 
+        if (!isset($_SESSION["user_id"]))
+        {
+            http_response_code(500);
+            die('User is not logged in!');
+        }
+
         $title      = $_POST["title"];
         $body       = $_POST["body"];
 
