@@ -29,7 +29,7 @@ switch($action)
 
         $new_filepath = null;
 
-        if ($_FILES["file"])
+        if (isset($_FILES["file"]))
         {
             $new_filepath = post::upload_file($_SESSION["user_id"]);
         }
