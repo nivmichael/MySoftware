@@ -34,7 +34,7 @@ Windows (depracated):
 
 
 
-### Create an page that displays data from API
+### Create an page that displays data from API - Optional!!!
 1. Download nanoajax as a local js file to use for AJAX calls 
 2. Use this link (https://jsonplaceholder.typicode.com/posts) to get json result, and show them in the 'results' div
 3. Filter the posts, keep only the the ones with titles that begin with the letter 'e'
