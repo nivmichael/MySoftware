@@ -32,11 +32,10 @@ class user
             var_dump("connection failed to connect to mysql server");
             exit();
         }
-
-        $q      = "SELECT username FROM users WHERE username='$this->username' AND password='$this->password'";
+        $username = $conn->real_escape_string($this->username);
+        $password = $conn->real_escape_string($this->password);
+        $q      = "SELECT username FROM users WHERE username='$username' AND password='$password'";
         $result = $conn->query($q);
-        // $users = $result->fetch_all(MYSQLI_ASSOC);
-        // var_dump(!!$result->num_rows);
         return !!$result->num_rows;
     }
 }
