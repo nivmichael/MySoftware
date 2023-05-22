@@ -34,28 +34,35 @@ button:hover {
   background-color: #45a049;
 }
 
-.container {
+.c-container {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
 }
 
-.login-container {
+.c-login-container {
   display: flex;
   flex-direction: column;
   width: 50%;
 }
 
-.login-input{
+.c-login-input {
   padding: 12px;
 }
 
-.submit-btn{
+.c-submit-btn {
   margin-top: 15px;
 }
 
-.form-container{
+.c-form-container {
   display: flex;
   justify-content: center;
   margin-top: 50px;
+}
+
+.c-err-msg-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  color: #FF2E2E;
 }

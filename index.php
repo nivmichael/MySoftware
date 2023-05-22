@@ -17,22 +17,23 @@
 
 <body>
 
-<form class="c-form-container" onsubmit="user.loginUser(event)">
+  <form class="c-form-container" onsubmit="user.loginUser(event)">
 
-<div class="c-login-container container">
+    <div class="c-login-container c-container">
 
-  <label for="uname"><b>Username</b></label>
-  <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
+      <label for="uname"><b>Username</b></label>
+      <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
 
-  <label for="passw"><b>Password</b></label>
-  <input class="c-login-input" type="password" placeholder="Enter Password" name="passw" required>
+      <label for="passw"><b>Password</b></label>
+      <input class="c-login-input" type="password" placeholder="Enter Password" name="passw" required>
 
-  <button id="id-submit-button" class="submit-btn" type="submit">Login</button>
+      <button class="c-submit-btn" type="submit">Login</button>
 
-</div>
+    </div>
 
-</form>
-
+  </form>
+  
+  <div id="id-err-login-msg" class="c-err-msg-container">  </div>
 
   <script src="js/user.js"></script>
 
