@@ -17,17 +17,17 @@
 
 <body>
 
-<form class="form-container" onsubmit="user.loginUser(event)">
+<form class="c-form-container" onsubmit="user.loginUser(event)">
 
-<div class="login-container container">
+<div class="c-login-container container">
 
   <label for="uname"><b>Username</b></label>
-  <input class="login-input" type="text" placeholder="Enter Username" name="uname" required>
+  <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
 
   <label for="passw"><b>Password</b></label>
-  <input class="login-input" type="password" placeholder="Enter Password" name="passw" required>
+  <input class="c-login-input" type="password" placeholder="Enter Password" name="passw" required>
 
-  <button class="submit-btn" type="submit">Login</button>
+  <button id="id-submit-button" class="submit-btn" type="submit">Login</button>
 
 </div>
 
