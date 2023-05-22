@@ -3,9 +3,9 @@ class user
 {
     private $user_id  = null;
     private $username = null;
-    private $type     = null;
+    private $name     = null;
 
-    public function __construct($user_id, $username, $name, $type)
+    public function __construct($user_id, $username, $name)
     {
         if(!is_numeric($user_id))
             die('user constractor user_id is not numeric');
