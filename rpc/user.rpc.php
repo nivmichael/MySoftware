@@ -19,10 +19,11 @@ switch ($action) {
             http_response_code(400);
             die("username or password does not match requiremnts");
         }
-        if(!$user->login()){
+        if (!$user->login()) {
             http_response_code(400);
             die("username or password does not exists");
         }
+        var_dump("Success Login");
         break;
 
     default:
