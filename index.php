@@ -14,9 +14,9 @@
 
   </head>
 
-<form id="userLoginForm" onsubmit="userLogin(event)">
+<form id="userLoginForm" onsubmit="user.userLogin(event)">
   <label for="username">Username:</label><br>
-  <input type="text" id="username" name="username"><br>
+  <input type="text" id="username" name="username" required="true"><br>
   <label for="pwd">Password:</label><br>
   <input type="password" id="pwd" name="pwd">
   <input type="submit" id="submitButton" value="Submit"> </input> 
@@ -26,6 +26,5 @@
 
 
   <script src="js/nanoajax.min.js"></script>
-
-  <script src="scripts.js"></script>
+  <script src="js/user.js</script>
 </html>
