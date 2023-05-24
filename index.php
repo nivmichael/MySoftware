@@ -7,17 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>PHP Sandbox</title>
-  <meta name="description" content="PHP sandbox">
-  <meta name="author" content="MMD">
+  <meta name="descrption" content="PHP sandbox">
+  <meta name="authori" content="MMD">
 
   <link rel="stylesheet" href="styles.css?v=1.0">
     
-</head>
 
-Hello World!
-
-<body>
 
   <script src="scripts.js"></script>
+  </head>
+
+<form>
+  <label for="username">Username:</label><br>
+  <input type="text" id="username" name="username"><br>
+  <label for="pwd">Password:</label><br>
+  <input type="password" id="pwd" name="pwd">
+</form>
+<br>
+<button type="button" id="submitButton">Submit </button> 
+
+<body>
 </body>
 </html>
