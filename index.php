@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 
 <html lang="en">
@@ -10,33 +14,95 @@
   <meta name="description" content="PHP sandbox">
   <meta name="author" content="MMD">
   <script src="/libs/nanoajax.min.js"></script>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css?v=1.0">
 
 </head>
 
-<body>
+<body onload="app.onInit()">
 
-  <form class="c-form-container" onsubmit="user.loginUser(event)">
+  <div class="c-container">
 
-    <div class="c-login-container c-container">
+    <nav class="c-navabar-conatiner">
+      <h2><i class="fa-brands fa-blogger-b"></i></h2>
+      <ul class="c-nav-links">
+        <li><a onclick="user.logout()" href="#">Logout</a></li>
+        <!-- <li><a href="#">News</a></li> -->
+      </ul>
+    </nav>
 
-      <label for="uname"><b>Username</b></label>
-      <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
+    <div class="c-sections-container">
 
-      <label for="passw"><b>Password</b></label>
-      <input class="c-login-input" type="password" placeholder="Enter Password" name="passw" required>
+      <section id="id-login-section" class="c-section-container">
 
-      <button class="c-submit-btn" type="submit">Login</button>
+        <div class="c-login-title"> Hello to Blog Login! </div>
 
+        <form class="c-form-container" onsubmit="user.loginUser(event)">
+
+          <label for="uname"><b>Username</b></label>
+          <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
+
+          <label for="passw"><b>Password</b></label>
+          <input class="c-login-input" type="password" placeholder="Enter Password" name="passw" required>
+
+          <button class="c-submit-btn" type="submit">Login</button>
+
+        </form>
+
+        <div id="id-err-login-msg" class="c-err-msg-container"> </div>
+
+      </section>
+
+      <section id="id-blogs-section" class="c-section-container c-hide">
+
+        <div class="c-login-title"> Create your blog! </div>
+
+        <form class="c-form-container" onsubmit="blog.createBlog(event)">
+
+          <label for="blogtitle"><b>Blog Title</b></label>
+          <input class="c-login-input" type="text" placeholder="Enter Title" name="blogtitle" required>
+
+          <label for="blogtext"><b>Blog Text</b></label>
+          <input class="c-login-input" type="text" placeholder="Enter Blog Text" name="blogtext" required>
+
+          <button class="c-submit-btn" type="submit">Post</button>
+        </form>
+        <div id="id-err-login-msg" class="c-err-msg-container"> </div>
+      </section>
+
+      <div id="id-blogs-container" class="c-blogs-container"></div>
     </div>
 
-  </form>
-  
-  <div id="id-err-login-msg" class="c-err-msg-container">  </div>
 
+
+  </div>
+
+  <script src="js/const.js"></script>
   <script src="js/user.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/blog.js"></script>
+
 
 </body>
 
 </html>
+
+
+
+
+<!-- <div class="c-blog-card">
+            <div class="c-blog-title">
+                Blog Title 1
+            </div>
+            <div class="c-blog-text">
+                Here goes some blog text 1
+            </div>
+            <div class="c-blog-bottom c-flex-row-center">
+                <div class="c-blog-btns">
+                    <button class="c-blog-btn c-edit">Edit</button>
+                    <button class="c-blog-btn c-delete">Delete</button>
+                </div>
+                <div class="c-blog-creator">
+                    Created By: Shahar92
+                </div>
+            </div> -->

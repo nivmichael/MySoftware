@@ -32,20 +32,48 @@ class user
     {
         $conn = db::connect() or die($conn->error);
         if ($conn->connect_errno) {
-            var_dump("connection failed to connect to mysql server");
             return false;
         }
+
+        $user = $this->find_user($conn);
+        $this->update_last_login($conn, $user["id"]);
+        $this->init_user_session($user["id"], $user["last_login"]);
+        return true;
+    }
+
+    private function find_user($conn)
+    {
+        //TODO: db::executeQuery("  sda ", array( "username" => $this->username, "password" => $this->password));
         $username = $conn->real_escape_string($this->username);
         $password = $conn->real_escape_string($this->password);
-        $q      = "SELECT username FROM users WHERE username='$username' AND password='$password'";
-        $result = $conn->query($q);
-        if(!$result->num_rows){
-            return false;
+        $q      = "SELECT id, last_login FROM users WHERE username='$username' AND password='$password'";
+        $result = $conn->query($q)
+            or die("mysql error: login()" . $conn->error);
+        $res =  $result->fetch_assoc();
+        if (!$result->num_rows) {
+            return null;
         }
-        // Update last_login column
-        $sql = "UPDATE users SET last_login = now() WHERE username = '$username'";
-        $result = $conn->query($sql) or die ($conn->error);
-        var_dump($result);
-        return true;
+        return $res;
+    }
+
+    private function update_last_login($conn, $user_id)
+    {
+        // Return error in case of failure
+        $sql = "UPDATE users SET last_login = now() WHERE id = '$user_id'";
+        $conn->query($sql)
+            or die("mysql error: login()" . $conn->error);
+    }
+
+    public function init_user_session($id, $last_login)
+    {
+        $_SESSION["logged_in"]  = true;
+        $_SESSION["user_id"]    = $id;
+        $_SESSION["username"]   = $this->username;
+        $_SESSION["last_login"] = $last_login;
+    }
+
+    public static function logout()
+    {
+        session_unset();
     }
 }

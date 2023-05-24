@@ -1,14 +1,73 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  --bg-clr: #121212;
+  --fg-clr: #E4E4E4;
 }
 
 * {
   box-sizing: border-box;
 }
 
-input[type=text],
-select,
-textarea {
+.c-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.c-navabar-conatiner {
+  width: 100%;
+  position: sticky;
+  display: flex;
+  padding: 1em 2em;
+  top: 0;
+  gap: 1em;
+  justify-content: space-between;
+  align-items: center;
+  background: #04AA6D;
+  color: var(--fg-clr);
+  z-index: 100;
+}
+
+.c-nav-links {
+  display: flex;
+  gap: 1em;
+  list-style: none;
+}
+
+
+.c-sections-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.c-section-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.c-login-title {
+  font-size: 20px;
+  text-align: center;
+}
+
+.c-form-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.c-login-input {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -19,8 +78,8 @@ textarea {
   resize: vertical;
 }
 
-input[type=submit],
-button {
+.c-submit-btn {
+  margin-top: 15px;
   background-color: #04AA6D;
   color: white;
   padding: 12px 20px;
@@ -29,40 +88,111 @@ button {
   cursor: pointer;
 }
 
-input[type=submit]:hover,
+.c-submit-btn:hover,
 button:hover {
   background-color: #45a049;
 }
 
-.c-container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+.c-hide {
+  display: none;
 }
 
-.c-login-container {
+.c-display {
+  display: block;
+}
+
+
+
+.c-blogs-container {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
-.c-login-input {
-  padding: 12px;
-}
-
-.c-submit-btn {
+.c-blog-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 20px;
+  width: 100%;
   margin-top: 15px;
+
 }
 
-.c-form-container {
+.c-blog-title {
+  box-shadow: 0px 15px 10px -15px #111;
+  border-bottom: 1px;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-color: aliceblue;
+  border-style: solid;
+}
+
+.c-blog-text {
+  padding: 25px;
+}
+
+.c-flex-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-flex-row-center {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
 }
 
-.c-err-msg-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-  color: #FF2E2E;
+
+.c-blog-bottom {
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px;
+  border-style: solid;
+  border-color: #04AA6D;
+  justify-content: space-between;
+  padding: 15px;
+  width: 100%;
+}
+
+.c-blog-btn {
+  background-color: #04AA6D;
+  /* Green */
+  border: none;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.c-edit {
+  background-color: #45a049;
+}
+
+.c-edit:hover {
+  background-color: #04AA6D;
+}
+
+.c-delete {
+  background-color: #FF0000;
+}
+
+.c-delete:hover {
+  transition: background-color 0.3s;
+  background-color: #FF8A8A;
 }
