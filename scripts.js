@@ -3,9 +3,13 @@ function userLogin(event) {
   //console.dir(event.target.username.value)
   console.log(event);
   console.dir(event);
-  var req = { username: event.target.value };
+  const req = { 
+    username:event.target.username.value,
+    password:event.target.pwd.value
+  };
+  const json=JSON.stringify(req);
 
-  console.log( JSON.stringify(event.target.username.value))
+  console.log(JSON.stringify(req))
   nanoajax.ajax(
     {
       url: "/rpc/user.rpc.php",
@@ -13,7 +17,7 @@ function userLogin(event) {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: req,
+      body: json,
     },
     function (code, responseText, request) {
       console.log(code);
