@@ -10,9 +10,6 @@
   <meta name="authori" content="MMD">
   <link rel="stylesheet" href="styles.css?v=1.0">
 
-  <script src="nanoajax.min.js"></script>
-
-<script src="scripts.js"></script>
 
 
   </head>
@@ -28,4 +25,7 @@
 <br>
 
 
+  <script src="js/nanoajax.min.js"></script>
+
+  <script src="scripts.js"></script>
 </html>

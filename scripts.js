@@ -4,7 +4,6 @@ function userLogin(event) {
   console.log(event);
   console.dir(event);
   var req = { username: event.target.value };
-  var request = new XLHttpRequest();
 
   console.log( JSON.stringify(event.target.username.value))
   nanoajax.ajax(
