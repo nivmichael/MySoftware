@@ -88,11 +88,12 @@ class blog
             return false;
         }
 
-        $q = "SELECT id, title, text, created_at, user_id FROM blogs ORDER BY created_at DESC";
+        //$q = "SELECT id, title, text, created_at, user_id, username FROM blogs ORDER BY created_at DESC";
+        $q = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username FROM blogs AS b JOIN users AS u ON (b.user_id = u.id) ORDER BY b.created_at DESC;";
 
         if (isset($_SESSION["logged_in"])) {
             $user_id = $conn->real_escape_string($_SESSION["user_id"]);
-            $q = "SELECT id, title, text, created_at, user_id FROM blogs WHERE user_id='$user_id' ORDER BY created_at DESC";
+            $q = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username FROM blogs AS b JOIN users AS u ON (b.user_id = u.id) WHERE user_id='$user_id' ORDER BY b.created_at DESC;";
         }
 
         $result = $conn->query($q);

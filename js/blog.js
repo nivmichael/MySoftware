@@ -116,7 +116,7 @@ var blog = function () {
                     <button onclick="blog.deleteBlog(event, ${blog.id})" class="c-blog-btn c-delete">Delete</button>
                 </div>
                 <div class="c-blog-creator">
-                    Created By: ${blog.created_by}
+                    Created By: ${blog.username}
                 </div>
             </div>
         </div>`;
@@ -131,6 +131,7 @@ var blog = function () {
                 let blogs = JSON.parse(res);
                 let blogsInnerHtml = '';
                 for (const blog of blogs) {
+                    console.log(blog);
                     blogsInnerHtml += getBlogInnerHtml(blog)
                 }
                 let element = document.getElementById(blogsContainerId);
