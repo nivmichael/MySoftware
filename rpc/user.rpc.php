@@ -1,36 +1,39 @@
 <?php
-//$payload = file_get_contents('php://input');
+$payload = file_get_contents('php://input');
 $data = json_decode($payload);
-$action = var_dump($_GET);
+$action = $_GET["action"];
 
 switch($action){
     case 'user_login':
-        if(empty($data->username)) {
-            /* Username is null or empty so print a message 
-            before terminating the script */
-            die(json_encode(['error'=>'user.rpc.php: missing username field']));
+        if(empty($data->username) || empty($data->password)) {
+            /* Username is null or empty so return a error message */
+            $response = ['error'=>'missing username or password field'];
+            http_response_code(400);
         }
-        /* Password is null or empty so print a message 
-        before terminating the script */
-        else if(empty($data->password)){
-            die(json_encode(['error'=>'user.rpc.php: missing password field']));
-        }
-        /* Both fields username and password are OK => Calls login_user function*/
+            /* Both fields username and password are OK => Calls login_user function*/
         else {
-            user_login($data->username,$data->password);
+            $response = user_login($data->username,$data->password);    
         }
+        
         break;
 
     default:
-        die(json_encode(['error'=>'user.rpc.php: missing action param']));
+        /* Missing action param */
+        $response = ['error'=>'missing action param'];
+        http_response_code(400);
         break;
 }
 
-function user_login($username,$password) {
+echo json_encode($response);
 
+function user_login($username,$password) {
+    $response = ['success'=>'user login was successful'];
+    // If user exists in Database return 200
+    http_response_code(200);
+    return $response;
 }
 
-// echo "username: ".$data->username.", password: ".$data->password;
+die;
 
 /*
 1. Add a $action variable that stores the $_GET param 'action'
@@ -43,4 +46,3 @@ function user_login($username,$password) {
 
 //var_dump($_REQUEST);
 //var_dump($payload);
-die;

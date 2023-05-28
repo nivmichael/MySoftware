@@ -31,4 +31,9 @@ input[type=submit]:hover, button:hover {
   padding: 20px;
 }
 
+.c-error-message{
+  color: red;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 
