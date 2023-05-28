@@ -43,6 +43,44 @@ class blog
         return $res;
     }
 
+    public static function edit_blog($blog_id, $blog_title, $blog_text, $user_id)
+    {
+        $conn = db::connect() or die($conn->error);
+        if ($conn->connect_errno) {
+            return false;
+        }
+        // $user_id = $conn->real_escape_string($user_id);
+        // $blog_id = $conn->real_escape_string($blog_id);
+        $blog_title = $conn->real_escape_string($blog_title);
+        $blog_text = $conn->real_escape_string($blog_text);
+
+        // Check if this blog is connect to this user
+        $q = "UPDATE blogs
+        SET text = '$blog_text', title = '$blog_title'
+        WHERE user_id = $user_id AND id = $blog_id;";
+        return $conn->query($q) or die($conn->error);
+    }
+
+    public static function delete_blog($blog_id, $user_id)
+    {
+        $conn = db::connect() or die($conn->error);
+        if ($conn->connect_errno) {
+            return false;
+        }
+        $user_id = $conn->real_escape_string($user_id);
+        $blog_id = $conn->real_escape_string($blog_id);
+        // Check if this blog is connect to this user
+        $q = "SELECT user_id FROM blogs WHERE id = '$blog_id' AND user_id = '$user_id'";
+        $result =  $conn->query($q) or die($conn->error);
+        if (!$result->num_rows) {
+            return false;
+        }
+        $q        = "DELETE FROM blogs WHERE id = $blog_id";
+        $conn->query($q)
+            or die($conn->error);
+        return true;
+    }
+
     public static function get_blogs()
     {
         $conn = db::connect() or die($conn->error);

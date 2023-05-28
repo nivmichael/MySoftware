@@ -1,11 +1,15 @@
-const url = '/rpc/user.rpc.php?action=';
+const userUrl = '/rpc/user.rpc.php?action=';
+const blogUrl = '/rpc/blog.rpc.php?action=';
 
 const actions = {
     loginUser: "loginUser",
     isLoggedIn: "isLoggedIn",
     getBlogs: "getBlogs", 
     logout: "logout",
-    addBlog: "addBlog"
+    addBlog: "addBlog",
+    deleteBlog: "deleteBlog",
+    editBlog: "editBlog"
+
 }
 
 const RES_CODE = {
@@ -20,3 +24,8 @@ const SECTIONS = {
 
 const HIDE_CLASS = "c-hide";
 const DISPLAY_CLASS = "c-display";
+
+
+const LS_KEYS = {
+    login: "login"
+} 

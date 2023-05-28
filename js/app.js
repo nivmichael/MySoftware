@@ -2,9 +2,12 @@
 
 var app = function () {
 
+    let currFn = null;
+    let currParamsFn = null
+
     function onInit() {
         // check if user-is-logged-in => {yes-go to blogs | no- stay} 
-        nanoajax.ajax({ url: url + actions.isLoggedIn }, function (code, res) {
+        nanoajax.ajax({ url: userUrl + actions.isLoggedIn }, function (code, res) {
             let currSection = SECTIONS.LOGIN;
             if (code != RES_CODE.OK || !res) {
                 displaySection(currSection);
@@ -14,12 +17,13 @@ var app = function () {
             res = JSON.parse(res);
 
             if (res.logged_in) {
+                loggedIn = true;
                 currSection = SECTIONS.BLOGS;
             }
 
             displaySection(currSection);
-
         })
+        // Show blogs
         blog.setBlogs();
     }
 
@@ -28,8 +32,50 @@ var app = function () {
         for (const key in SECTIONS) {
             hideSection(SECTIONS[key]);
         }
-        // show my section
+        // Show my section
         showSection(sectionId);
+
+    }
+
+    function openPopup(elemId ,fn, paramsFn = null ) {
+        currFn = fn;
+        currParamsFn = paramsFn;
+        let popElem = document.getElementById(elemId);
+        popElem.classList.add('c-visible');
+    }
+
+    function submitPopup(elemId) {
+        let params = null;
+        if (currParamsFn) {
+            params = currParamsFn();
+        }
+        currFn(params);
+        closePopup(elemId);
+    }
+
+    function closePopup(elemId) {
+        let popElem = document.getElementById(elemId);
+        popElem.classList.remove('c-visible');
+
+    }
+
+    function removeElement(elemId) {
+        let element = document.getElementById(elemId);
+        if (!element) {
+            console.error(`element with id: ${elemId} is not found`);
+            return;
+        }
+        element.remove();
+    }
+
+    function toggleVisibility(elemId) {
+        const className = 'c-hidden';
+        let element = document.getElementById(elemId);
+        if (!element.classList.contains(className)) {
+            element.classList.add(className);
+            return;
+        }
+        element.classList.remove(className);
     }
 
     function showSection(sectionId) {
@@ -46,7 +92,12 @@ var app = function () {
 
     return {
         onInit,
-        displaySection
+        displaySection,
+        removeElement,
+        toggleVisibility,
+        openPopup,
+        closePopup,
+        submitPopup
     }
 
 }();

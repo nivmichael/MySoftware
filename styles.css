@@ -34,6 +34,10 @@ html {
   z-index: 100;
 }
 
+.c-stick-bottom{
+  bottom: 0;
+}
+
 .c-nav-links {
   display: flex;
   gap: 1em;
@@ -109,6 +113,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .c-blog-card {
@@ -120,8 +125,8 @@ button:hover {
   border-radius: 20px;
   width: 100%;
   margin-top: 15px;
-
 }
+
 
 .c-blog-title {
   box-shadow: 0px 15px 10px -15px #111;
@@ -153,7 +158,6 @@ button:hover {
   align-items: center;
 }
 
-
 .c-blog-bottom {
   border-bottom: 0;
   border-left: 0;
@@ -180,6 +184,14 @@ button:hover {
   font-size: 16px;
 }
 
+.c-blue{
+  background-color: #ADD8E6;
+}
+
+.c-blue:hover{
+  background-color: #B1ACE6;
+}
+
 .c-edit {
   background-color: #45a049;
 }
@@ -195,4 +207,73 @@ button:hover {
 .c-delete:hover {
   transition: background-color 0.3s;
   background-color: #FF8A8A;
+}
+
+.c-hidden{
+  visibility: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.c-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  top: 30%;
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .popup{
+    width: 70%;
+  }
+}
+
+.c-popup-btns{
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 20px;
 }

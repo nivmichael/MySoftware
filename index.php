@@ -37,7 +37,7 @@ session_start();
 
         <div class="c-login-title"> Hello to Blog Login! </div>
 
-        <form class="c-form-container" onsubmit="user.loginUser(event)">
+        <form class="c-form-container" onsubmit="user.loginUser2(event)">
 
           <label for="uname"><b>Username</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -74,13 +74,26 @@ session_start();
     </div>
 
 
-
+    <nav id="id-msg-container" class="c-navabar-conatiner c-stick-bottom c-hide">
+      <h2><i class="fa-brands fa-blogger-b"></i></h2>
+      <ul class="c-nav-links">
+        <li><a onclick="user.logout()" href="#">Logout</a></li>
+      </ul>
+    </nav>
   </div>
+
+  <div id="id-popup-overlay" class="overlay">
+    <div id="id-popup-conent" class="popup">
+
+    </div>
+  </div>
+   
 
   <script src="js/const.js"></script>
   <script src="js/user.js"></script>
   <script src="js/app.js"></script>
   <script src="js/blog.js"></script>
+  <script src="js/utils.js"></script>
 
 
 </body>

@@ -14,27 +14,6 @@ if (!$action)
 
 switch ($action) {
 
-    case 'addBlog':
-        if (!isset($_SESSION["logged_in"])) {
-            die("user is not Authorized to perfom this action: " . $action);
-        }
-        $data = json_decode($json);
-        $blog = new blog($data->title, $data->text);
-        if(!$blog->validate()){
-            die();
-        } 
-        $blog = $blog->createBlog($_SESSION["user_id"]);
-        die(json_encode($blog));
-        break;
-
-    case 'getBlogs':
-        $blogs = blog::get_blogs();
-        if (!$blogs) {
-            die();    
-        }
-        die(json_encode($blogs));
-        break;
-
     case 'loginUser':
         $data = json_decode($json);
         $user = new user(0, $data->username, $data->password);
