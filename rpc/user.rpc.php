@@ -1,6 +1,7 @@
 <?php
 $payload = file_get_contents('php://input');
 $data = json_decode($payload);
+// CR: check 'action' isset, if not null
 $action = $_GET["action"];
 
 switch($action){
@@ -10,9 +11,9 @@ switch($action){
             $response = ['error'=>'missing username or password field'];
             http_response_code(400);
         }
-            /* Both fields username and password are OK => Calls login_user function*/
         else {
-            $response = user_login($data->username,$data->password);    
+            /* Both fields username and password are OK => Calls login_user function*/
+            $response = user_login($data->username, $data->password);    
         }
         
         break;
@@ -25,8 +26,8 @@ switch($action){
 }
 
 echo json_encode($response);
-
-function user_login($username,$password) {
+// CR: there's no functionality in rpc - only in classes. this function ius part ot user class
+function user_login($username, $password) {
     $response = ['success'=>'user login was successful'];
     // If user exists in Database return 200
     http_response_code(200);

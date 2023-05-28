@@ -22,6 +22,7 @@ var user = (function () {
         body: json,
       },
       function (code, responseText, request) {
+        // CR: add try-catch for each response from server, handle the response and error in this function only
         var response = JSON.parse(responseText);
 
         handleResponse(response, code);
