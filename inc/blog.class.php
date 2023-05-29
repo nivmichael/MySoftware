@@ -85,6 +85,7 @@ class blog
         $target_file = $target_dir . $blog_id . "." . $imageFileType;
         $check = getimagesize($_FILES["file"]["tmp_name"]);
         $msg = "";
+
         if ($check !== false) {
             $msg = $msg . "File is an image - " . $check["mime"] . ".\n";
             $uploadOk = 1;
@@ -123,8 +124,9 @@ class blog
             }
         }
         $res = [
+            "uploaded" => $uploadOk,
             "file_ext" => $imageFileType,
-            "messege"  =>  $msg
+            "msg"  =>  $msg
         ];
         return $res;
     }
@@ -182,12 +184,16 @@ class blog
             return false;
         }
 
-        $q = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username, b.file_ext FROM blogs AS b JOIN users AS u ON (b.user_id = u.id) ORDER BY b.created_at DESC;";
-
+        $select = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username, b.file_ext FROM blogs AS b JOIN users AS u ON (b.user_id = u.id)";
+        $order_by = "ORDER BY b.created_at DESC;";
+        $where = "";
+        
         if (isset($_SESSION["logged_in"])) {
             $user_id = $conn->real_escape_string($_SESSION["user_id"]);
-            $q = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username, b.file_ext FROM blogs AS b JOIN users AS u ON (b.user_id = u.id) WHERE user_id='$user_id' ORDER BY b.created_at DESC;";
+            $where = "WHERE user_id='$user_id'";
         }
+
+        $q = $select . $where . $order_by;
 
         $result = $conn->query($q);
         while ($row = $result->fetch_assoc())

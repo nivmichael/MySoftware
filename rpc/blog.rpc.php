@@ -38,11 +38,13 @@ switch ($action) {
   
         if (!isset($_POST["body"])) {
             http_response_code(500);
-            die('body paramter is missin in the request');
+            die('body paramter is missing in the request');
         }
         if (!isset($_SESSION["logged_in"])) {
+            http_response_code(400);
             die("user is not Authorized to perfom this action: " . $action);
         }
+
         $body       = json_decode($_POST["body"]);
         $blog = new blog($body->title, $body->text);
         if (!$blog->validate()) {
@@ -55,6 +57,12 @@ switch ($action) {
         if (isset($_FILES["file"]) &&  isset($blog_id) ) {
             $file_res = $blog->upload_file($blog_id);
         }
+
+        if(!$file_res["uploaded"]){
+            $blog->delete_blog($_SESSION["user_id"]);
+            die("file didn't uploaded error: " . $file_res["msg"]);
+        }
+
         $blog->set_id($blog_id);
         $blog->update_file_ext($file_res["file_ext"]);
         $new_blog["file_ext"] = $file_res["file_ext"];
