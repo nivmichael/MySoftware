@@ -11,10 +11,8 @@ class user
     }
 
     public function login() {
-        $response['username'] = $this->username;
-        $response['password'] = $this->password;
-        // Checks if username exists with username and password.
-        $sql = "SELECT username,password FROM users WHERE username='admin' AND password='1234';";
+        // Checks if username exists with username and password.        
+        $sql = "SELECT username,password FROM users WHERE username='$this->username' AND password='$this->password';";
         $res =db::connect()->query($sql) or die(db::connect()->error);
 
         if (db::connect()->connect_errno) {
