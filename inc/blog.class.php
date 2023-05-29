@@ -72,7 +72,6 @@ class blog
 
     public function upload_file($blog_id)
     {
-
         $target_dir = "../images/";
 
         if (!file_exists($target_dir)) {
@@ -80,7 +79,7 @@ class blog
         }
 
         $tar_file = $target_dir . basename($_FILES["file"]["name"]);
-        $uploadOk = 1;
+        $uploadOk = true;
         $imageFileType = strtolower(pathinfo($tar_file, PATHINFO_EXTENSION));
         $target_file = $target_dir . $blog_id . "." . $imageFileType;
         $check = getimagesize($_FILES["file"]["tmp_name"]);
@@ -88,41 +87,39 @@ class blog
 
         if ($check !== false) {
             $msg = $msg . "File is an image - " . $check["mime"] . ".\n";
-            $uploadOk = 1;
+            $uploadOk = true;
         } else {
             $msg = $msg . "File is not an image.";
-            $uploadOk = 0;
+            $uploadOk = false;
         }
         
         // Check if file already exists
         if (file_exists($target_file)) {
             $msg = $msg . "Sorry, file already exists.";
-            $uploadOk = 0;
+            $uploadOk = false;
         }
         
         // Check file size
         if ($_FILES["file"]["size"] > 500000) {
             $msg = $msg . "Sorry, your file is too large.";
-            $uploadOk = 0;
+            $uploadOk = false;
         }
         
         // Allow certain file formats
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
             $msg = $msg . "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
+            $uploadOk = false;
         }
         
         // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            $msg = $msg . "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
-        } else {
+        if ($uploadOk) {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
                 $msg = $msg . "The file " . htmlspecialchars(basename($_FILES["file"]["name"])) . " has been uploaded.";
             } else {
                 $msg = $msg . "Sorry, there was an error uploading your file.";
             }
-        }
+        } 
+
         $res = [
             "uploaded" => $uploadOk,
             "file_ext" => $imageFileType,

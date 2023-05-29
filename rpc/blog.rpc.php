@@ -40,12 +40,13 @@ switch ($action) {
             http_response_code(500);
             die('body paramter is missing in the request');
         }
+
         if (!isset($_SESSION["logged_in"])) {
             http_response_code(400);
             die("user is not Authorized to perfom this action: " . $action);
         }
 
-        $body       = json_decode($_POST["body"]);
+        $body = json_decode($_POST["body"]);
         $blog = new blog($body->title, $body->text);
         if (!$blog->validate()) {
             die("blog params are not valid");
