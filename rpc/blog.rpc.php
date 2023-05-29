@@ -6,7 +6,7 @@ session_start();
 header("Content-Type: application/json");
 $json = file_get_contents('php://input');
 $data = json_decode($json);
-
+$res  = null;
 $action = $_GET['action'] ?? null;
 unset($_GET['action']);
 
@@ -20,47 +20,58 @@ switch ($action) {
             die("user is not Authorized to perfom this action: " . $action);
         }
 
-        // Check this blog connect to this user that try to perform this action
-        $edited_blog = blog::edit_blog($data->blog_id, $data->title, $data->text ,$_SESSION["user_id"]);
-        die($edited_blog);
+        $blog = new blog($data->text, $data->title, $data->blog_id);
+        $edited_blog = $blog->edit_blog($_SESSION["user_id"]);
+        $res = $edited_blog;
         break;
 
     case 'deleteBlog':
         if (!isset($_SESSION["logged_in"])) {
             die("user is not Authorized to perfom this action: " . $action);
         }
-        
-        $deleted = blog::delete_blog($data->blog_id, $_SESSION["user_id"]);
-        die($deleted);
+        $blog = new blog(null, null, $data->blog_id);
+        $res = $blog->delete_blog($_SESSION["user_id"]);
         break;
 
+
     case 'addBlog':
+  
+        if (!isset($_POST["body"])) {
+            http_response_code(500);
+            die('body paramter is missin in the request');
+        }
         if (!isset($_SESSION["logged_in"])) {
             die("user is not Authorized to perfom this action: " . $action);
         }
-        $blog = new blog($data->title, $data->text);
+        $body       = json_decode($_POST["body"]);
+        $blog = new blog($body->title, $body->text);
         if (!$blog->validate()) {
-            die();
+            die("blog params are not valid");
         }
-        $blog = $blog->createBlog($_SESSION["user_id"]);
-        die(json_encode($blog));
+
+        $new_blog = $blog->createBlog($_SESSION["user_id"]);
+        $blog_id = (int)$new_blog["id"];
+
+        if (isset($_FILES["file"]) &&  isset($blog_id) ) {
+            $file_res = $blog->upload_file($blog_id);
+        }
+        $blog->set_id($blog_id);
+        $blog->update_file_ext($file_res["file_ext"]);
+        $new_blog["file_ext"] = $file_res["file_ext"];
+        $res = $new_blog;
         break;
 
     case 'getBlogs':
-        $blogs = blog::get_blogs();
+        $blog = new blog();
+        $blogs = $blog->get_blogs();
         if (!$blogs) {
-            die();
+            $blogs = [];
         }
-        die(json_encode($blogs));
+        $res = $blogs;
         break;
 
     default:
-        die;
         break;
 }
-// V -- CR - add a switch case for action
-// V -- Add validation for username & password - if one missing retur error "missing credentials" and show error beneath the login
-// V -- Create users table
-// V -- Create a login function in user.class.php 
-// V -- Validate agains the DB with mysqli 
-// V -- Make sure to sanitize the unam and pwd 
+
+die(json_encode($res));

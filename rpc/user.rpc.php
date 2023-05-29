@@ -5,9 +5,9 @@ session_start();
 // Takes raw data from the request
 header("Content-Type: application/json");
 $json = file_get_contents('php://input');
-
 $action = $_GET['action'] ?? null;
 unset($_GET['action']);
+$res = null;
 
 if (!$action)
     return http_response_code(400);
@@ -25,8 +25,6 @@ switch ($action) {
             http_response_code(400);
             die("username or password does not exists");
         }
-
-        die(json_encode($res));
         break;
 
     case 'logout':
@@ -42,31 +40,11 @@ switch ($action) {
                 "username"     => $_SESSION["username"],
                 "last_login"   => $_SESSION["last_login"],
             ];
-            die(json_encode($res));
         }
-
-
-
         break;
 
     default:
-        die;
         break;
 }
 
-die();
-
-
-
-
-
-
-
-
-
-// V -- CR - add a switch case for action
-// V -- Add validation for username & password - if one missing retur error "missing credentials" and show error beneath the login
-// V -- Create users table
-// V -- Create a login function in user.class.php 
-// V -- Validate agains the DB with mysqli 
-// V -- Make sure to sanitize the unam and pwd 
+die(json_encode($res));

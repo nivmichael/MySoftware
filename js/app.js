@@ -8,23 +8,21 @@ var app = function () {
     function onInit() {
         // check if user-is-logged-in => {yes-go to blogs | no- stay} 
         nanoajax.ajax({ url: userUrl + actions.isLoggedIn }, function (code, res) {
-            let currSection = SECTIONS.LOGIN;
-            if (code != RES_CODE.OK || !res) {
-                displaySection(currSection);
-                return;
-            }
-
             res = JSON.parse(res);
 
-            if (res.logged_in) {
+            loggedIn = false;
+            let currSection = SECTIONS.LOGIN;
+
+            if (res && res.logged_in) {
                 loggedIn = true;
                 currSection = SECTIONS.BLOGS;
             }
 
+            user.setLogin(loggedIn);
             displaySection(currSection);
+            blog.setBlogs();
         })
-        // Show blogs
-        blog.setBlogs();
+
     }
 
     function displaySection(sectionId) {
@@ -37,7 +35,7 @@ var app = function () {
 
     }
 
-    function openPopup(elemId ,fn, paramsFn = null ) {
+    function openPopup(elemId, fn, paramsFn = null) {
         currFn = fn;
         currParamsFn = paramsFn;
         let popElem = document.getElementById(elemId);

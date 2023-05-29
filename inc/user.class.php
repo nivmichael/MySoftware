@@ -36,6 +36,9 @@ class user
         }
 
         $user = $this->find_user($conn);
+        if (!$user) {
+            return false;
+        }
         $this->update_last_login($conn, $user["id"]);
         $this->init_user_session($user["id"], $user["last_login"]);
         return true;

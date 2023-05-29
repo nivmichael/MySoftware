@@ -39,3 +39,9 @@ VALUES
         'texttstdtstststststst',
         1
     );
+
+-- created by Shahar at 29-5
+ALTER TABLE
+    blogs
+ADD
+    `file_ext` varchar(100);

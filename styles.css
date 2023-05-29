@@ -277,3 +277,21 @@ button:hover {
   margin-top: 15px;
   gap: 20px;
 }
+
+.c-blog-img-container{
+  margin-bottom: 30px;
+  width: 320px;
+  height: 160px;
+}
+
+.c-blog-img{
+  width: 100%;
+  height: 100%;
+}
+
+
+.c-err-msg-container{
+  text-align: center;
+  color: #FF0000;
+  margin-top: 5px;
+}

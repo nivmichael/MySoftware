@@ -1,23 +1,20 @@
 var util = function () {
 
-    function sendAjax(url, callBackFN, method = 'GET', body = null, errHandling = (err)=> console.error(err), errHandlingMsg = 'Response Code is not OK!' ) {
+    function sendAjax(url, callBackFN, method = 'GET', body = null,
+     errHandling = (err,res)=> {console.error(err); console.error(res);}, errHandlingMsg = 'Response Code is not OK!' ) {
         body = JSON.stringify(body);
 
         wrapFn = (code, res) => {
             try {
                 if (code != RES_CODE.OK ) {
                     let err = new Error(errHandlingMsg);
-                    errHandling(err);
+                    errHandling(err,res);
                     return;                                        
                 }
                 callBackFN(code, res);
 
             } catch (e) {
-                if (!errHandling) {
-                    console.error(e);
-                    return;
-                }
-                errHandling(e);
+                errHandling(e,res);
             };
         };
 

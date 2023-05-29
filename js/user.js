@@ -1,28 +1,10 @@
 var user = function () {
-    // function loginUser(ev) {
-    //     ev.preventDefault();
-    //     const body = JSON.stringify({ username: ev.target.elements.uname.value, password: ev.target.elements.passw.value })
-    //     nanoajax.ajax({ url: userUrl + actions.loginUser, body, method: 'POST' }, function (code, res) {
-    //         try {
-    //             if (code != RES_CODE.OK) {
-    //                 // Display Error Msg
-    //                 return;
-    //             }
-    //             app.displaySection(SECTIONS.BLOGS);
-    //             setLogin(true);
-    //             blog.setBlogs();
-    //         } catch (e) {
-    //             console.error(`error in loginUser(): ${error}`);
-    //         }
-    //     })
-    // }
 
     function setLogin(loggedIn){
         if (!loggedIn) {
             localStorage.removeItem(LS_KEYS.login);
             return;
         }
-
         localStorage.setItem(LS_KEYS.login, loggedIn);
     }
  
@@ -31,15 +13,17 @@ var user = function () {
         return logged !== null; 
     }
 
-    function loginUser2(ev) {
+    function loginUser(ev) {
         ev.preventDefault();
         fn = () => {
-            app.displaySection(SECTIONS.BLOGS);
             setLogin(true);
+            app.displaySection(SECTIONS.BLOGS);
             blog.setBlogs();
         }
         const body = { username: ev.target.elements.uname.value, password: ev.target.elements.passw.value };
-        util.sendAjax(userUrl + actions.loginUser,fn, 'POST' , body);
+        util.sendAjax(userUrl + actions.loginUser,fn, 'POST' , body, (err,res)=>{
+            document.getElementById('id-err-login-msg').innerHTML = res;
+        });
     }
 
     function logout() {
@@ -52,8 +36,9 @@ var user = function () {
 
     return {
         logout,
-        loginUser2,
-        isLoggedIn
+        loginUser,
+        isLoggedIn,
+        setLogin
     }
 
 }();

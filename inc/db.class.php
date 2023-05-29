@@ -8,8 +8,6 @@ class db
 	private static $password = "q1w2e3R4!";
 	private static $db = "testphp";
 
-	private static $replaceSign = "$%$";
-
 	public static function connect()
 	{
 		if (!self::$conn) {
@@ -19,16 +17,5 @@ class db
 		}
 
 		return self::$conn;
-	}
-
-	public static function executeQuery($query, ...$params)
-	{	
-		$q      = "SELECT username FROM users WHERE username='$%$' AND password='$%$'";
-		$newQuery = "sadas";
-		foreach ($params as $p) {
-			$newQuery = strings::str_replace_first(db::$replaceSign, $p, $q);
-			
-		}
-		//$result = $conn->query($q);
 	}
 }

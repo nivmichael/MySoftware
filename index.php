@@ -37,7 +37,7 @@ session_start();
 
         <div class="c-login-title"> Hello to Blog Login! </div>
 
-        <form class="c-form-container" onsubmit="user.loginUser2(event)">
+        <form class="c-form-container" onsubmit="user.loginUser(event)">
 
           <label for="uname"><b>Username</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Username" name="uname" required>
@@ -57,22 +57,25 @@ session_start();
 
         <div class="c-login-title"> Create your blog! </div>
 
-        <form class="c-form-container" onsubmit="blog.createBlog(event)">
+        <form class="c-form-container" onsubmit="blog.createBlog(event)" method="post" enctype="multipart/form-data">
 
           <label for="blogtitle"><b>Blog Title</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Title" name="blogtitle" required>
 
           <label for="blogtext"><b>Blog Text</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Blog Text" name="blogtext" required>
+          
+          <label for="uploadFile"><b>Upload image</b></label>
+          <input type="file" name="uploadFile" accept="image/jpeg, image/png, image/jpg" id="id-upload-image">
 
           <button class="c-submit-btn" type="submit">Post</button>
         </form>
-        <div id="id-err-login-msg" class="c-err-msg-container"> </div>
+
+        <div id="id-err-blog-msg" class="c-err-msg-container"> </div>
       </section>
 
       <div id="id-blogs-container" class="c-blogs-container"></div>
     </div>
-
 
     <nav id="id-msg-container" class="c-navabar-conatiner c-stick-bottom c-hide">
       <h2><i class="fa-brands fa-blogger-b"></i></h2>
@@ -87,9 +90,9 @@ session_start();
 
     </div>
   </div>
-   
 
-  <script src="js/const.js"></script>
+
+  <script src="js/config.js"></script>
   <script src="js/user.js"></script>
   <script src="js/app.js"></script>
   <script src="js/blog.js"></script>
