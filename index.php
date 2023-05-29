@@ -12,23 +12,24 @@
 
 </head>
 
-  <body>
+<body>
   <form id="id-user-login-form" action="/index.php" onsubmit="user.userLogin(event)">
-  <label for="username">Username:</label><br>
-  <input type="text" id="id-username" name="username"><br>
-  <label for="pwd">Password:</label><br>
-  <input type="password" id="id-password" name="pwd">
-  <input type="submit" id="id-submit-button" value="Submit"> </input> 
+    <label for="username">Username:</label><br>
+    <input type="text" id="id-username" name="username"><br>
+    <label for="pwd">Password:</label><br>
+    <input type="password" id="id-password" name="pwd">
+    <input type="submit" id="id-submit-button" value="Submit"> </input>
 
-  <div id="id-error-message" class="c-error-message"></div>
+    <div id="id-message" class="c-message"></div>
 
-</form>
-<br>
+  </form>
+  <br>
 </body>
 
 
 
-  <script src="js/nanoajax.min.js"></script>
-  <script src="js/user.js"></script>
-  <script src="js/userActionsType.js"></script>
+<script src="js/nanoajax.min.js"></script>
+<script src="js/user.js"></script>
+<script src="js/userActionsType.js"></script>
+
 </html>

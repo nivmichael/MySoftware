@@ -1,38 +1,39 @@
 <?php
+require_once '../mysoftware_autoload.class.php';
+
 $payload = file_get_contents('php://input');
 $data = json_decode($payload);
 // CR: check 'action' isset, if not null
 $action = $_GET["action"];
+if(isset($action)==null)
+    die;    
 
 switch($action){
+
     case 'user_login':
+    
         if(empty($data->username) || empty($data->password)) {
-            /* Username is null or empty so return a error message */
-            $response = ['error'=>'missing username or password field'];
-            http_response_code(400);
+            // Username is null or empty so return a error message 
+            $response = rpchelper::rpcerror('missing username or password field');
         }
         else {
-            /* Both fields username and password are OK => Calls login_user function*/
-            $response = user_login($data->username, $data->password);    
+            // Both fields username and password are OK => Calls login_user function
+           
+            $user = new user($data->username, $data->password);
+            $db = db::connect();
+            $response[] = $user->login();
+        
         }
         
         break;
 
     default:
-        /* Missing action param */
-        $response = ['error'=>'missing action param'];
-        http_response_code(400);
+        // Missing action param
+        $response = rpchelper::rpcerror('missing action param');
         break;
 }
 
 echo json_encode($response);
-// CR: there's no functionality in rpc - only in classes. this function ius part ot user class
-function user_login($username, $password) {
-    $response = ['success'=>'user login was successful'];
-    // If user exists in Database return 200
-    http_response_code(200);
-    return $response;
-}
 
 die;
 

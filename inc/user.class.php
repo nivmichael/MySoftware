@@ -1,17 +1,35 @@
 <?php 
 class user
 {
-    private $user_id  = null;
     private $username = null;
-    private $type     = null;
+    private $password = null;
 
-    public function __construct($user_id, $username, $name, $type)
+    public function __construct($username,$password)
     {
-        if(!is_numeric($user_id))
-            die('user constractor user_id is not numeric');
-        $this->user_id  = $user_id;
         $this->username = $username;
-        $this->name     = $name;
+        $this->password = $password;
     }
-    
+
+    public function login() {
+        $response['username'] = $this->username;
+        $response['password'] = $this->password;
+        // Checks if username exists with username and password.
+        $sql = "SELECT username,password FROM users WHERE username='admin' AND password='1234';";
+        $res =db::connect()->query($sql) or die(db::connect()->error);
+
+        if (db::connect()->connect_errno) {
+            var_dump("conn error");
+        }
+        if($res->num_rows>0){
+            // If user exists in Database return 200
+            $response = ['success'=>'user login was successful'];
+            http_response_code(200);
+        }
+        else{
+            $response = ['unsuccessful'=>'user login was not successful'];
+            http_response_code(404);
+        }
+      
+        return $response;
+    }
 }

@@ -1,7 +1,9 @@
 var user = (function () {
   function userLogin(event) {
+    var responseMessage=document.getElementById('id-message');
+
     event.preventDefault();
-    console.dir(event);
+    //console.dir(event);
     // console.log(event);
     // console.dir(event);
     const req = {
@@ -22,10 +24,36 @@ var user = (function () {
         body: json,
       },
       function (code, responseText, request) {
+        
         // CR: add try-catch for each response from server, handle the response and error in this function only
-        var response = JSON.parse(responseText);
+        //var response = JSON.parse(responseText);
+        console.log(responseText);
+        return;
+        // Hide error
+        responseMessage.textContent='';
 
-        handleResponse(response, code);
+        if (code === 200) {
+          // Handle successful login response from user.rpc.php
+          try {
+            console.log(response);
+          if (response.success) {
+            alert(response.success);
+          } else if (response.error) {
+            responseMessage.textContent=response.error;
+          }
+          } catch (error) {
+            throw new Exception(error);
+          }
+        } else {
+          // Handle error
+          try {
+            console.log('Error: ' + code);
+            responseMessage.textContent=response.error;
+          } catch (error) {
+            throw new Exception(error);
+          }
+  
+        }
       }
     );
   }
@@ -34,32 +62,5 @@ var user = (function () {
     userLogin,
   };
 })();
-
-function handleResponse(response, code) {
-  hideError();
-  if (code === 200) {
-    // Handle successful login response from user.rpc.php
-    console.log(response);
-    if (response.success) {
-      alert(response.success);
-    } else if (response.error) {
-      showError(response.error);
-    }
-  } else {
-    // Handle error
-    console.log('Error: ' + code);
-    showError(response.error);
-  }
-}
-
-function showError(message){
-  var errorMessage=document.getElementById('id-error-message');
-  errorMessage.textContent=message;
-}
-
-function hideError(){
-  var errorMessage=document.getElementById('id-error-message');
-  errorMessage.textContent='';
-}
 
 
