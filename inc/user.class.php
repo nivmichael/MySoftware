@@ -11,14 +11,16 @@ class user
     }
 
     public function login() {
+        // CR: sanitize strings, trim, strip tags
+        // For numeric we use is_numeric
+        $response = false;
         // Checks if username exists with username and password.        
-        $sql = "SELECT username,password FROM users WHERE username='$this->username' AND password='$this->password';";
-        $res =db::connect()->query($sql) or die(db::connect()->error);
+        $sql = "SELECT username,password FROM users WHERE username='$this->username' AND password='$this->password'";
+        //var_dump($sql);die;
+        $res = db::connect()->query($sql) or die(db::connect()->error);
 
-        if (db::connect()->connect_errno) {
-            var_dump("conn error");
-        }
-        if($res->num_rows>0){
+        if($res->num_rows > 0){
+            // CR: Add session - save user id, name last login
             // If user exists in Database return 200
             $response = ['success'=>'user login was successful'];
             http_response_code(200);

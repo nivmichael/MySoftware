@@ -11,7 +11,13 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 
 </head>
-
+<!-- 
+  CR:
+  Split the index into two section:
+  1. our login blog
+  2. our blog post form, which show only when we're logged in
+  3. Add logouy button in blog section - send rpc to logout and kill session
+-->
 <body>
   <form id="id-user-login-form" action="/index.php" onsubmit="user.userLogin(event)">
     <label for="username">Username:</label><br>

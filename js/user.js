@@ -26,9 +26,7 @@ var user = (function () {
       function (code, responseText, request) {
         
         // CR: add try-catch for each response from server, handle the response and error in this function only
-        //var response = JSON.parse(responseText);
-        console.log(responseText);
-        return;
+        var response = JSON.parse(responseText);
         // Hide error
         responseMessage.textContent='';
 
@@ -37,20 +35,22 @@ var user = (function () {
           try {
             console.log(response);
           if (response.success) {
+            // Id login successfull - show new section of blog post form
             alert(response.success);
+
           } else if (response.error) {
-            responseMessage.textContent=response.error;
+            responseMessage.textContent = response.error;
           }
-          } catch (error) {
-            throw new Exception(error);
+          } catch (e) {
+              console.log('userLogin error:' + e);
           }
         } else {
           // Handle error
           try {
             console.log('Error: ' + code);
-            responseMessage.textContent=response.error;
-          } catch (error) {
-            throw new Exception(error);
+            responseMessage.textContent = response.error;
+          } catch (e) {
+              console.log('userLogin error:' + e);
           }
   
         }

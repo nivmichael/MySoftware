@@ -3,10 +3,8 @@ require_once '../mysoftware_autoload.class.php';
 
 $payload = file_get_contents('php://input');
 $data = json_decode($payload);
-// CR: check 'action' isset, if not null
-$action = $_GET["action"];
-if(isset($action)==null)
-    die;    
+$action = isset($_GET["action"]) ?? null;
+$response = [];
 
 switch($action){
 
@@ -19,9 +17,9 @@ switch($action){
         else {
             // Both fields username and password are OK => Calls login_user function
            
-            $user = new user($data->username, $data->password);
-            $db = db::connect();
-            $response[] = $user->login();
+            $user       = new user($data->username, $data->password);
+            $db         = db::connect();
+            $response['success'] = $user->login();
         
         }
         
