@@ -38,5 +38,8 @@ const ELEM_ID = {
     errLoginMsg: 'id-err-login-msg',
     logoutBtn: 'id-logout-li',
     errBlogMsg: 'id-err-blog-msg',
+    imagePreviewContainer: 'id-image-preview-container',
+    imagePreview: 'id-image-perview',
+    imageUploadInput: 'id-upload-image-input'
 
 }

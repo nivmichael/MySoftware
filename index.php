@@ -25,6 +25,7 @@ session_start();
 
     <nav class="c-navabar-conatiner">
       <h2><i class="fa-brands fa-blogger-b"></i></h2>
+      <input oninput="blog.search(event)" class="c-search-input" type="input" placeholder="Search" />
       <ul class="c-nav-links">
         <li id="id-username-li"></li>
         <li id="id-logout-li" class="c-hide"><button class="c-blog-btn c-white" onclick="user.logout()">Logout</button></li>
@@ -65,10 +66,16 @@ session_start();
           <label for="blogtext"><b>Blog Text</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Blog Text" name="blogtext" required>
 
-          <div>
-            <label class="c-upload-btn c-blue" for="id-upload-image"><b>Upload image</b></label>
-            <input onchange="blog.fileChanged(event)" type="file" accept="image/jpeg, image/png, image/jpg" id="id-upload-image">
-            <span id="id-filename">  </span>
+          <div class="c-image-preview-container">
+            <label class="c-upload-btn c-blue" for="id-upload-image-input"><b>Upload image</b></label>
+            <input onchange="blog.fileChanged(event)" type="file" accept="image/jpeg, image/png, image/jpg" id="id-upload-image-input">
+            <span class="c-filename-text" id="id-filename"> </span>
+          </div>
+          
+          <div id="id-image-preview-container" class="c-image-preview-container c-hide">
+            <div class="c-image-perview-box">
+              <img id="id-image-perview" class="c-image-perview">
+            </div>
           </div>
 
           <button class="c-submit-btn" type="submit">Post</button>

@@ -8,7 +8,11 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 $res  = null;
 $action = $_GET['action'] ?? null;
+$search = $_GET['search'] ?? null;
 unset($_GET['action']);
+unset($_GET['search']);
+
+
 
 if (!$action)
     return http_response_code(400);
@@ -46,6 +50,16 @@ switch ($action) {
             die('Please upload a file');
         }
 
+        if ($_FILES["file"]["error"] > 0) {
+            http_response_code(500);
+            die(config::file_err[$_FILES["file"]["error"]]);
+        }
+
+        if (!isset($_FILES["file"]["tmp_name"])) {
+            http_response_code(500);
+            die("file should contain temp location");
+        }
+
         if (!isset($_SESSION["logged_in"])) {
             http_response_code(400);
             die("user is not Authorized to perfom this action: " . $action);
@@ -63,25 +77,27 @@ switch ($action) {
             die("didn't succes to create blog");
         }
 
+
+        $blog_id = (int)$new_blog["id"];
         // Upload image
-        $file_res = $blog->upload_file((int)$new_blog["id"]);
+        $file_res = $blog->upload_file($blog_id);
 
         // Delete blog in case not uploaded image
         if (!$file_res["uploaded"]) {
             $blog->delete_blog($_SESSION["user_id"]);
             die("file didn't uploaded error: " . $file_res["msg"]);
         }
-
         // Update blog column file_ext
         $blog->set_id($blog_id);
         $blog->update_file_ext($file_res["file_ext"]);
         $new_blog["file_ext"] = $file_res["file_ext"];
         $res = $new_blog;
+
         break;
 
     case 'getBlogs':
         $blog = new blog();
-        $blogs = $blog->get_blogs();
+        $blogs = $blog->get_blogs($search);
         if (!$blogs) {
             $blogs = [];
         }

@@ -1,17 +1,48 @@
 var blog = function () {
 
+    let statedTimeout = false;
+    let lastValue = null;
+
     function fileChanged(event) {
         event.preventDefault();
         const filename = event.target?.files?.item(0)?.name
         if (filename) {
             document.getElementById(ELEM_ID.filenameInput).innerHTML =  filename;
+            updatePreview(event.target?.files?.item(0), ELEM_ID.imagePreview);
+            let elem = document.getElementById(ELEM_ID.imagePreviewContainer);
+            if(elem){
+                elem.classList.remove(HIDE_CLASS);
+            }
         }
+    }
+
+    function updatePreview(file, target) {
+        let reader = new FileReader();
+    
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            let img = document.getElementById(target);
+            img.src = reader.result;
+        }
+    }
+
+    function search(event) {
+        event.preventDefault();
+        lastValue = event.target.value
+        
+        if(!statedTimeout){
+            setTimeout(() => {
+                statedTimeout = false;
+                setBlogs(lastValue);
+            }, 500);
+        }
+        statedTimeout = true;
     }
 
     function createBlog(ev) {
         ev.preventDefault();
         const body = JSON.stringify({ text: ev.target.elements.blogtext.value, title: ev.target.elements.blogtitle.value });
-        const file = document.getElementById("id-upload-image").files[0];
+        const file = document.getElementById(ELEM_ID.imageUploadInput).files[0];
     
         const formData = new FormData();
         formData.append('body', body);
@@ -27,6 +58,7 @@ var blog = function () {
                 ev.target.elements.blogtext.value = '';
                 ev.target.elements.blogtitle.value = '';
                 document.getElementById(ELEM_ID.filenameInput).innerHTML =  '';
+                document.getElementById(ELEM_ID.imagePreviewContainer).classList.add(HIDE_CLASS);
                 let htmlBlog = getBlogInnerHtml(JSON.parse(res));
                 let element = document.getElementById(ELEM_ID.blogsContainer);
                 let html = htmlBlog + element.innerHTML;
@@ -131,8 +163,9 @@ var blog = function () {
         </div>`;
     }
 
-    function setBlogs() {
-        nanoajax.ajax({ url: blogUrl + actions.getBlogs }, function (code, res) {
+    function setBlogs(searchValue = null) {
+        
+        nanoajax.ajax({ url: blogUrl + actions.getBlogs + "&search=" + searchValue}, function (code, res) {
             try {
                 if (code != RES_CODE.OK || !res) {
                     return;
@@ -160,7 +193,8 @@ var blog = function () {
         deleteBlog,
         displayBtns,
         editBlog,
-        fileChanged
+        fileChanged,
+        search
     }
 
 }();

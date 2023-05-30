@@ -20,6 +20,7 @@ class blog
 
     public function set_id($id)
     {
+
         $this->id = $id;
     }
 
@@ -76,6 +77,7 @@ class blog
 
     public function upload_file($blog_id)
     {
+
         $target_dir = "../images/";
         if (!file_exists($target_dir)) {
             mkdir($target_dir, 0777, true);
@@ -86,6 +88,7 @@ class blog
         $imageFileType = strtolower(pathinfo($temp_file, PATHINFO_EXTENSION));
         $target_file = $target_dir . $blog_id . "." . $imageFileType;
         $check = getimagesize($_FILES["file"]["tmp_name"]);
+
         $msg = "";
 
         if ($check !== false) {
@@ -95,6 +98,8 @@ class blog
             $msg = $msg . "File is not an image.\n";
             $uploadOk = false;
         }
+
+
 
         // Check if file already exists
         if (file_exists($target_file)) {
@@ -116,10 +121,11 @@ class blog
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk) {
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+            $moved = move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+            if ($moved) {
                 $msg = $msg . "The file " . htmlspecialchars(basename($_FILES["file"]["name"])) . " has been uploaded.\n";
             } else {
-                $msg = $msg . "Sorry, there was an error uploading your file.\n";
+                $msg = $msg . "Sorry, there was an error uploading your file. \n";
             }
         }
 
@@ -182,15 +188,19 @@ class blog
         return true;
     }
 
-    public function get_blogs()
+    public function get_blogs($search = null)
     {
+        if ($search == "null") {
+            $search = null;
+        }
+
         $conn = db::connect() or die($conn->error);
         if ($conn->connect_errno) {
             return false;
         }
 
         $select = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username, b.file_ext FROM blogs AS b JOIN users AS u ON (b.user_id = u.id)";
-        $order_by = "ORDER BY b.created_at DESC;";
+        $order_by = " ORDER BY b.created_at DESC;";
         $where = "";
 
         if (isset($_SESSION["logged_in"])) {
@@ -198,9 +208,23 @@ class blog
             $where = "WHERE user_id='$user_id'";
         }
 
-        $q = $select . $where . $order_by;
+        if ($search) {
+            $search = $conn->real_escape_string($search);
+            $where = $where . "AND b.title LIKE '%$search%'";
+        }
 
-        $result = $conn->query($q);
+        $q = $select . $where . $order_by;
+        $result = null;
+        try {
+            $result = $conn->query($q);
+        } catch (Exception $e) {
+            var_dump($e);
+            var_dump($conn->error);
+            die;
+        }
+
+
+
         while ($row = $result->fetch_assoc())
             $rows[] = $row;
         $result->free();
