@@ -40,10 +40,6 @@ class blog
         SET file_ext = '$file_ext'
         WHERE id = $this->id;";
 
-        // Check this blog connect to this user that try to perform this action
-        // $q = "UPDATE blogs
-        // SET text = '$blog_text', title = '$blog_title'
-        // WHERE user_id = $user_id AND id = $this->id;";
         return $conn->query($q) or die($conn->error);
     }
 
@@ -55,16 +51,24 @@ class blog
         }
         $text = $conn->real_escape_string($this->text);
         $title = $conn->real_escape_string($this->title);
+
         $q = "INSERT INTO blogs 
                 (title, text, user_id)
             VALUES
                 ( '$title', '$text', '$id' );";
+
         $conn->query($q)
             or die("mysql error: createBlog(): " . $conn->error);
-        // TODO: add created by
-        $q  = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username 
-            FROM blogs AS b JOIN users AS u ON (b.user_id = u.id)
-            WHERE b.id = $conn->insert_id ORDER BY b.created_at DESC;";        
+
+        $q  = "SELECT 
+                    b.id, b.title, b.text, b.created_at, b.user_id, u.username
+               FROM 
+                    blogs AS b JOIN users AS u ON (b.user_id = u.id)
+               WHERE 
+                    b.id = $conn->insert_id
+               ORDER BY 
+                    b.created_at DESC;";
+
         $result = $conn->query($q)
             or die("mysql error: createBlog(): " . $conn->error);
         return $result->fetch_assoc();
@@ -73,14 +77,13 @@ class blog
     public function upload_file($blog_id)
     {
         $target_dir = "../images/";
-
         if (!file_exists($target_dir)) {
             mkdir($target_dir, 0777, true);
         }
 
-        $tar_file = $target_dir . basename($_FILES["file"]["name"]);
         $uploadOk = true;
-        $imageFileType = strtolower(pathinfo($tar_file, PATHINFO_EXTENSION));
+        $temp_file = config::images_url . "/" . basename($_FILES["file"]["name"]);
+        $imageFileType = strtolower(pathinfo($temp_file, PATHINFO_EXTENSION));
         $target_file = $target_dir . $blog_id . "." . $imageFileType;
         $check = getimagesize($_FILES["file"]["tmp_name"]);
         $msg = "";
@@ -89,41 +92,41 @@ class blog
             $msg = $msg . "File is an image - " . $check["mime"] . ".\n";
             $uploadOk = true;
         } else {
-            $msg = $msg . "File is not an image.";
+            $msg = $msg . "File is not an image.\n";
             $uploadOk = false;
         }
-        
+
         // Check if file already exists
         if (file_exists($target_file)) {
-            $msg = $msg . "Sorry, file already exists.";
+            $msg = $msg . "Sorry, file already exists.\n";
             $uploadOk = false;
         }
-        
+
         // Check file size
         if ($_FILES["file"]["size"] > 500000) {
-            $msg = $msg . "Sorry, your file is too large.";
+            $msg = $msg . "Sorry, your file is too large.\n";
             $uploadOk = false;
         }
-        
+
         // Allow certain file formats
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-            $msg = $msg . "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $msg = $msg . "Sorry, only JPG, JPEG, PNG & GIF files are allowed.\n";
             $uploadOk = false;
         }
-        
+
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk) {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                $msg = $msg . "The file " . htmlspecialchars(basename($_FILES["file"]["name"])) . " has been uploaded.";
+                $msg = $msg . "The file " . htmlspecialchars(basename($_FILES["file"]["name"])) . " has been uploaded.\n";
             } else {
-                $msg = $msg . "Sorry, there was an error uploading your file.";
+                $msg = $msg . "Sorry, there was an error uploading your file.\n";
             }
-        } 
+        }
 
         $res = [
+            "msg"      => $msg,
             "uploaded" => $uploadOk,
             "file_ext" => $imageFileType,
-            "msg"  =>  $msg
         ];
         return $res;
     }
@@ -163,14 +166,19 @@ class blog
             return "connect_errno";
         }
         // Check if this blog is connect to this user
-        $q = "SELECT user_id FROM blogs WHERE id = $this->id AND user_id = $user_id";
+        $q = "SELECT user_id, file_ext FROM blogs WHERE id = $this->id AND user_id = $user_id";
         $result =  $conn->query($q) or die($conn->error);
         if (!$result->num_rows) {
             return false;
         }
+        $blog_to_delete =  $result->fetch_assoc();
         $q = "DELETE FROM blogs WHERE id = $this->id";
         $conn->query($q)
             or die($conn->error);
+        $file_path = "../images/" . $this->id . "." . $blog_to_delete["file_ext"];
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
         return true;
     }
 
@@ -184,7 +192,7 @@ class blog
         $select = "SELECT b.id, b.title, b.text, b.created_at, b.user_id, u.username, b.file_ext FROM blogs AS b JOIN users AS u ON (b.user_id = u.id)";
         $order_by = "ORDER BY b.created_at DESC;";
         $where = "";
-        
+
         if (isset($_SESSION["logged_in"])) {
             $user_id = $conn->real_escape_string($_SESSION["user_id"]);
             $where = "WHERE user_id='$user_id'";

@@ -35,10 +35,15 @@ switch ($action) {
 
 
     case 'addBlog':
-  
+
         if (!isset($_POST["body"])) {
             http_response_code(500);
             die('body paramter is missing in the request');
+        }
+
+        if (!isset($_FILES["file"])) {
+            http_response_code(500);
+            die('Please upload a file');
         }
 
         if (!isset($_SESSION["logged_in"])) {
@@ -46,24 +51,28 @@ switch ($action) {
             die("user is not Authorized to perfom this action: " . $action);
         }
 
+        // Create blog
         $body = json_decode($_POST["body"]);
         $blog = new blog($body->title, $body->text);
         if (!$blog->validate()) {
             die("blog params are not valid");
         }
-
         $new_blog = $blog->createBlog($_SESSION["user_id"]);
-        $blog_id = (int)$new_blog["id"];
 
-        if (isset($_FILES["file"]) &&  isset($blog_id) ) {
-            $file_res = $blog->upload_file($blog_id);
+        if (!isset($new_blog["id"])) {
+            die("didn't succes to create blog");
         }
 
-        if(!$file_res["uploaded"]){
+        // Upload image
+        $file_res = $blog->upload_file((int)$new_blog["id"]);
+
+        // Delete blog in case not uploaded image
+        if (!$file_res["uploaded"]) {
             $blog->delete_blog($_SESSION["user_id"]);
             die("file didn't uploaded error: " . $file_res["msg"]);
         }
 
+        // Update blog column file_ext
         $blog->set_id($blog_id);
         $blog->update_file_ext($file_res["file_ext"]);
         $new_blog["file_ext"] = $file_res["file_ext"];

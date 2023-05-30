@@ -7,9 +7,6 @@ class user
     private $created_at   = null;
     private $last_login   = null;
 
-    const username_length = 3;
-    const password_length = 5;
-
     public function __construct($user_id, $username, $password)
     {
         if (!is_numeric($user_id))
@@ -21,7 +18,7 @@ class user
 
     public function validate()
     {
-        if (strlen(trim($this->username)) <= user::username_length or strlen(trim($this->password)) <= user::password_length) {
+        if (strlen(trim($this->username)) <= config::username_length or strlen(trim($this->password)) <= config::password_length) {
             return false;
         }
 
@@ -46,7 +43,6 @@ class user
 
     private function find_user($conn)
     {
-        //TODO: db::executeQuery("  sda ", array( "username" => $this->username, "password" => $this->password));
         $username = $conn->real_escape_string($this->username);
         $password = $conn->real_escape_string($this->password);
         $q      = "SELECT id, last_login FROM users WHERE username='$username' AND password='$password'";
@@ -61,7 +57,6 @@ class user
 
     private function update_last_login($conn, $user_id)
     {
-        // Return error in case of failure
         $sql = "UPDATE users SET last_login = now() WHERE id = '$user_id'";
         $conn->query($sql)
             or die("mysql error: login()" . $conn->error);

@@ -1,12 +1,18 @@
 var blog = function () {
-    const blogsContainerId = 'id-blogs-container';
+
+    function fileChanged(event) {
+        event.preventDefault();
+        const filename = event.target?.files?.item(0)?.name
+        if (filename) {
+            document.getElementById(ELEM_ID.filenameInput).innerHTML =  filename;
+        }
+    }
 
     function createBlog(ev) {
         ev.preventDefault();
         const body = JSON.stringify({ text: ev.target.elements.blogtext.value, title: ev.target.elements.blogtitle.value });
         const file = document.getElementById("id-upload-image").files[0];
-        console.log(file);
-
+    
         const formData = new FormData();
         formData.append('body', body);
         formData.append('file', file);
@@ -14,14 +20,15 @@ var blog = function () {
         nanoajax.ajax({ url: blogUrl + actions.addBlog, body: formData, method: 'POST' }, function (code, res) {
             try {
                 if (code != RES_CODE.OK) {
-                    // TODO: Display Error Msg
+                    document.getElementById(ELEM_ID.errBlogMsg).innerHTML = res;
                     return;
                 }
-                console.log(res);
+                
                 ev.target.elements.blogtext.value = '';
                 ev.target.elements.blogtitle.value = '';
+                document.getElementById(ELEM_ID.filenameInput).innerHTML =  '';
                 let htmlBlog = getBlogInnerHtml(JSON.parse(res));
-                let element = document.getElementById(blogsContainerId);
+                let element = document.getElementById(ELEM_ID.blogsContainer);
                 let html = htmlBlog + element.innerHTML;
                 element.innerHTML = html;
             } catch (e) {
@@ -37,7 +44,7 @@ var blog = function () {
     function getEditBlogHtml(blogText, blogTitle) {
         return `
         <h2>Edit</h2>
-        <a class="close" onclick="app.closePopup('id-popup-overlay')" >&times;</a>
+        <a class="close" onclick="app.closePopup('${ELEM_ID.popupOverlay}')" >&times;</a>
         <div class="content">
             <form class="c-form-container">
               <label for="blogtitle"><b>Blog Title</b></label>
@@ -46,8 +53,8 @@ var blog = function () {
               <input id="id-blog-title" class="c-login-input" type="text" placeholder="Enter Blog Text" name="blogtext" value="${blogTitle}" required>
             </form>
             <div class="c-popup-btns">
-                <button onclick="app.closePopup('id-popup-overlay')" class="c-blog-btn c-blue">Cancel</button>
-                <button onclick="app.submitPopup('id-popup-overlay')" class="c-blog-btn ">Submit</button>
+                <button onclick="app.closePopup('${ELEM_ID.popupOverlay}')" class="c-blog-btn c-blue">Cancel</button>
+                <button onclick="app.submitPopup('${ELEM_ID.popupOverlay}')" class="c-blog-btn ">Submit</button>
             </div>
         </div>
      `;
@@ -56,42 +63,40 @@ var blog = function () {
     function getDeleteBlogHtml() {
         return `
         <h2>Delete</h2>
-        <a class="close" onclick="app.closePopup('id-popup-overlay')">&times;</a>
+        <a class="close" onclick="app.closePopup('${ELEM_ID.popupOverlay}')">&times;</a>
         <div class="content">
           Are you sure you want to delete it?
         </div>
         <div class="c-popup-btns">
-          <button onclick="app.closePopup('id-popup-overlay')" class="c-blog-btn c-blue">Cancel</button>
-          <button onclick="app.submitPopup('id-popup-overlay')" class="c-blog-btn c-delete">Delete</button>
+          <button onclick="app.closePopup('${ELEM_ID.popupOverlay}')" class="c-blog-btn c-blue">Cancel</button>
+          <button onclick="app.submitPopup('${ELEM_ID.popupOverlay}')" class="c-blog-btn c-delete">Delete</button>
         </div>`;
     }
 
     function editBlog(ev, blogId, blogText, blogTitle) {
         ev.preventDefault();
-        document.getElementById('id-popup-conent').innerHTML = getEditBlogHtml(blogText, blogTitle);
-        app.openPopup('id-popup-overlay', (blog) => {
+        document.getElementById(ELEM_ID.popupContent).innerHTML = getEditBlogHtml(blogText, blogTitle);
+        app.openPopup(ELEM_ID.popupOverlay, (blog) => {
             let fn = (code, res) => {
-                console.log(code, res);
                 setBlogs();
             }
             const body = { blog_id: blogId, text: blog.text, title: blog.title };
             util.sendAjax(blogUrl + actions.editBlog, fn, 'POST', body);
         }, () => {
-            let title = document.getElementById('id-blog-title').value;
-            let text = document.getElementById('id-blog-text').value;
+            let title = document.getElementById(ELEM_ID.blogTitle).value;
+            let text = document.getElementById(ELEM_ID.blogText).value;
             return { title, text };
         });
     }
 
     function deleteBlog(ev, blogId) {
         ev.preventDefault();
-        document.getElementById('id-popup-conent').innerHTML = getDeleteBlogHtml();
+        document.getElementById(ELEM_ID.popupContent).innerHTML = getDeleteBlogHtml();
 
-        app.openPopup('id-popup-overlay', () => {
+        app.openPopup(ELEM_ID.popupOverlay, () => {
             let fn = (code, res) => {
 
                 if (code != RES_CODE.OK || !res) {
-                    // id-msg-container
                     // TODO: Display Error Msg
                     return;
                 }
@@ -138,7 +143,7 @@ var blog = function () {
                 for (const blog of blogs) {
                     blogsInnerHtml += getBlogInnerHtml(blog)
                 }
-                let element = document.getElementById(blogsContainerId);
+                let element = document.getElementById(ELEM_ID.blogsContainer);
                 element.innerHTML = blogsInnerHtml;
 
 
@@ -154,7 +159,8 @@ var blog = function () {
         createBlog,
         deleteBlog,
         displayBtns,
-        editBlog
+        editBlog,
+        fileChanged
     }
 
 }();

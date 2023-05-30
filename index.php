@@ -26,8 +26,8 @@ session_start();
     <nav class="c-navabar-conatiner">
       <h2><i class="fa-brands fa-blogger-b"></i></h2>
       <ul class="c-nav-links">
-        <li><a onclick="user.logout()" href="#">Logout</a></li>
-        <!-- <li><a href="#">News</a></li> -->
+        <li id="id-username-li"></li>
+        <li id="id-logout-li" class="c-hide"><button class="c-blog-btn c-white" onclick="user.logout()">Logout</button></li>
       </ul>
     </nav>
 
@@ -64,9 +64,12 @@ session_start();
 
           <label for="blogtext"><b>Blog Text</b></label>
           <input class="c-login-input" type="text" placeholder="Enter Blog Text" name="blogtext" required>
-          
-          <label for="uploadFile"><b>Upload image</b></label>
-          <input type="file" name="uploadFile" accept="image/jpeg, image/png, image/jpg" id="id-upload-image">
+
+          <div>
+            <label class="c-upload-btn c-blue" for="id-upload-image"><b>Upload image</b></label>
+            <input onchange="blog.fileChanged(event)" type="file" accept="image/jpeg, image/png, image/jpg" id="id-upload-image">
+            <span id="id-filename">  </span>
+          </div>
 
           <button class="c-submit-btn" type="submit">Post</button>
         </form>

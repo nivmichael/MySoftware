@@ -45,3 +45,4 @@ ALTER TABLE
     blogs
 ADD
     `file_ext` varchar(100);
+
