@@ -48,7 +48,6 @@ switch($action) {
 
     case 'user_logout': 
          // HTTP Response 200 by Default
-
          if($user->logout()) {
             $response["status"] = true;
             $response["msg"] = "logout was successful";
@@ -61,7 +60,6 @@ switch($action) {
 
         break;
     
-
     default:
         // Missing action param
         $response = rpchelper::rpcerror('missing action param');
@@ -71,13 +69,8 @@ switch($action) {
 die(json_encode($response));
 
 /*
-1. Add a $action variable that stores the $_GET param 'action'
-2. Create a switch/case bloke that uses action as it's switch
-3. In the 'userLogin' case - validate that we got both the username and password
-4. If missing one of them, return JSON error to client and print beneath the login form
-5. If both params are OK, call a method in user.class.php named login_user that gets both params
-6. Create the users table in MySQL - talk with michael about changes.sql + schema.sql
+1. Create a blog_posts table
+2. Create a form to upload a post with params we have in the git readme
+3. Creat a blog.rpc.file to handle the call
 */
 
-//var_dump($_REQUEST);
-//var_dump($payload);
