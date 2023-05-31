@@ -3,9 +3,9 @@ var user = (function () {
   let currSection = SECTION.login;
 
   function userLogin(event) {
-    var messageLogin = document.getElementById("id-message-login");
-
     event.preventDefault();
+
+    var messageLogin = document.getElementById("id-message-login");
 
     const req = {
       username: event.target.username.value,
@@ -24,10 +24,10 @@ var user = (function () {
       },
       function (code, responseText, request) {
         // CR: add try-catch for each response from server, handle the response and error in this function only
-        var response = JSON.parse(responseText);
-        // Hide error
-        messageLogin.textContent = "";
         try {
+          var response = JSON.parse(responseText);
+          // Hide error
+          messageLogin.textContent = "";
           if (response.status) {
             // Id login successful - show new section of create blog
 
@@ -45,7 +45,7 @@ var user = (function () {
     );
   }
 
-  function userLogout(event){
+  function userLogout(event) {
     event.preventDefault();
 
     var messageLogout = document.getElementById("id-message-create-blog");

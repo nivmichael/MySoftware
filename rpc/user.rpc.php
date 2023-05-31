@@ -13,7 +13,8 @@ $response = [
     "data" => null,
 ];
 
-switch($action){
+switch($action)
+{
     case 'user_login': 
         $response["status"] = false;
 
@@ -21,12 +22,14 @@ switch($action){
             // Username is null or empty so return a error message
             $response = rpchelper::rpcerror('missing username or password field');
         }
-        else {
+        else 
+        {
             // Both fields username and password are OK => Calls login_user function
             $user       = new user($data->username, $data->password);
             $db         = db::connect();
 
-            if($user->login()) {
+            if($user->login()) 
+            {
                // HTTP Response 200 by Default
                $user->init_session();
                $response["status"] = true;
@@ -41,17 +44,19 @@ switch($action){
         break;
 
     case 'user_logout': 
-         // HTTP Response 200 by Default
-
-         if($user->logout()){
+        // HTTP Response 200 by Default
+        // CR:  what is missing? hint, you have the solution above us + OOP
+        $user       = new user();
+        
+        if($user->logout()){
             $response["status"] = true;
             $response["msg"] = "logout was successful";
-         }
-         else{
+        }
+        else{
             $response["status"] = true;
             $response["msg"] = "logout was not successful";
             http_response_code(400);
-         }
+        }
 
         break;
     
@@ -65,12 +70,9 @@ switch($action){
 die(json_encode($response));
 
 /*
-1. Add a $action variable that stores the $_GET param 'action'
-2. Create a switch/case bloke that uses action as it's switch
-3. In the 'userLogin' case - validate that we got both the username and password
-4. If missing one of them, return JSON error to client and print beneath the login form
-5. If both params are OK, call a method in user.class.php named login_user that gets both params
-6. Create the users table in MySQL - talk with michael about changes.sql + schema.sql
+1. Create a blog_posts table
+2. Create a form to upload a post with params we have in the git readme
+3. Creat a blog.rpc.file to handle the call
 */
 
 //var_dump($_REQUEST);
