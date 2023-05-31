@@ -6,17 +6,41 @@ class user
     private $password = null;
     private $last_login = null;
 
-
-    public function __construct($username, $password, $id = null)
+    public function __construct($username = null, $password = null, $id = null)
     {
-        $this->username = $username;
-        $this->password = $password;
-        $this->id       = $id;
+        if($this->id == null) {
+            $this->id       = $id;
+            $this->username = $username;
+            $this->password = $password; 
+        }
     }
 
     public function set_id($id)
     {
-        $this->id       = $id;
+        if(!is_numeric($id))
+        {
+            $this->id = $id;
+        }
+    }
+
+    public function set_username($username)
+    {
+        $this->username = $username;
+    }
+
+    public function set_password($password)
+    {
+        $this->password = $password;
+    }
+
+    public function get_username()
+    {
+        return $this->username;
+    }
+
+    public function get_password()
+    {
+        return $this->password;
     }
 
     public function init_session()
@@ -26,28 +50,36 @@ class user
         ];
     }
 
-    // CR: sanitize strings, trim, strip tags
-    // For numeric we use is_numeric
     public function login()
     {
-        $conn = db::connect();
-        $password = $conn->real_escape_string($this->password);
-        $username = $conn->real_escape_string($this->username);
+        $data = [];
+
+        $conn     = db::connect();
+        $password = $conn->real_escape_string(trim(strip_tags($this->password)));
+        $username = $conn->real_escape_string(trim(strip_tags($this->username)));
 
         // Checks if username exists with username and password.        
-        $sql = "SELECT id,username,password FROM users WHERE username='$username' AND password='$password'";
+        $sql = "SELECT id, 
+        username, 
+        password 
+        FROM users 
+        WHERE username='$username' 
+        AND password='$password'";
 
-        $res = $conn->query($sql) or die($conn->error);
+        $res = $conn->query($sql) 
+        or die("Mysql error: login()" . $conn->error);
+    
         $data = $res->fetch_row();
-        // Sets the id from SQL Database
-        $this->set_id($data[0]);
 
-        return $res->num_rows > 0;
+        if(!isset($data)) {
+            return false;
+        }
+
+        return $data[0];
     }
 
     public function logout()
     {
-        return  session_destroy();
-
+        return session_destroy();
     }
 }

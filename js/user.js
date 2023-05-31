@@ -3,9 +3,9 @@ var user = (function () {
   let currSection = SECTION.login;
 
   function userLogin(event) {
-    var messageLogin = document.getElementById("id-message-login");
-
     event.preventDefault();
+
+    var messageLogin = document.getElementById("id-message-login");
 
     const req = {
       username: event.target.username.value,
@@ -22,12 +22,11 @@ var user = (function () {
         method: "POST",
         body: json,
       },
-      function (code, responseText, request) {
-        // CR: add try-catch for each response from server, handle the response and error in this function only
-        var response = JSON.parse(responseText);
-        // Hide error
-        messageLogin.textContent = "";
+      function (code, responseText, request) {     
         try {
+          var response = JSON.parse(responseText);
+          // Hide error
+          messageLogin.textContent = "";
           if (response.status) {
             // Id login successful - show new section of create blog
 
@@ -59,11 +58,10 @@ var user = (function () {
         method: "GET",
       },
       function (code, responseText, request) {
-        // CR: add try-catch for each response from server, handle the response and error in this function only
-        var response = JSON.parse(responseText);
-        // Hide error
-        messageLogout.textContent = "";
         try {
+          var response = JSON.parse(responseText);
+          // Hide error
+          messageLogout.textContent = "";
           if (response.status) {
             alert(response.msg);
             // display login section and hide currSection => SECTION.createBlog;

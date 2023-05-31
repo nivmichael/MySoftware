@@ -12,5 +12,6 @@ CREATE TABLE users(
 INSERT INTO users (username, password, created_at)
 VALUES ("admin", "1234", NOW());
 
--- 2023-05-29 Michael, add name to users
-ALTER TABLE users ADD fname VARCHAR (100) DEFAULT NULL AFTER password;
+-- 2023-05-31 Diana, add address to users
+ALTER TABLE users ADD address VARCHAR (100) DEFAULT NULL AFTER password;
+

@@ -13,7 +13,9 @@ $response = [
     "data" => null,
 ];
 
-switch($action){
+$user = new user();
+
+switch($action) {
     case 'user_login': 
         $response["status"] = false;
 
@@ -22,20 +24,24 @@ switch($action){
             $response = rpchelper::rpcerror('missing username or password field');
         }
         else {
-            // Both fields username and password are OK => Calls login_user function
-            $user       = new user($data->username, $data->password);
+            // Both fields username and password are OK => set username and password 
+            // And call login_user function
+            $user->set_username($data->username);
+            $user->set_password($data->password);            
             $db         = db::connect();
 
-            if($user->login()) {
-               // HTTP Response 200 by Default
-               $user->init_session();
-               $response["status"] = true;
-               $response["msg"] = "login was successful";
+            $user_login = $user->login();
+            if($user_login) {
+                $user->set_id($user_login);
+                // HTTP Response 200 by Default
+                $user->init_session();
+                $response["status"] = true;
+                $response["msg"] = "login was successful";
             }
-            else{
+            else {
                 $response["status"] = false;
                 $response["msg"]="login was not successful";
-                http_response_code(404);
+                http_response_code(404);   
             }
         }
         break;
@@ -43,11 +49,11 @@ switch($action){
     case 'user_logout': 
          // HTTP Response 200 by Default
 
-         if($user->logout()){
+         if($user->logout()) {
             $response["status"] = true;
             $response["msg"] = "logout was successful";
          }
-         else{
+         else {
             $response["status"] = true;
             $response["msg"] = "logout was not successful";
             http_response_code(400);
