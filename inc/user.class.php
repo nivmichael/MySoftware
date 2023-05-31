@@ -1,35 +1,53 @@
-<?php 
+<?php
 class user
 {
+    private $id = null;
     private $username = null;
     private $password = null;
+    private $last_login = null;
 
-    public function __construct($username,$password)
+
+    public function __construct($username, $password, $id = null)
     {
         $this->username = $username;
         $this->password = $password;
+        $this->id       = $id;
     }
 
-    public function login() {
-        // CR: sanitize strings, trim, strip tags
-        // For numeric we use is_numeric
-        $response = false;
-        // Checks if username exists with username and password.        
-        $sql = "SELECT username,password FROM users WHERE username='$this->username' AND password='$this->password'";
-        //var_dump($sql);die;
-        $res = db::connect()->query($sql) or die(db::connect()->error);
+    public function set_id($id)
+    {
+        $this->id       = $id;
+    }
 
-        if($res->num_rows > 0){
-            // CR: Add session - save user id, name last login
-            // If user exists in Database return 200
-            $response = ['success'=>'user login was successful'];
-            http_response_code(200);
-        }
-        else{
-            $response = ['unsuccessful'=>'user login was not successful'];
-            http_response_code(404);
-        }
-      
-        return $response;
+    public function init_session()
+    {
+        $_SESSION = [
+            "user_id" => $this->id,
+        ];
+    }
+
+    // CR: sanitize strings, trim, strip tags
+    // For numeric we use is_numeric
+    public function login()
+    {
+        $conn = db::connect();
+        $password = $conn->real_escape_string($this->password);
+        $username = $conn->real_escape_string($this->username);
+
+        // Checks if username exists with username and password.        
+        $sql = "SELECT id,username,password FROM users WHERE username='$username' AND password='$password'";
+
+        $res = $conn->query($sql) or die($conn->error);
+        $data = $res->fetch_row();
+        // Sets the id from SQL Database
+        $this->set_id($data[0]);
+
+        return $res->num_rows > 0;
+    }
+
+    public function logout()
+    {
+        return  session_destroy();
+
     }
 }

@@ -1,7 +1,16 @@
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+}
+* {
+  box-sizing: border-box;
+}
 
-input[type=text],input[type=password], select, textarea {
+/* Sign In Form Styles */
+input[type="text"],
+input[type="password"],
+select,
+textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
@@ -12,8 +21,9 @@ input[type=text],input[type=password], select, textarea {
   resize: vertical;
 }
 
-input[type=submit], button {
-  background-color: #04AA6D;
+input[type="submit"],
+button {
+  background-color: #04aa6d;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -21,7 +31,8 @@ input[type=submit], button {
   cursor: pointer;
 }
 
-input[type=submit]:hover, button:hover {
+input[type="submit"]:hover,
+button:hover {
   background-color: #45a049;
 }
 
@@ -31,9 +42,40 @@ input[type=submit]:hover, button:hover {
   padding: 20px;
 }
 
-.c-message{
+.c-message {
   color: red;
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
+.c-text-area {
+  width: 50%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+  display: block;
+  margin: 0 auto;
+}
+
+.c-blog-form-title {
+  text-align: center;
+  color: black;
+}
+
+.c-hide-content {
+  display: none;
+}
+
+.c-button-log-out{
+  background-color:red;
+}
+
+.c-button-log-out:hover{
+  background-color:red;
+
+}
