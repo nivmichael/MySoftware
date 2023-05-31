@@ -40,6 +40,7 @@ const ELEM_ID = {
     errBlogMsg: 'id-err-blog-msg',
     imagePreviewContainer: 'id-image-preview-container',
     imagePreview: 'id-image-perview',
-    imageUploadInput: 'id-upload-image-input'
+    imageUploadInput: 'id-upload-image-input',
+    
 
 }

@@ -1,15 +1,10 @@
-// TODO: Save UserID In global Var
-
 var app = function () {
-
     let currFn = null;
     let currParamsFn = null
 
+    //CR: Move to util.ajax -- V
     function onInit() {
-        // check if user-is-logged-in => {yes-go to blogs | no- stay} 
-        nanoajax.ajax({ url: userUrl + actions.isLoggedIn }, function (code, res) {
-            res = JSON.parse(res);
-
+        const successFn = (code, res)=>{
             loggedIn = false;
             let currSection = SECTIONS.LOGIN;
 
@@ -21,10 +16,35 @@ var app = function () {
             user.setLogin(loggedIn);
             displaySection(currSection);
             blog.setBlogs();
-        })
+        }
 
+        const errorFn = (code,err)=>{
+            let elem = document.getElementById(ELEM_ID.errLoginMsg);
+            if(elem){
+                elem.innerHTML = err;
+            }
+        }
+
+        util.sendAjax(userUrl + actions.isLoggedIn, successFn , null, null , errorFn);
+
+        // nanoajax.ajax({ url: userUrl + actions.isLoggedIn }, function (code, res) {
+        //     res = JSON.parse(res);
+
+        //     loggedIn = false;
+        //     let currSection = SECTIONS.LOGIN;
+
+        //     if (res && res.logged_in) {
+        //         loggedIn = true;
+        //         currSection = SECTIONS.BLOGS;
+        //     }
+
+        //     user.setLogin(loggedIn);
+        //     displaySection(currSection);
+        //     blog.setBlogs();
+        // })
     }
 
+    
     function displaySection(sectionId) {
         // Hide all sections
         for (const key in SECTIONS) {
@@ -32,7 +52,6 @@ var app = function () {
         }
         // Show my section
         showSection(sectionId);
-
     }
 
     function openPopup(elemId, fn, paramsFn = null) {

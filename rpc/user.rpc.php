@@ -6,7 +6,6 @@ session_start();
 header("Content-Type: application/json");
 $json = file_get_contents('php://input');
 $action = $_GET['action'] ?? null;
-unset($_GET['action']);
 $res = null;
 
 if (!$action)

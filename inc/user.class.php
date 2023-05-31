@@ -7,9 +7,9 @@ class user
     private $created_at   = null;
     private $last_login   = null;
 
-    public function __construct($user_id, $username, $password)
+    public function __construct($user_id = null, $username, $password)
     {
-        if (!is_numeric($user_id))
+        if ($user_id != null and !is_numeric($user_id))
             die('user constractor user_id is not numeric');
         $this->user_id  = $user_id;
         $this->username = $username;
@@ -47,7 +47,7 @@ class user
         $password = $conn->real_escape_string($this->password);
         $q      = "SELECT id, last_login FROM users WHERE username='$username' AND password='$password'";
         $result = $conn->query($q)
-            or die("mysql error: login()" . $conn->error);
+            or die("mysql error: find_user()" . $conn->error);
         $res =  $result->fetch_assoc();
         if (!$result->num_rows) {
             return null;

@@ -54,6 +54,7 @@ session_start();
 
       </section>
 
+
       <section id="id-blogs-section" class="c-section-container c-hide">
 
         <div class="c-login-title"> Create your blog! </div>

@@ -2,7 +2,9 @@ var blog = function () {
 
     let statedTimeout = false;
     let lastValue = null;
-
+    let filteredBlogsArray = [];
+    let blogsArray = [];
+     
     function fileChanged(event) {
         event.preventDefault();
         const filename = event.target?.files?.item(0)?.name
@@ -26,6 +28,7 @@ var blog = function () {
         }
     }
 
+    // CR: Search for blogs in DOM rather then call RPC -- V
     function search(event) {
         event.preventDefault();
         lastValue = event.target.value
@@ -33,7 +36,8 @@ var blog = function () {
         if(!statedTimeout){
             setTimeout(() => {
                 statedTimeout = false;
-                setBlogs(lastValue);
+                filteredBlogsArray = blogsArray.filter(b => b.title.includes(lastValue))
+                displayBlogs();
             }, 500);
         }
         statedTimeout = true;
@@ -163,22 +167,28 @@ var blog = function () {
         </div>`;
     }
 
-    function setBlogs(searchValue = null) {
+
+    function displayBlogs() {
         
+        let blogsInnerHtml = '';
+
+        for (const blog of filteredBlogsArray) {
+            blogsInnerHtml += getBlogInnerHtml(blog)
+        }
+
+        let element = document.getElementById(ELEM_ID.blogsContainer);
+        element.innerHTML = blogsInnerHtml;
+    }
+
+    function setBlogs(searchValue = null) {
         nanoajax.ajax({ url: blogUrl + actions.getBlogs + "&search=" + searchValue}, function (code, res) {
             try {
                 if (code != RES_CODE.OK || !res) {
                     return;
                 }
-                let blogs = JSON.parse(res);
-
-                let blogsInnerHtml = '';
-                for (const blog of blogs) {
-                    blogsInnerHtml += getBlogInnerHtml(blog)
-                }
-                let element = document.getElementById(ELEM_ID.blogsContainer);
-                element.innerHTML = blogsInnerHtml;
-
+                blogsArray = JSON.parse(res);
+                filteredBlogsArray = blogsArray;
+                displayBlogs();
 
             } catch (error) {
                 console.error(`error in setBlogs(): ${error}`);

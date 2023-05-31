@@ -37,7 +37,6 @@ switch ($action) {
         $res = $blog->delete_blog($_SESSION["user_id"]);
         break;
 
-
     case 'addBlog':
 
         if (!isset($_POST["body"])) {
