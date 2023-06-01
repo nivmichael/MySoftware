@@ -5,8 +5,8 @@ require_once '../mysoftware_autoload.class.php';
 session_start();
 
 $payload = file_get_contents('php://input');
-$data = json_decode($payload);
-$action = null;
+$data    = json_decode($payload);
+$action  = null;
 
 if (isset($_GET)) {
     $action = $_GET["action"];
@@ -14,18 +14,19 @@ if (isset($_GET)) {
 
 $response = [
     "status" => false,
-    "msg" => null,
-    "data" => null,
-
+    "msg"    => null,
+    "data"   => null
 ];
 
 $user = new user();
 
-switch($action) {
+switch($action) 
+{
     case 'user_login': 
         $response["status"] = false;
 
-        if(empty($data->username) || empty($data->password)) {
+        if(empty($data->username) || empty($data->password)) 
+        {
             // Username is null or empty so return a error message
             $response = rpchelper::rpcerror('missing username or password field');
         }
@@ -41,27 +42,28 @@ switch($action) {
                 $user->set_id($user_login);
                 // HTTP Response 200 by Default
                 $user->init_session();
-                $response["status"] = true;
-                $response["msg"] = "login was successful";
+                $response = rpchelper::rpcsuccess('login was successful');  
             }
-            else {
-                $response["status"] = false;
-                $response["msg"]="login was not successful";
-                http_response_code(404);   
+            else
+            {
+                // Login was not successful(USER NOT FOUND in users table)
+                // => set message into response and return http code 404
+                $response = rpchelper::rpcerror('login was not successful - user does not exist', 404);  
             }
         }
         break;
 
     case 'user_logout': 
          // HTTP Response 200 by Default
-         if($user->logout()) {
-            $response["status"] = true;
-            $response["msg"] = "logout was successful";
+         if($user->logout()) 
+         {
+            $response = rpchelper::rpcsuccess('logout was successful');  
+
          }
-         else {
-            $response["status"] = true;
-            $response["msg"] = "logout was not successful";
-            http_response_code(400);
+         else 
+         {
+            // Logout was not successful => set message into response and return http code 500
+            $response = rpchelper::rpcerror('logout was not successful', 500);  
          }
 
         break;

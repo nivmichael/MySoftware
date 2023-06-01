@@ -15,3 +15,14 @@ VALUES ("admin", "1234", NOW());
 -- 2023-05-31 Diana, add address to users
 ALTER TABLE users ADD address VARCHAR (100) DEFAULT NULL AFTER password;
 
+
+-- 2023-05-30 Diana, changed users table with NOT NULL and DEFAULT NULL values
+CREATE TABLE users(
+    id          int NOT NULL AUTO_INCREMENT,
+    username    varchar(100) NOT NULL,
+    password    varchar(100) NOT NULL,
+    created_at  datetime NOT NULL,
+    last_login  timestamp DEFAULT NULL,
+    PRIMARY KEY(id)
+);
+

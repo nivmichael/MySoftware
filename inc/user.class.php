@@ -1,7 +1,7 @@
 <?php
 class user
 {
-    private $id = null;
+    private $id       = null;
     private $username = null;
     private $password = null;
     private $last_login = null;
@@ -58,7 +58,7 @@ class user
         $password = $conn->real_escape_string(trim(strip_tags($this->password)));
         $username = $conn->real_escape_string(trim(strip_tags($this->username)));
 
-        // Checks if username exists with username and password.        
+        // Executes sql statement to get user from users table by username and password     
         $sql = "SELECT id, 
         username, 
         password 
@@ -68,13 +68,12 @@ class user
 
         $res = $conn->query($sql) 
         or die("Mysql error: login()" . $conn->error);
-    
+        // Gets the Sql row from res
         $data = $res->fetch_row();
-
-        if(!isset($data)) {
+        // checks if $data[0] is not set or null => return false 
+        if(!isset($data[0])) {
             return false;
         }
-
         return $data[0];
     }
 
