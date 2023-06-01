@@ -6,11 +6,17 @@ session_start();
 
 $payload = file_get_contents('php://input');
 $data = json_decode($payload);
-$action = isset($_GET) ?? null;
+$action = null;
+
+if (isset($_GET)) {
+    $action = $_GET["action"];
+}
+
 $response = [
     "status" => false,
     "msg" => null,
     "data" => null,
+
 ];
 
 $user = new user();
