@@ -11,13 +11,6 @@
   <link rel="stylesheet" href="styles.css?v=1.0">
 
 </head>
-<!-- 
-  CR:
-  Split the index into two section:
-  1. our login blog
-  2. our blog post form, which show only when we're logged in
-  3. Add logouy button in blog section - send rpc to logout and kill session
--->
 
 <body>
 
@@ -39,7 +32,7 @@
   </section>
 
   <section id="id-create-blog-section" class="c-hide-content">
-  <button class="c-button-log-out" id="id-logout-button" type="button" onclick="user.userLogout(event)">Log Out</button>
+    <button class="c-button-log-out" id="id-logout-button" type="button" onclick="user.userLogout(event)">Log Out</button>
     <h2 class="c-blog-form-title">Blog Form</h2>
     <textarea class="c-text-area" id="id-blog-form" name="form" rows="4" cols="50"></textarea>
     <div id="id-message-create-blog" class="c-message"></div>
