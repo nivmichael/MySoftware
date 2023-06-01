@@ -44,7 +44,7 @@ var user = (function () {
     );
   }
 
-  function userLogout(event){
+  function userLogout(event) {
     event.preventDefault();
 
     var messageLogout = document.getElementById("id-message-create-blog");

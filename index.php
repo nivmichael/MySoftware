@@ -17,7 +17,7 @@
 
   <section id="id-login-section">
     <div>
-      <form id="id-user-login-form" action="/index.php" onsubmit="user.userLogin(event)">
+      <form id="id-user-login-form" class="c-login-form" action="/index.php" onsubmit="user.userLogin(event)">
         <label for="username">Username:</label><br>
         <input type="text" id="id-username" name="username"><br>
         <label for="pwd">Password:</label><br>
@@ -33,10 +33,14 @@
 
   <section id="id-create-blog-section" class="c-hide-content">
     <button class="c-button-log-out" id="id-logout-button" type="button" onclick="user.userLogout(event)">Log Out</button>
-    <h2 class="c-blog-form-title">Blog Form</h2>
-    <textarea class="c-text-area" id="id-blog-form" name="form" rows="4" cols="50"></textarea>
-    <div id="id-message-create-blog" class="c-message"></div>
-
+    <div>
+      <form id="id-create-blog-form" action="/index.php">
+        <h2 class="c-blog-form-title">Blog Form</h2>
+        <textarea class="c-text-area" id="id-post-body" name="form" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
+        <input type="file" id="id-image-file" name="filename" accept="image/*">
+        <div id="id-message-create-blog" class="c-message"></div>
+      </form>
+    </div>
   </section>
 
 </body>
