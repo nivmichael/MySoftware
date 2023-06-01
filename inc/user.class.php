@@ -8,7 +8,7 @@ class user
 
     public function __construct($username = null, $password = null, $id = null)
     {
-        if($this->id == null) {
+        if(!$this->id) {
             $this->id       = $id;
             $this->username = $username;
             $this->password = $password; 
@@ -53,6 +53,7 @@ class user
     public function login()
     {
         $data = [];
+        $response = null;
 
         $conn     = db::connect();
         $password = $conn->real_escape_string(trim(strip_tags($this->password)));
@@ -67,14 +68,15 @@ class user
         AND password='$password'";
 
         $res = $conn->query($sql) 
-        or die("Mysql error: login()" . $conn->error);
+            or die("Mysql error: login()" . $conn->error);
         // Gets the Sql row from res
         $data = $res->fetch_row();
         // checks if $data[0] is not set or null => return false 
         if(!isset($data[0])) {
-            return false;
+            $response = $data[0];
         }
-        return $data[0];
+
+        return $response;
     }
 
     public function logout()
