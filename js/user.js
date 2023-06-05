@@ -9,8 +9,9 @@ var user = (function () {
 
     const req = {
       username: event.target.username.value,
-      password: event.target.pwd.value,
+      password: event.target.pwd.value
     };
+
     const json = JSON.stringify(req);
 
     nanoajax.ajax(
@@ -76,11 +77,15 @@ var user = (function () {
         }
       }
     );
-
   }
+
+  function isLogin(event) {
+    
+  }
+
   return {
     userLogin,
-    userLogout
+    userLogout,
   };
 })();
 

@@ -8,7 +8,8 @@ $payload = file_get_contents('php://input');
 $data    = json_decode($payload);
 $action  = null;
 
-if (isset($_GET)) {
+if (isset($_GET)) 
+{
     $action = $_GET["action"];
 }
 
@@ -30,16 +31,19 @@ switch($action)
             // Username is null or empty so return a error message
             $response = rpchelper::rpcerror('missing username or password field');
         }
-        else {
+        else 
+        {
             // Both fields username and password are OK => set username and password 
-            // And call login_user function
+            // And call login_user function from user.class.php file
             $user->set_username($data->username);
-            $user->set_password($data->password);            
-            $db         = db::connect();
-
+            $user->set_password($data->password);
+            // Checks if user exists in database
             $user_login = $user->login();
-            if($user_login) {
-                $user->set_id($user_login);
+
+            if($user_login) 
+            {
+                $user->set_id($user_login)
+                    or die("user.rpc.php: set_id() id value is incorrect");
                 // HTTP Response 200 by Default
                 $user->init_session();
                 $response = rpchelper::rpcsuccess('login was successful');  

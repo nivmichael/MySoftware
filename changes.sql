@@ -16,13 +16,18 @@ VALUES ("admin", "1234", NOW());
 ALTER TABLE users ADD address VARCHAR (100) DEFAULT NULL AFTER password;
 
 
--- 2023-05-30 Diana, changed users table with NOT NULL and DEFAULT NULL values
-CREATE TABLE users(
-    id          int NOT NULL AUTO_INCREMENT,
-    username    varchar(100) NOT NULL,
-    password    varchar(100) NOT NULL,
-    created_at  datetime NOT NULL,
-    last_login  timestamp DEFAULT NULL,
-    PRIMARY KEY(id)
-);
+-- 2023-06-04 Diana, altered users table with NOT NULL and DEFAULT NULL values
+ALTER TABLE users MODIFY COLUMN username	VARCHAR(100) NOT NULL;
+ALTER TABLE users MODIFY COLUMN password	VARCHAR(100) NOT NULL;
+ALTER TABLE users MODIFY COLUMN created_at	VARCHAR(100) NOT NULL;
+ALTER TABLE users MODIFY COLUMN last_login	VARCHAR(100) DEFAULT NULL;
 
+-- 2023-06-04 Diana, create and init posts table
+CREATE TABLE posts(
+    post_id	INT NOT NULL AUTO_INCREMENT,
+    user_id	INT NOT NULL,
+    title	VARCHAR(255) NOT NULL,
+    body    TEXT DEFAULT NULL,
+    PRIMARY KEY(post_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

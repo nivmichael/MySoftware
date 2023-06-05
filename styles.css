@@ -55,18 +55,13 @@ button:hover {
   padding-bottom: 15px;
 }
 
-.c-text-area {
-  width: 50%;
-  height: 150px;
-  padding: 12px 20px;
+.c-post-form-input {
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
-  font-size: 16px;
+  font-size: 14px;
   resize: none;
-  display: block;
-  margin: 0 auto;
 }
 
 .c-blog-form-title {
@@ -83,11 +78,26 @@ button:hover {
 }
 
 .c-button-log-out:hover{
-  background-color:red;
+  background-color:rgb(255, 47, 47);
+}
+
+.c-button-post-button {
+  display: block;
+  margin: 0 auto;
 }
 
 .c-login-form {
   width: 100%;
   max-width: 32rem;
   margin: auto;
+}
+
+form {
+  /* Center the form on the page */
+  margin: 0 auto;
+  width: 600px;
+  /* Form outline */
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
 }

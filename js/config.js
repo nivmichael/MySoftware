@@ -1,7 +1,11 @@
-const USER_ACTIONS={
+const USER_ACTIONS = {
     LOGIN: "user_login",
-    LOG_OUT: "user_logout"
+    LOG_OUT: "user_logout",
 };
+
+const BLOG_ACTIONS = {
+    CREATE_POST: "create_post"
+}
 
 const CLASS_LIST = {
     hide: 'c-hide-content'
