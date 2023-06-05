@@ -30,7 +30,8 @@ var app = (() => {
     hideElemnt(secIdToHide);
   }
 
-
-
-  return { toggleElementVisability, displaySection};
+  return {
+    toggleElementVisability,
+    displaySection
+  };
 })();
