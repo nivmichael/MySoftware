@@ -5,7 +5,8 @@ const USER_ACTIONS = {
 };
 
 const BLOG_ACTIONS = {
-    CREATE_POST: "create_post"
+    CREATE_POST: "create_post",
+    GET_ALL_POSTS: "get_all_posts"
 }
 
 const CLASS_LIST = {

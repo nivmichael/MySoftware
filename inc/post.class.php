@@ -31,19 +31,12 @@ class post
                  '$title',
                  '$body')";
 
+    
+
         $res = $this->mysqli ->query($sql) 
             or die("Mysql error: save_post()" . $this->mysqli->error);
-
-        // Gets the Sql row from res
-        $data = $res->fetch_row();
-
-        // checks if $data[0] is not null => sets response with id
-        if(isset($data[0])) 
-        {
-            $response = $data;    
-        }
-
-        return $response;
+      
+        return $res;
     }
 
     public function get_all_posts() 

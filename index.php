@@ -38,7 +38,7 @@
         <input id="id-title" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." /><br>
         <textarea class="c-post-form-input" id="id-post-body" name="body" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
         <input id="id-image-file" type="file" name="filename" accept="image/*" />
-        <input id="id-submit-post-button" class="c-button-post-button " type="submit" value="Submit" />
+        <input id="id-submit-post-button" class="c-button-post-button " type="submit" value="Post" />
 
         <div id="id-message-create-blog" class="c-message"></div>
 
@@ -46,9 +46,10 @@
     </div>
 
     <div class="container">
-      <div class="column">This is column 1.</div>
-      <div class="column">This is column 2.</div>
+      <div class="column">Post example 1</div>
+      <div class="column">Post example 2</div>
     </div>
+
   </section>
 
 </body>

@@ -1,5 +1,6 @@
 body {
   margin: 20px;
+  padding: 1rem;
 }
 
 * {
@@ -94,10 +95,32 @@ form {
 .c-button-post-button {
   display: block;
   margin: 0 auto;
+  color: hsl(240, 62%, 90%);;
 }
 
 .c-login-form {
   width: 100%;
   max-width: 32rem;
   margin: auto;
+}
+/* Classes for displaying User Posts */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 20px;
+}
+
+.column {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: hsl(240, 62%, 90%);
+  flex: 1;
+}
+
+@media (max-width: 1024px) {
+  .column {
+    width: 100%;
+    flex: auto;
+  }
 }

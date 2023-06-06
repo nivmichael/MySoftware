@@ -18,9 +18,12 @@ $response = [
     "data"   => null
 ];
 
+$post = new post();
+
 switch ($action) {
     case 'create_post': 
-        {
+    {
+        
             $response["status"] = false;
          
             if (empty($data->title))
@@ -52,6 +55,20 @@ switch ($action) {
                 }
             }
         }
+        break;
+
+    case 'get_all_posts': 
+        if($post->get_all_posts()) 
+         {
+            // HTTP Response is 200 By Default
+            $response = rpchelper::rpcsuccess('post.rpc.php: getAllPosts() was successful');  
+         }
+         else 
+         {
+            // GetAllPosts was not successful => set message into response and return http code 500
+            $response = rpchelper::rpcerror('post.rpc.php: getAllPosts() was not successful', 500);  
+         }
+
         break;
 
     default:
