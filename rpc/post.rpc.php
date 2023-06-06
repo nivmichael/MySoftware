@@ -18,8 +18,6 @@ $response = [
     "data"   => null
 ];
 
-$post = new post();
-
 switch ($action) {
     case 'create_post': 
         {
@@ -35,21 +33,14 @@ switch ($action) {
                 // Title field is OK => set post title and body
                 // And call save_post function from post.class.php file
 
-                // 1. Set post's user id from global variable SESSION
-                $post->set_user_id($_SESSION["user_id"]);
-                // 2. Set post's title
-                $post->set_title($data->title);
-                // 3. Set post's body
-                $post->set_body($data->body);
+
+                // Initialize post from global variable SESSION with user id, title and body.  
+                $post = new post($_SESSION["user_id"], $data->title, $data->body);
+
                 // 4. Save post in DB and assign saved post data
                 $post_data = $post->save_post();
-                // 5. Assign id from the post data
-                $id = $post_data[0];
-                if($id) 
+                if($post_data) 
                 {
-                    // Set post id by the returned post data from the DB
-                    $post->set_post_id($id)
-                        or die("post.rpc.php: set_post_id() id value is incorrect");
                     $response = rpchelper::rpcsuccess('saving post was successful');  
                     $response["data"] = $post_data;
                 }

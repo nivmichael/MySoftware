@@ -1,6 +1,7 @@
 const USER_ACTIONS = {
     LOGIN: "user_login",
     LOG_OUT: "user_logout",
+    IS_LOGIN: "is_login"
 };
 
 const BLOG_ACTIONS = {

@@ -1,37 +1,16 @@
 <?php
 class user
 {
-    private $id         = null;
     private $username   = null;
     private $password   = null;
     private $last_login = null;
 
-    public function __construct($username = null, $password = null, $id = null)
+    public function __construct($username = null, $password = null)
     {
-        if(!$this->id) {
-            $this->id       = $id;
+        if(!$this->username) {
             $this->username = $username;
             $this->password = $password; 
         }
-    }
-
-    public function set_id($id)
-    {
-        if(is_numeric($id))
-        {
-            $this->id = $id;
-        }
-        return $this->id;
-    }
-
-    public function set_username($username)
-    {
-        $this->username = $username;
-    }
-
-    public function set_password($password)
-    {
-        $this->password = $password;
     }
 
     public function set_last_login($last_login)
@@ -39,9 +18,9 @@ class user
         $this->last_login = $last_login;
     }
 
-    public function init_session()
+    public function init_session($id)
     {
-        $_SESSION["user_id"] =$this->id;
+        $_SESSION["user_id"] = $id;
     }
 
     public function login()

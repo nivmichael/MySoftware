@@ -35,17 +35,14 @@ switch($action)
         {
             // Both fields username and password are OK => set username and password 
             // And call login_user function from user.class.php file
-            $user->set_username($data->username);
-            $user->set_password($data->password);
+            $user = new user($data->username, $data->password);
             // Checks if user exists in database
-            $user_login = $user->login();
+            $id = $user->login();
 
-            if($user_login) 
+            if($id) 
             {
-                $user->set_id($user_login)
-                    or die("user.rpc.php: set_id() id value is incorrect");
                 // HTTP Response 200 by Default
-                $user->init_session();
+                $user->init_session($id);
                 $response = rpchelper::rpcsuccess('login was successful');  
             }
             else
@@ -62,7 +59,6 @@ switch($action)
          if($user->logout()) 
          {
             $response = rpchelper::rpcsuccess('logout was successful');  
-
          }
          else 
          {
@@ -72,6 +68,11 @@ switch($action)
 
         break;
     
+    case 'is_login': 
+    {
+        $response["status"] = isset($_SESSION["user_id"]) ? true : false;
+        break;
+    }
     default:
         // Missing action param
         $response = rpchelper::rpcerror('missing action param');

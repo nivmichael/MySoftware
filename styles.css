@@ -43,6 +43,16 @@ button:hover {
   background-color: #45a049;
 }
 
+form {
+  /* Center the form on the page */
+  margin: 0 auto;
+  width: 600px;
+  /* Form outline */
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+}
+
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -73,7 +83,7 @@ button:hover {
   display: none;
 }
 
-.c-button-log-out{
+.c-button-log-out {
   background-color:red;
 }
 
@@ -90,14 +100,4 @@ button:hover {
   width: 100%;
   max-width: 32rem;
   margin: auto;
-}
-
-form {
-  /* Center the form on the page */
-  margin: 0 auto;
-  width: 600px;
-  /* Form outline */
-  padding: 1em;
-  border: 1px solid #ccc;
-  border-radius: 1em;
 }

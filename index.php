@@ -12,16 +12,16 @@
 
 </head>
 
-<body>
+<body onload="user.isLogin(event)">
 
-  <section id="id-login-section">
+  <section id="id-login-section" class="c-hide-content">
     <div>
       <form id="id-user-login-form" class="c-login-form" action="/index.php" onsubmit="user.userLogin(event)">
         <label for="username">Username:</label><br>
         <input id="id-username" type="text" name="username" required="true"><br>
         <label for="pwd">Password:</label><br>
-        <input id="id-password" type="password" name="pwd" required="true">
-        <input id="id-submit-button" type="submit" value="Submit">
+        <input id="id-password" type="password" name="pwd" required="true" />
+        <input id="id-submit-button" type="submit" value="Submit" />
 
         <div id="id-message-login" class="c-message"></div>
       </form>
@@ -35,13 +35,19 @@
     <div>
       <form id="id-create-blog-form" action="/index.php" onsubmit="post.createPost(event)">
         <h2 class="c-blog-form-title">Blog Form</h2>
-        <input id="id-title" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." required="true"><br>
+        <input id="id-title" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." /><br>
         <textarea class="c-post-form-input" id="id-post-body" name="body" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
-        <input id="id-image-file" type="file" name="filename" accept="image/*">
-        <input id="id-submit-post-button" class="c-button-post-button " type="submit" value="Submit">
+        <input id="id-image-file" type="file" name="filename" accept="image/*" />
+        <input id="id-submit-post-button" class="c-button-post-button " type="submit" value="Submit" />
+
         <div id="id-message-create-blog" class="c-message"></div>
 
       </form>
+    </div>
+
+    <div class="container">
+      <div class="column">This is column 1.</div>
+      <div class="column">This is column 2.</div>
     </div>
   </section>
 
