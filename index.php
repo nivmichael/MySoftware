@@ -29,9 +29,11 @@ session_start();
 
         <div id="id-message-login" class="c-message"></div>
       </form>
-
+      <div id="id-all-posts" class="c-container">
+        <!-- <div class="c-column">Post example 1</div>
+      <div class="c-column">Post example 2</div> -->
+      </div>
     </div>
-
   </section>
 
   <section id="id-create-blog-section" class="c-hide-content">
@@ -49,12 +51,12 @@ session_start();
       </form>
     </div>
 
-  </section>
-
-  <div id="id-posts" class="c-container">
+    <div id="id-posts" class="c-container">
       <!-- <div class="c-column">Post example 1</div>
       <div class="c-column">Post example 2</div> -->
     </div>
+  </section>
+
 </body>
 
 <script src="js/nanoajax.min.js"></script>
@@ -69,15 +71,15 @@ session_start();
 
     const callbackFn = (loggedIn) => {
       let currSection = loggedIn ? SECTION.login : SECTION.createBlog;
-      switch(currSection) {
+      switch (currSection) {
         case SECTION.login:
-          app.displaySection(SECTION.createBlog,currSection);
+          app.displaySection(SECTION.createBlog, currSection);
           break;
         case SECTION.createBlog:
           app.displaySection(SECTION.login, currSection);
           break;
       }
-      post.getAllPosts();
+      post.getAllPosts(loggedIn);
     }
     user.isLogin(callbackFn)
   }

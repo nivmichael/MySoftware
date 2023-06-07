@@ -31,7 +31,7 @@ var post = (function () {
             alert(response.msg);
             titleElement.value = "";
             bodyElement.value = "";
-            getAllPosts();
+            getAllPosts(true);
           } else {
             messageElement.textContent = response.msg;
           }
@@ -42,7 +42,7 @@ var post = (function () {
     );
   }
 
-  function getAllPosts() {
+  function getAllPosts(loggedIn) {
     nanoajax.ajax(
       {
         url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.GET_POSTS_BY_USER_ID}`,
@@ -57,12 +57,12 @@ var post = (function () {
           const blogs =  response.data;
 
           if (!blogs) {
-            // TODO: 
+            // TODO
           }
-
           for (const post of blogs) {
              // Display all blogs
-             createPostElement(post);
+             
+             createPostElement(post,loggedIn);
           }
         } catch (e) {
           console.log("isLogin error:" + e);
@@ -72,8 +72,9 @@ var post = (function () {
   }
 
     // Creates a post element with a title and body
-    function createPostElement(post) {
-      var postElement = document.getElementById("id-posts");
+    function createPostElement(post, loggedIn) {
+      console.log(loggedIn);
+      var postElement = loggedIn ? document.getElementById("id-posts") : document.getElementById("id-all-posts");
       postElement.innerHTML +=`
        <div class="c-column">
            <h3 class="c-column">Title: ${post[2]}</h3>
@@ -82,6 +83,7 @@ var post = (function () {
        `;
       return postElement;
     }
+
   return {
     createPost,
     getAllPosts,

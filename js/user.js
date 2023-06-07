@@ -32,6 +32,7 @@ var user = (function () {
             // display create Blog section and hide currSection => SECTION.login;
             app.displaySection(SECTION.createBlog, SECTION.login);
             alert(response.msg);
+            post.getAllPosts(true);
           } else {
             messageLogin.textContent = response.msg;
           }
@@ -66,6 +67,7 @@ var user = (function () {
             currSection = SECTION.createBlog;
             // display login section and hide currSection => SECTION.createBlog;
             app.displaySection(SECTION.login, currSection);
+            post.getAllPosts(false);
           } else {
             // error message to client
             messageLogout.textContent = response.msg;
