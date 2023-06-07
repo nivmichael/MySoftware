@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +16,7 @@
 
 </head>
 
-<body onload="user.isLogin(event)">
+<body onload="init(event)">
 
   <section id="id-login-section" class="c-hide-content">
     <div>
@@ -45,13 +49,12 @@
       </form>
     </div>
 
-    <div class="container">
-      <div class="column">Post example 1</div>
-      <div class="column">Post example 2</div>
-    </div>
-
   </section>
 
+  <div id="id-posts" class="c-container">
+      <!-- <div class="c-column">Post example 1</div>
+      <div class="c-column">Post example 2</div> -->
+    </div>
 </body>
 
 <script src="js/nanoajax.min.js"></script>
@@ -59,5 +62,25 @@
 <script src="js/user.js"></script>
 <script src="js/post.js"></script>
 <script src="js/app.js"></script>
+
+<script>
+  function init(event) {
+    event.preventDefault();
+
+    const callbackFn = (loggedIn) => {
+      let currSection = loggedIn ? SECTION.login : SECTION.createBlog;
+      switch(currSection) {
+        case SECTION.login:
+          app.displaySection(SECTION.createBlog,currSection);
+          break;
+        case SECTION.createBlog:
+          app.displaySection(SECTION.login, currSection);
+          break;
+      }
+      post.getAllPosts();
+    }
+    user.isLogin(callbackFn)
+  }
+</script>
 
 </html>

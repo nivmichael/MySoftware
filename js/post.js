@@ -31,6 +31,7 @@ var post = (function () {
             alert(response.msg);
             titleElement.value = "";
             bodyElement.value = "";
+            getAllPosts();
           } else {
             messageElement.textContent = response.msg;
           }
@@ -41,12 +42,10 @@ var post = (function () {
     );
   }
 
-  function getAllPosts(event) {
-    event.preventDefault();
-
+  function getAllPosts() {
     nanoajax.ajax(
       {
-        url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.GET_ALL_POSTS}`,
+        url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.GET_POSTS_BY_USER_ID}`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -54,16 +53,16 @@ var post = (function () {
       },
       function (code, responseText, request) {
         try {
-          var response = JSON.parse(responseText);
+          const response = JSON.parse(responseText);
+          const blogs =  response.data;
 
-          if (response.status) {
-            // display create blog section and hide login section
-            app.displaySection(SECTION.createBlog, SECTION.login);
-            currSection = SECTION.createBlog;
-          } else {
-            // display login section and hide createBlog section
-            app.displaySection(SECTION.login, SECTION.createBlog);
-            currSection = SECTION.login;
+          if (!blogs) {
+            // TODO: 
+          }
+
+          for (const post of blogs) {
+             // Display all blogs
+             createPostElement(post);
           }
         } catch (e) {
           console.log("isLogin error:" + e);
@@ -71,6 +70,18 @@ var post = (function () {
       }
     );
   }
+
+    // Creates a post element with a title and body
+    function createPostElement(post) {
+      var postElement = document.getElementById("id-posts");
+      postElement.innerHTML +=`
+       <div class="c-column">
+           <h3 class="c-column">Title: ${post[2]}</h3>
+           <span class="c-column">Body: ${post[3]}</span>
+       </div>
+       `;
+      return postElement;
+    }
   return {
     createPost,
     getAllPosts,

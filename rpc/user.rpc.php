@@ -1,6 +1,11 @@
 <?php
 require_once '../mysoftware_autoload.class.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // Start new or resume existing session
 session_start();
 
@@ -71,6 +76,7 @@ switch($action)
     case 'is_login': 
     {
         $response["status"] = isset($_SESSION["user_id"]) ? true : false;
+
         break;
     }
     default:
