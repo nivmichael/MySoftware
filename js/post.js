@@ -73,7 +73,6 @@ var post = (function () {
 
     // Creates a post element with a title and body
     function createPostElement(post, loggedIn) {
-      console.log(loggedIn);
       var postElement = loggedIn ? document.getElementById("id-posts") : document.getElementById("id-all-posts");
       postElement.innerHTML +=`
        <div class="c-column">
