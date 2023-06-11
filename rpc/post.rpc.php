@@ -48,6 +48,14 @@ switch ($action) {
                 $post->set_user_id($user_id);
                 $post->set_title($data->title);
                 isset($data->body) ? $post->set_body($data->body) : $post->set_body("");
+                // Upload images
+
+                // $info = pathinfo($_FILES['userFile']['name']);
+                // $ext = $info['extension']; // get the extension of the file
+                // $newname = "newname.".$ext; 
+
+                // $target = 'images/'.$newname;
+                // move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
         
                 $post_data = $post->save_post();
                 if ($post_data) {
@@ -63,9 +71,61 @@ switch ($action) {
         break;
 
     case 'get_posts':
+        $response["status"] = false;
+
         $post->set_user_id($user_id);
-        $response = rpchelper::rpcsuccess('post.rpc.php: getPosts was successful');
-        $response["data"] = $post->get_posts();
+        $post_data = $post->get_posts();
+    
+            if ($post_data) {
+                $response = rpchelper::rpcsuccess('post.rpc.php: get_posts() was successful');
+                $response["data"] = $post_data;
+            } else {
+                // Getting posts was not successful
+                // => set message into response and return http code 500
+                $response = rpchelper::rpcerror('post.rpc.php: get_posts() was not successful', 500);
+            }
+
+        break;
+
+    case 'update_post':
+        $response["status"] = false;
+        
+        if (empty($data->title)) 
+        {
+            // Title is null or empty so return a error message
+            $response = rpchelper::rpcerror('missing title field');
+        } else 
+        {
+            // Title field is OK => set post title and body
+            // And call save_post function from post.class.php file
+            $post->set_user_id($user_id);
+            $post->set_title($data->title);
+            isset($data->body) ? $post->set_body($data->body) : $post->set_body("");
+    
+            $post_data = $post->update_post($data->id);
+            if ($post_data) {
+                $response = rpchelper::rpcsuccess('update post was successful');
+                $response["data"] = $post_data;
+            } else {
+                // Updating post was not successful
+                // => set message into response and return http code 500
+                $response = rpchelper::rpcerror('updating post was not successful', 500);
+            }
+        }
+        break;
+    case 'delete_post': 
+                $response["status"] = false;
+
+                $post->set_user_id($user_id);
+                $post_response = $post->delete_post($data->id);
+
+                if ($post_response) {
+                    $response = rpchelper::rpcsuccess('deleting post was successful');
+                } else {
+                    // Saving post was not successful
+                    // => set message into response and return http code 500
+                    $response = rpchelper::rpcerror('deleting post was not successful', 500);
+                }
 
         break;
 

@@ -31,7 +31,7 @@ var user = (function () {
             currSection = SECTION.login;
             // display create Blog section and hide currSection => SECTION.login;
             app.displaySection(SECTION.createBlog, SECTION.login);
-            alert(response.msg);
+       
             post.getAllPosts(true);
           } else {
             messageLogin.textContent = response.msg;
@@ -71,8 +71,6 @@ var user = (function () {
           } else {
             // error message to client
             messageLogout.textContent = response.msg;
-            // app.displaySection(SECTION.login, currSection);
-            // currSection = SECTION.login;
           }
         } catch (e) {
           console.log("userLogout error:" + e);

@@ -3,8 +3,8 @@ var post = (function () {
     event.preventDefault();
 
     var messageElement = document.getElementById("id-message-create-blog");
-    var titleElement = document.getElementById("id-title");
-    var bodyElement = document.getElementById("id-post-body");
+    var titleElement = document.getElementById("id-post-title-form");
+    var bodyElement = document.getElementById("id-post-body-form");
 
     const req = {
       title: event.target.title.value,
@@ -54,15 +54,19 @@ var post = (function () {
       function (code, responseText, request) {
         try {
           const response = JSON.parse(responseText);
-          const blogs =  response.data;
+          const blogs = response.data;
 
           if (!blogs) {
             // TODO
           }
+
+          let allPostsElement = loggedIn
+            ? document.getElementById("id-posts")
+            : document.getElementById("id-all-posts");
+          allPostsElement.innerHTML = ``;
           for (const post of blogs) {
-             // Display all blogs
-             
-             createPostElement(post,loggedIn);
+            // Display all blogs
+            allPostsElement.innerHTML += createPostElement(post, loggedIn);
           }
         } catch (e) {
           console.log("isLogin error:" + e);
@@ -71,20 +75,152 @@ var post = (function () {
     );
   }
 
-    // Creates a post element with a title and body
-    function createPostElement(post, loggedIn) {
-      var postElement = loggedIn ? document.getElementById("id-posts") : document.getElementById("id-all-posts");
-      postElement.innerHTML +=`
-       <div class="c-column">
-           <h3 class="c-column">Title: ${post[2]}</h3>
-           <span class="c-column">Body: ${post[3]}</span>
+  function updatePost(event, postId) {
+    event.preventDefault();
+    const postElement = document.getElementById(`id-post-${postId}`);
+
+    const titleInputElement = postElement.querySelector("#id-post-title-input");
+    const bodyInputElement = postElement.querySelector("#id-post-body-input");
+    const updateMessageElement = postElement.querySelector("#id-message-update-post");
+
+    const req = {
+      id: postId,
+      title: titleInputElement.value,
+      body: bodyInputElement.value,
+    };
+
+    const json = JSON.stringify(req);
+
+    nanoajax.ajax(
+      {
+        url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.UPDATE_POST}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: json,
+      },
+      function (code, responseText, request) {
+        try {
+          var response = JSON.parse(responseText);
+          // Hide error
+          updateMessageElement.textContent = "";
+
+          if (response.status) {
+            getAllPosts(true);
+            alert(response.msg);
+          } else {
+            messa.textContent = response.msg;
+          }
+        } catch (e) {
+          console.log("updatePost error:" + e);
+        }
+      }
+    );
+  }
+
+  function deletePost(event, postId) {
+    event.preventDefault();
+
+    const postElement = document.getElementById(`id-post-${postId}`);
+
+    const req = {
+      id: postId,
+    };
+
+    const json = JSON.stringify(req);
+
+    nanoajax.ajax(
+      {
+        url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.DELETE_POST}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: json,
+      },
+      function (code, responseText, request) {
+        try {
+          var response = JSON.parse(responseText);
+
+          if (response.status) {
+            getAllPosts(true);
+            alert(response.msg);
+          } else {
+            alert(response.msg);
+          }
+        } catch (e) {
+          console.log("deletePost error:" + e);
+        }
+      }
+    );
+  }
+
+  // Creates a post element with a title and body
+  function createPostElement(post, loggedIn) {
+    return `
+       <div id="id-post-${post.post_id}" class="c-column">
+            ${userSignedInElements(post, loggedIn)}
+            <div id="id-post-values" class="c-post">
+              <h3 id="id-post-title">Title: ${post.title}</h3>
+              <p id="id-post-body">Body: ${post.body}</p>
+            </div>
        </div>
        `;
-      return postElement;
+  }
+
+  function userSignedInElements(post, loggedIn) {
+    return loggedIn
+      ? `<div class="c-icons">
+            <button id="id-edit-button" class="c-icon-button" onclick="post.setElementsEditable(event,'${post.post_id}','${post.title}', '${post.body}')">
+              <img src="./assets/icons/editIcon.svg" alt="view icon">
+            </button>
+            <button id="id-delete-button" class="c-icon-button" onclick="post.showConfirmMessage(event, '${post.post_id}')">
+              <img src="./assets/icons/deleteIcon.svg" alt="view icon">
+            </button>
+        </div>
+        `
+      : ``;
+  }
+
+  function showConfirmMessage(event, post_id) {
+    var result = confirm("Want to delete?");
+    if (result) {
+      //Logic to delete the item
+      deletePost(event,  post_id);
     }
+  }
+
+  function setElementsEditable(event, id, title, body) {
+    event.preventDefault();
+
+    // Convert the post elements to editable inputs
+    console.log(`id-post-${id}`);
+    let elem = document.getElementById(`id-post-${id}`);
+    if (elem) {
+      // elem.innerHTML = 'asdasdas'
+      document.getElementById(`id-post-${id}`).innerHTML = `
+      
+            <input id="id-post-title-input" class="c-post-form-input" name="updated-title" type="text" value="${title}">        
+            <textarea id="id-post-body-input" class="c-post-form-input" name="updated-body" type="text">${body}</textarea>
+    
+            <div id="id-message-update-post" class="c-message"></div>
+            <button id="id-done-button" class="c-icon-button" onclick="post.updatePost(event, ${id})">
+            <img src="./assets/icons/doneIcon.svg" alt="view icon">
+         </button>
+        `;
+    } else {
+      console.log("NO element");
+    }
+  }
 
   return {
+    setElementsEditable,
+    createPostElement,
+    showConfirmMessage,
     createPost,
-    getAllPosts,
+    updatePost,
+    deletePost,
+    getAllPosts
   };
 })();

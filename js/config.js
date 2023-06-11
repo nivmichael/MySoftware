@@ -6,7 +6,9 @@ const USER_ACTIONS = {
 
 const BLOG_ACTIONS = {
     CREATE_POST: "create_post",
-    GET_POSTS_BY_USER_ID: "get_posts" // TODO: change KEY
+    GET_POSTS_BY_USER_ID: "get_posts", // TODO: change KEY
+    UPDATE_POST: "update_post",
+    DELETE_POST: "delete_post"
 }
 
 const CLASS_LIST = {

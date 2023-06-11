@@ -19,7 +19,7 @@ session_start();
 <body onload="init(event)">
 
   <section id="id-login-section" class="c-hide-content">
-    <div>
+    <div id="id-login-div">
       <form id="id-user-login-form" class="c-login-form" action="/index.php" onsubmit="user.userLogin(event)">
         <label for="username">Username:</label><br>
         <input id="id-username" type="text" name="username" required="true"><br>
@@ -29,40 +29,36 @@ session_start();
 
         <div id="id-message-login" class="c-message"></div>
       </form>
-      <div id="id-all-posts" class="c-container">
-        <!-- <div class="c-column">Post example 1</div>
-      <div class="c-column">Post example 2</div> -->
-      </div>
+
     </div>
+    <div id="id-all-posts" class="c-container"></div>
+
   </section>
 
   <section id="id-create-blog-section" class="c-hide-content">
     <button id="id-logout-button" class="c-button-log-out" type="button" onclick="user.userLogout(event)">Log Out</button>
-    <div>
-      <form id="id-create-blog-form" action="/index.php" onsubmit="post.createPost(event)">
+    <div id="id-post-div">
+      <form id="id-create-blog-form" class="c-post-form" action="/index.php" onsubmit="post.createPost(event)">
         <h2 class="c-blog-form-title">Blog Form</h2>
-        <input id="id-title" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." /><br>
-        <textarea class="c-post-form-input" id="id-post-body" name="body" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
+        <input id="id-post-title-form" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." /><br>
+        <textarea id="id-post-body-form" class="c-post-form-input" name="body" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
         <input id="id-image-file" type="file" name="filename" accept="image/*" />
-        <input id="id-submit-post-button" class="c-button-post-button " type="submit" value="Post" />
+        <input id="id-submit-post-button" class="c-button-post-button" type="submit" value="Post" />
 
         <div id="id-message-create-blog" class="c-message"></div>
-
       </form>
+      <div id="id-posts" class="c-container"></div>
+
     </div>
 
-    <div id="id-posts" class="c-container">
-      <!-- <div class="c-column">Post example 1</div>
-      <div class="c-column">Post example 2</div> -->
-    </div>
   </section>
 
 </body>
 
 <script src="js/nanoajax.min.js"></script>
 <script src="js/config.js"></script>
-<script src="js/user.js"></script>
 <script src="js/post.js"></script>
+<script src="js/user.js"></script>
 <script src="js/app.js"></script>
 
 <script>

@@ -41,10 +41,10 @@ input[type="file"] {
 
 input[type="submit"]:hover,
 button:hover {
-  background-color: #45a049;
+  /* background-color: #45a049; */
 }
 
-form {
+#id-login-div, #id-post-div form {
   /* Center the form on the page */
   margin: 0 auto;
   width: 600px;
@@ -52,6 +52,10 @@ form {
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 1em;
+}
+
+p {
+  display: block;
 }
 
 .c-container {
@@ -94,8 +98,8 @@ form {
 
 .c-button-post-button {
   display: block;
-  margin: 0 auto;
-  color: hsl(240, 62%, 90%);;
+  margin: 20px auto;
+  color: hsl(240, 62%, 90%);
 }
 
 .c-login-form {
@@ -109,6 +113,7 @@ form {
   flex-wrap: wrap;
   gap: 1rem;
   margin: 20px;
+  
 }
 
 .c-column {
@@ -116,6 +121,8 @@ form {
   border-radius: 8px;
   background-color: hsl(240, 62%, 90%);
   flex: 1;
+  flex: 1 0 34%; 
+  margin: 10px;
 }
 
 @media (max-width: 1024px) {
@@ -123,4 +130,53 @@ form {
     width: 100%;
     flex: auto;
   }
+}
+
+.c-post {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: hsl(240, 62%, 90%);
+  flex: auto;
+  flex-direction: column;
+}
+
+.c-icons {
+  flex: 1;
+  display: flex;  
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.c-icon-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+  border: 2px solid #be92ffd2; /* Added border color */
+  flex-direction: row;
+}
+
+.c-icon-button::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  transition: border-color 0.3s, transform 0.3s;
+  transform: scale(0.8);
+}
+
+.c-icon-button:hover::before {
+  border-color: #8a3ffc;
+  transform: scale(1);
 }
