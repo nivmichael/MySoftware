@@ -47,7 +47,7 @@ switch ($action) {
                 // And call save_post function from post.class.php file
                 $post->set_user_id($user_id);
                 $post->set_title($data->title);
-                isset($data->body) ? $post->set_body($data->body) : $post->set_body("");
+                $post->set_body($data->body);
                 // Upload image here
         
                 $post_data = $post->save_post();
@@ -75,7 +75,7 @@ switch ($action) {
             } else {
                 // Getting posts was not successful
                 // => set message into response and return http code 500
-                $response = rpchelper::rpcerror('post.rpc.php: get_posts() was not successful', 500);
+                $response = rpchelper::rpcsuccess('post.rpc.php: get_posts() was not successful');
             }
 
         break;
@@ -93,8 +93,8 @@ switch ($action) {
             // And call save_post function from post.class.php file
             $post->set_user_id($user_id);
             $post->set_title($data->title);
-            isset($data->body) ? $post->set_body($data->body) : $post->set_body("");
-    
+            $post->set_body($data->body);
+                
             $post_data = $post->update_post($data->id);
             if ($post_data) {
                 $response = rpchelper::rpcsuccess('update post was successful');

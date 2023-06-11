@@ -51,23 +51,20 @@ class post
 
     public function get_posts()
     {
+        $data   = [];
         $mysqli = db::connect();
 
-        $q = "SELECT user_id, post_id, title, body FROM posts";
-        if ($this->user_id) {
-            $user_id = $this->user_id;
-            $q = $q . " WHERE user_id = $user_id";
-        }
-        $q = $q . ";";
+        $where = $this->user_id ? " WHERE user_id = $this->user_id" : "";
+
+        $q = "SELECT user_id, post_id, title, body FROM posts $where ;";
 
         $res = $mysqli->query($q)
             or die("Mysql error: get_all_posts()" . $mysqli->error);
-        $numRows = $res->num_rows;
-        if ($numRows > 0) {
-            while ($row = $res->fetch_assoc()) {
-                $data[] = $row;
-            }
+
+        while ($row = $res->fetch_assoc()) {
+            $data[] = $row;
         }
+
         return $data;
     }
 
@@ -79,9 +76,8 @@ class post
         $body             = $mysqli->real_escape_string(trim(strip_tags($this->body)));
 
         $q = "UPDATE posts
-        SET title = '$title', body= '$body'
-        WHERE user_id = $this->user_id AND post_id = $id";
-        $q = $q . ";";
+                SET title = '$title', body= '$body'
+                WHERE user_id = $this->user_id AND post_id = $id";
 
         $response = $mysqli->query($q)
             or die("Mysql error: update_post()" . $mysqli->error);
@@ -94,8 +90,6 @@ class post
         $mysqli = db::connect();
 
         $q = "DELETE FROM posts WHERE post_id = $id";
-
-        $q = $q . ";";
 
         $response = $mysqli->query($q)
             or die("Mysql error: delete_post()" . $mysqli->error);
