@@ -28,7 +28,6 @@ class post
         $this->body = $body;
     }
 
-
     public function save_post()
     {
         $response = null;
@@ -43,8 +42,6 @@ class post
          VALUES ($this->user_id,
                  '$title',
                  '$body')";
-
-
 
         $response = $mysqli->query($q)
             or die("Mysql error: save_post()" . $mysqli->error);

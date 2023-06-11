@@ -48,14 +48,7 @@ switch ($action) {
                 $post->set_user_id($user_id);
                 $post->set_title($data->title);
                 isset($data->body) ? $post->set_body($data->body) : $post->set_body("");
-                // Upload images
-
-                // $info = pathinfo($_FILES['userFile']['name']);
-                // $ext = $info['extension']; // get the extension of the file
-                // $newname = "newname.".$ext; 
-
-                // $target = 'images/'.$newname;
-                // move_uploaded_file( $_FILES['userFile']['tmp_name'], $target);
+                // Upload image here
         
                 $post_data = $post->save_post();
                 if ($post_data) {

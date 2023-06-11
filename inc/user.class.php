@@ -3,7 +3,6 @@ class user
 {
     private $username   = null;
     private $password   = null;
-    private $last_login = null;
 
     public function __construct($username = null, $password = null)
     {
@@ -11,11 +10,6 @@ class user
             $this->username = $username;
             $this->password = $password; 
         }
-    }
-
-    public function set_last_login($last_login)
-    {
-        $this->last_login = $last_login;
     }
 
     public function init_session($id)

@@ -31,8 +31,6 @@ session_start();
       </form>
 
     </div>
-    <div id="id-all-posts" class="c-container"></div>
-
   </section>
 
   <section id="id-create-blog-section" class="c-hide-content">
@@ -47,11 +45,11 @@ session_start();
 
         <div id="id-message-create-blog" class="c-message"></div>
       </form>
-      <div id="id-posts" class="c-container"></div>
 
     </div>
 
   </section>
+  <div id="id-posts" class="c-container"></div>
 
 </body>
 

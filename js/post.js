@@ -60,9 +60,8 @@ var post = (function () {
             // TODO
           }
 
-          let allPostsElement = loggedIn
-            ? document.getElementById("id-posts")
-            : document.getElementById("id-all-posts");
+          let allPostsElement = document.getElementById("id-posts");
+            
           allPostsElement.innerHTML = ``;
           for (const post of blogs) {
             // Display all blogs
@@ -110,7 +109,7 @@ var post = (function () {
             getAllPosts(true);
             alert(response.msg);
           } else {
-            messa.textContent = response.msg;
+            updateMessageElement.textContent = response.msg;
           }
         } catch (e) {
           console.log("updatePost error:" + e);
@@ -161,9 +160,9 @@ var post = (function () {
     return `
        <div id="id-post-${post.post_id}" class="c-column">
             ${userSignedInElements(post, loggedIn)}
-            <div id="id-post-values" class="c-post">
-              <h3 id="id-post-title">Title: ${post.title}</h3>
-              <p id="id-post-body">Body: ${post.body}</p>
+            <div class="c-post">
+              <h3 >Title: ${post.title}</h3>
+              <p>Body: ${post.body}</p>
             </div>
        </div>
        `;
@@ -172,10 +171,10 @@ var post = (function () {
   function userSignedInElements(post, loggedIn) {
     return loggedIn
       ? `<div class="c-icons">
-            <button id="id-edit-button" class="c-icon-button" onclick="post.setElementsEditable(event,'${post.post_id}','${post.title}', '${post.body}')">
+            <button class="c-icon-button" onclick="post.setElementsEditable(event,'${post.post_id}','${post.title}', '${post.body}')">
               <img src="./assets/icons/editIcon.svg" alt="view icon">
             </button>
-            <button id="id-delete-button" class="c-icon-button" onclick="post.showConfirmMessage(event, '${post.post_id}')">
+            <button class="c-icon-button" onclick="post.showConfirmMessage(event, '${post.post_id}')">
               <img src="./assets/icons/deleteIcon.svg" alt="view icon">
             </button>
         </div>
@@ -192,22 +191,20 @@ var post = (function () {
   }
 
   function setElementsEditable(event, id, title, body) {
-    event.preventDefault();
-
     // Convert the post elements to editable inputs
     console.log(`id-post-${id}`);
     let elem = document.getElementById(`id-post-${id}`);
     if (elem) {
       // elem.innerHTML = 'asdasdas'
-      document.getElementById(`id-post-${id}`).innerHTML = `
+      elem.innerHTML = `
       
             <input id="id-post-title-input" class="c-post-form-input" name="updated-title" type="text" value="${title}">        
             <textarea id="id-post-body-input" class="c-post-form-input" name="updated-body" type="text">${body}</textarea>
     
             <div id="id-message-update-post" class="c-message"></div>
             <button id="id-done-button" class="c-icon-button" onclick="post.updatePost(event, ${id})">
-            <img src="./assets/icons/doneIcon.svg" alt="view icon">
-         </button>
+              <img src="./assets/icons/doneIcon.svg" alt="view icon">
+          </button>
         `;
     } else {
       console.log("NO element");
