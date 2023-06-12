@@ -28,10 +28,9 @@ class post
         $this->body = $body;
     }
 
+    // Return last inserted id if save post was successful, if not it will be return null
     public function save_post()
     {
-        $response = null;
-
         // Connect to DB          
         $mysqli           = db::connect();
         $title            = $mysqli->real_escape_string(trim(strip_tags($this->title)));
@@ -43,10 +42,10 @@ class post
                  '$title',
                  '$body')";
 
-        $response = $mysqli->query($q)
+        $mysqli->query($q)
             or die("Mysql error: save_post()" . $mysqli->error);
 
-        return $response;
+        return $mysqli->insert_id;
     }
 
     public function get_posts()
@@ -93,6 +92,22 @@ class post
 
         $response = $mysqli->query($q)
             or die("Mysql error: delete_post()" . $mysqli->error);
+        
+        return $response;
+    }
+
+    public function upload_picture_post($id)
+    {
+        $mysqli = db::connect();
+
+        $id_str = strval($id);
+
+        $q = "UPDATE posts
+        SET file_name =  CONCAT(NOW(), '_', $id_str)
+        WHERE post_id = $id";
+
+        $response = $mysqli->query($q)
+            or die("Mysql error: upload_picture_post()" . $mysqli->error);
         
         return $response;
     }

@@ -33,14 +33,15 @@ session_start();
     </div>
   </section>
 
+
   <section id="id-create-blog-section" class="c-hide-content">
     <button id="id-logout-button" class="c-button-log-out" type="button" onclick="user.userLogout(event)">Log Out</button>
     <div id="id-post-div">
-      <form id="id-create-blog-form" class="c-post-form" action="/index.php" onsubmit="post.createPost(event)">
+      <form id="id-create-blog-form" class="c-post-form" method="post" action="/index.php" onsubmit="post.createPost(event)">
         <h2 class="c-blog-form-title">Blog Form</h2>
         <input id="id-post-title-form" class="c-post-form-input" type="text" name="title" placeholder="Type here your title..." /><br>
         <textarea id="id-post-body-form" class="c-post-form-input" name="body" placeholder="What's on your mind?" rows="4" cols="50"></textarea>
-        <input id="id-image-file" type="file" name="filename" accept="image/*" />
+        <input id="id-image-file" type="file" name="filename" accept="image/*" enctype="multipart/form-data" />
         <input id="id-submit-post-button" class="c-button-post-button" type="submit" value="Post" />
 
         <div id="id-message-create-blog" class="c-message"></div>

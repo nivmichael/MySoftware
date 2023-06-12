@@ -8,10 +8,11 @@ CREATE TABLE users(
 );
 
 CREATE TABLE posts(
-    post_id	INT NOT NULL AUTO_INCREMENT,
-    user_id	INT NOT NULL,
-    title	VARCHAR(255) NOT NULL,
-    body    TEXT DEFAULT NULL,
+    post_id	  INT NOT NULL AUTO_INCREMENT,
+    user_id	  INT NOT NULL,
+    title	  VARCHAR(255) NOT NULL,
+    body      TEXT DEFAULT NULL,
+    file_name VARCHAR (100) DEFAULT NULL,
     PRIMARY KEY(post_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

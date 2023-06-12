@@ -1,6 +1,6 @@
 var user = (function () {
   let currSection = SECTION.login;
-
+;
   function userLogin(event) {
     event.preventDefault();
 

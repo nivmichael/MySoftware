@@ -31,3 +31,6 @@ CREATE TABLE posts(
     PRIMARY KEY(post_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- 2023-06-12 Diana, add file_name to posts
+ALTER TABLE posts ADD file_name VARCHAR (100) DEFAULT NULL AFTER body;

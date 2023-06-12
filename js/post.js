@@ -2,24 +2,25 @@ var post = (function () {
   function createPost(event) {
     event.preventDefault();
 
-    var messageElement = document.getElementById("id-message-create-blog");
-    var titleElement = document.getElementById("id-post-title-form");
-    var bodyElement = document.getElementById("id-post-body-form");
+    let titleElement = document.getElementById("id-post-title-form");
+    let bodyElement = document.getElementById("id-post-body-form");
+    let messageElement = document.getElementById("id-message-create-blog");
 
-    const req = {
-      title: event.target.title.value,
-      body: event.target.body.value,
-    };
-    const json = JSON.stringify(req);
+    const input = document.getElementById("id-image-file");
+    const formData = new FormData();
 
+    if(input.files.length > 0) {
+      formData.append("file",  input.files[0]);
+    }
+
+    formData.append("title", event.target.title.value);
+    formData.append("body", event.target.body.value);
+    
     nanoajax.ajax(
       {
         url: `/rpc/post.rpc.php?action=${BLOG_ACTIONS.CREATE_POST}`,
-        headers: {
-          "Content-Type": "application/json",
-        },
         method: "POST",
-        body: json,
+        body: formData ,
       },
       function (code, responseText, request) {
         try {
@@ -121,8 +122,6 @@ var post = (function () {
   function deletePost(event, postId) {
     event.preventDefault();
 
-    const postElement = document.getElementById(`id-post-${postId}`);
-
     const req = {
       id: postId,
     };
@@ -210,6 +209,7 @@ var post = (function () {
       console.log("NO element");
     }
   }
+
 
   return {
     setElementsEditable,
