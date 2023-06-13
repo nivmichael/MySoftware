@@ -38,6 +38,9 @@ input[type="file"] {
   margin: 20px auto;
 }
 
+img {
+  border-radius: 50%;
+}
 
 input[type="submit"]:hover,
 button:hover {

@@ -55,25 +55,34 @@ switch ($action) {
             {
                 if(isset($_FILES['file']) && isset($_FILES['file']['tmp_name'])) 
                 {
-                     // Upload image here
-                    $file = $_FILES['file'];
-                    $current_name = $_FILES['file']['name'];
-                    $from = $_FILES['file']['tmp_name'];
-                    
-                    $newname = "{$id}_" . "$current_name";
-                    $target = config::file_post_path . $newname;
+
+                    $folder_path = config::file_post_path . $id;
+
+                    if(!mkdir($folder_path, 0777, true)) {
+                        die("post.rpc.php: Failed to create folder.");
+                    } else {	
+                        // Upload image here
+                        $file = $_FILES['file'];
+                   
+                        $current_name = $_FILES['file']['name'];
+                        $from = $_FILES['file']['tmp_name'];
+  
+                        $newname = "{$id}_" . "$current_name";
+                        $target =  config::file_post_path . $id . "/" . $newname;
                  
-                    if (move_uploaded_file($from, $target)) 
-                    {
-                        // Move succeed.
-                        // Save picture in DB
-                        $post->upload_picture_post($id);
-                    } 
-                    else 
-                    {
-                    // Move failed.
-                    $response = rpchelper::rpcerror('saving post was not successful, error in moving the file', 500);
+                        if (move_uploaded_file($from, $target)) 
+                        {
+                            // Move succeed.
+                            // Save picture in DB
+                            $post->upload_picture_post($id, $current_name);
+                        } 
+                        else 
+                        {
+                            // Move failed.
+                            $response = rpchelper::rpcerror('saving post was not successful, error in moving the file', 500);
+                        }                    
                     }
+                   
                 }
                
                 $response = rpchelper::rpcsuccess('saving post was successful');

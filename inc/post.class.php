@@ -55,7 +55,8 @@ class post
 
         $where = $this->user_id ? " WHERE user_id = $this->user_id" : "";
 
-        $q = "SELECT user_id, post_id, title, body FROM posts $where ;";
+        $q = "SELECT user_id, post_id, title, body, file_name
+              FROM posts $where ;";
 
         $res = $mysqli->query($q)
             or die("Mysql error: get_all_posts()" . $mysqli->error);
@@ -96,14 +97,14 @@ class post
         return $response;
     }
 
-    public function upload_picture_post($id)
+    public function upload_picture_post($id, $current_name)
     {
         $mysqli = db::connect();
 
         $id_str = strval($id);
 
         $q = "UPDATE posts
-        SET file_name =  CONCAT(NOW(), '_', $id_str)
+        SET file_name =  CONCAT(NOW(), '_','$id_str', '_', '$current_name')
         WHERE post_id = $id";
 
         $response = $mysqli->query($q)

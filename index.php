@@ -1,6 +1,12 @@
 <?php
+    require_once "configs/config.class.php";
+
 session_start();
+$count='One';
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +20,13 @@ session_start();
   <meta name="authori" content="MMD">
   <link rel="stylesheet" href="styles.css?v=1.0">
 
+
+
+
 </head>
 
 <body onload="init(event)">
+
 
   <section id="id-login-section" class="c-hide-content">
     <div id="id-login-div">
@@ -54,6 +64,7 @@ session_start();
 
 </body>
 
+
 <script src="js/nanoajax.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/post.js"></script>
@@ -80,4 +91,8 @@ session_start();
   }
 </script>
 
+
+<script>
+  const filePostPath = <?php echo json_encode(config::file_post_path);?>;
+</script>
 </html>
