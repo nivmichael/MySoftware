@@ -86,9 +86,3 @@ switch($action)
 
 die(json_encode($response));
 
-/*
-1. Create a blog_posts table
-2. Create a form to upload a post with params we have in the git readme
-3. Creat a blog.rpc.file to handle the call
-*/
-

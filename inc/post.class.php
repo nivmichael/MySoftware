@@ -102,7 +102,7 @@ class post
         $mysqli = db::connect();
 
         $id_str = strval($id);
-
+    
         $q = "UPDATE posts
         SET file_name =  CONCAT(NOW(), '_','$id_str', '_', '$current_name')
         WHERE post_id = $id";

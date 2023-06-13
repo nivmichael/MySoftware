@@ -37,16 +37,16 @@ class user
         $res = $mysqli->query($sql) 
             or die("Mysql error: login()" . $mysqli->error);
         // Gets the Sql row from res
-        $data = $res->fetch_row();
+        $data = $res->fetch_assoc();
         // checks if $data[0] is not null => sets response with id
-        if(isset($data[0])) 
+        if(isset($data['id'])) 
         {
-            $response = $data[0];
+            $response = $data['id'];
 
             // Update users table with last_login value to DB
             $sql = "UPDATE users 
             SET last_login = NOW()
-            WHERE id = $data[0]";
+            WHERE id = $data[id]";
 
             $res = $mysqli->query($sql) 
                 or die("Mysql error: login()" . $mysqli->error);

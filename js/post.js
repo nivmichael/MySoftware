@@ -192,7 +192,7 @@ var post = (function () {
             <button class="c-icon-button" onclick="post.setElementsEditable('${post.post_id}','${post.title}', '${post.body}')">
               <img src="./assets/icons/editIcon.svg" alt="view icon">
             </button>
-            <button class="c-icon-button" onclick="post.showConfirmMessage('${post.post_id}')">
+            <button class="c-icon-button" onclick="post.showConfirmMessage(event, '${post.post_id}')">
               <img src="./assets/icons/deleteIcon.svg" alt="view icon">
             </button>
         </div>
@@ -210,11 +210,9 @@ var post = (function () {
 
   function setElementsEditable(id, title, body) {
     // Convert the post elements to editable inputs
-    console.log(`id-post-${id}`);
-    let elem = document.getElementById(`id-post-${id}`);
-    if (elem) {
-      // elem.innerHTML = 'asdasdas'
-      elem.innerHTML = `
+    let postElement = document.getElementById(`id-post-${id}`);
+    if (postElement) {
+      postElement.innerHTML = `
             <input id="id-post-title-input" class="c-post-form-input" name="updated-title" type="text" value="${title}">        
             <textarea id="id-post-body-input" class="c-post-form-input" name="updated-body" type="text">${body}</textarea>
             <div id="id-message-update-post" class="c-message"></div>

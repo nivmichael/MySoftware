@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 // Start new or resume existing session
 session_start();
 
@@ -14,12 +13,14 @@ $data    = json_decode($payload);
 $action  = null;
 $user_id = null;
 
-if (isset($_GET)) {
+if (isset($_GET)) 
+{
     $action = $_GET["action"];
 }
 
 
-if (isset($_SESSION["user_id"])) {
+if (isset($_SESSION["user_id"])) 
+{
     $user_id = $_SESSION["user_id"];
 }
 
@@ -32,7 +33,8 @@ $response = [
 $post = new post();
 
 
-switch ($action) {
+switch ($action) 
+{
     case 'create_post':
         $response["status"] = false;
 
@@ -114,7 +116,6 @@ switch ($action) {
             // => set message into response and return http code 500
             $response = rpchelper::rpcsuccess('post.rpc.php: get_posts() was not successful');
         }
-
         break;
 
     case 'update_post':
@@ -124,7 +125,8 @@ switch ($action) {
         {
             // Title is null or empty so return a error message
             $response = rpchelper::rpcerror('missing title field');
-        } else 
+        } 
+        else 
         {
             // Title field is OK => set post title and body
             // And call save_post function from post.class.php file
@@ -155,13 +157,13 @@ switch ($action) {
         if ($post_response) 
         {
             $response = rpchelper::rpcsuccess('deleting post was successful');
-        } else 
+        } 
+        else 
         {
             // Saving post was not successful
             // => set message into response and return http code 500
             $response = rpchelper::rpcerror('deleting post was not successful', 500);
         }
-
         break;
 
     default:
